@@ -80,5 +80,23 @@
 			die();
 		}
 		return $dbc;
+	}
+
+	function tableExists($db, $table) {
+		// Try a select statement against the table
+		// Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
+		try {
+			$query = "SHOW TABLES LIKE ':table';";
+			$query = $db->prepare($query);
+			$query->bindParam(':table', $table);
+	
+			$query->execute();
+		} catch (Exception $e) {
+			// We got an exception == table not found
+			return FALSE;
+		}
+
+		// Result is either boolean FALSE (no table found) or PDOStatement Object (table found)
+		return $result !== FALSE;
 	}	
 ?>

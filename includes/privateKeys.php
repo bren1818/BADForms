@@ -30,6 +30,16 @@
 	
 	define("CREATE_GITIGNORE", true);	//create gitIgnore Files in Directory (Cache, Log, Temp)
 	
+	if( DATABASE_MODE == 1 ){
+		define("DATABASE_TABLE", LOCAL_DATABASE);
+	}else if( DATABASE_MODE == 2 ){
+		define("DATABASE_TABLE", STAGING_DATABASE);
+	}else if( DATABASE_MODE == 3){
+		define("DATABASE_TABLE", PRODUCTION_DATABASE);
+	}else{
+		define("DATABASE_TABLE", "");
+	}
+	
 	
 	/*System Checks*/
 	if( !file_exists( LOG_DIR) ){
