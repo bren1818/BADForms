@@ -6,5 +6,7 @@
 		$time = date(TIMESTAMP_FORMAT_LOG, time() );
 		$preface = PHP_EOL.$time." -- Script: ".basename($script)." -- Line: ".$line." -- ";
 		file_put_contents($logFile, $preface.$message, FILE_APPEND);
-	}	
+	}
+
+	
 ?>

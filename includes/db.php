@@ -1,6 +1,4 @@
 <?php
-	require_once("privateKeys.php");
-
 	//some instances may bark if date isn't set
 	date_default_timezone_set("America/New_York");
 
@@ -85,7 +83,6 @@
 	function dbExists($db, $dbName) {
 		$query = "SHOW DATABASES LIKE '$dbName';";
 		$query = $db->prepare($query);
-		//$query->bindParam(':db', $dbName);
 		if( $query->execute() ){
 			$count = $query->rowCount();
 			if($count > 0 ){
@@ -96,5 +93,43 @@
 		}else{
 			exit;
 		}
-	}	
+	}
+
+	function tableExists($db, $tableName){
+		$query = "SHOW TABLES LIKE '$tableName';";
+		$query = $db->prepare($query);
+		if( $query->execute() ){
+			$count = $query->rowCount();
+			if($count > 0 ){
+				return 1;
+			}else{
+				return 0;
+			}
+		}else{
+			exit;
+		}
+	}
+	
+	function createAndTestTable($db, $tableName, $query){
+		if( tableExists($db, $tableName) ){
+			echo "<p>Table: '$tableName' already exists.</p>";
+		}else{
+			echo '<p>Creating `'.$tableName.'` table...</p>';
+	
+			$db->exec( $query );
+		
+			if( tableExists($db, $tableName) ){
+				echo "<p>Created `".$tableName."` table</p>";
+			}else{
+				echo "<p>Could not create `".$tableName."` table</p>";	
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 ?>
