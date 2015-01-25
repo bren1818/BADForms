@@ -1,0 +1,9 @@
+CREATE TABLE  `formobjecttype` (
+`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+##`isListType` INTEGER,
+##`html` VARCHAR( 45 ),
+##`listItems` VARCHAR( 45 ),
+`value` VARCHAR( 45 ),
+`formID` INTEGER,
+`objectID` INTEGER
+);

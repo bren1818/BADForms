@@ -1,0 +1,11 @@
+CREATE TABLE  `theform` (
+`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+`owner` VARCHAR( 60),
+`title` VARCHAR( 45 ),
+`description` VARCHAR( 150),
+`encrypt_all` INTEGER,
+`created` DATETIME,
+`enabled` INTEGER,
+`sunrise` DATETIME,
+`sunset` DATETIME
+);

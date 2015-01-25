@@ -1,0 +1,19 @@
+CREATE TABLE  `formobject` (
+`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+`type` INTEGER,
+`label` VARCHAR( 60 ),
+`name` VARCHAR( 60 ),
+`default` VARCHAR( 60 ),
+`errorText` VARCHAR( 150 ),
+`placeholder` VARCHAR( 60 ),
+`regex` VARCHAR( 255 ),
+`minValue` INTEGER,
+`maxValue` INTEGER,
+`minLength` INTEGER,
+`maxLength` INTEGER,
+`classes` VARCHAR( 150 ),
+`required` INTEGER,
+`encrypted` INTEGER,
+`formID` INTEGER,
+`order` INTEGER
+);
