@@ -1,5 +1,5 @@
 <?php
-	include "../includes/db.php";
+	//include "../includes/db.php";
 	include "../includes/include.php";
 ?>
 <h1>Brens Awesome Dynamic Forms Setup Wizard</h1>
@@ -71,6 +71,7 @@
 	
 	createAndTestTable($db, "theform", $query);
 	
+	//tool tip
 	$query = "CREATE TABLE  `formobject` (
 				`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
 				`type` INTEGER,
@@ -126,7 +127,7 @@
 	//email format
 	
 	
-	
+	//list items
 	
 	
 	

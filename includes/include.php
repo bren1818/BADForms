@@ -1,7 +1,6 @@
 <?php
 	include "privateKeys.php";
-	//include ("db.php");
-	include ( CLASSES_DIR.DIRECTORY_SEPARATOR."includes.php");
-	include ("functions.php");
-	
+	include INCLUDES_DIR.DIRECTORY_SEPARATOR."db.php";
+	include INCLUDES_DIR.DIRECTORY_SEPARATOR."functions.php";
+	include CLASSES_DIR.DIRECTORY_SEPARATOR."includes.php";
 ?>

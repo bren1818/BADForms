@@ -2,7 +2,7 @@
 	error_reporting( E_ALL );
 	
 	require_once( "includes/include.php" );
-	require_once( "includes/db.php" );
+	//require_once( "includes/db.php" );
 	
 	$db = getDB();
 	if( dbExists($db, DATABASE_NAME) == 0 ){
@@ -14,3 +14,4 @@
 <?php
 	//echo DATABASE_USER;
 ?>
+<a href="buildForm.php">Build Form</a>

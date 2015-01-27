@@ -5,6 +5,7 @@
 	define("TEMP_DIR", 		ROOT_DIR."temp");
 	define("CACHE_DIR", 	ROOT_DIR."cache");
 	define("CLASSES_DIR", 	ROOT_DIR."classes");
+	define("INCLUDES_DIR",	ROOT_DIR."includes");
 	
 	define("DATABASE_MODE", 1 );
 	
