@@ -122,15 +122,6 @@ function generateHtml($formID){
 		<input type="hidden" name="formObjectID" value="<?php ?>" />
 		<input type="hidden" name="order" value="<?php ?>" />
 	</div>
-
-	<!--
-	minValue, i
-	maxValue, i
-	minLength, i
-	maxLength, i
-	-->
-	
-
 </div>
 <?php
 	$component = ob_get_contents();
