@@ -269,6 +269,25 @@
 			$this->setOrder( (isset($_REQUEST["order"])) ? $_REQUEST["order"] : $this->getOrder() );
 		}
 
+		function getFromArray($arr){
+			$this->setType( (isset($arr["type"])) ? $arr["type"] : $this->getType() );
+			$this->setLabel( (isset($arr["label"])) ? $arr["label"] : $this->getLabel() );
+			$this->setName( (isset($arr["name"])) ? $arr["name"] : $this->getName() );
+			$this->setDefault( (isset($arr["default"])) ? $arr["default"] : $this->getDefault() );
+			$this->setErrorText( (isset($arr["errorText"])) ? $arr["errorText"] : $this->getErrorText() );
+			$this->setPlaceholder( (isset($arr["placeholder"])) ? $arr["placeholder"] : $this->getPlaceholder() );
+			$this->setRegex( (isset($arr["regex"])) ? $arr["regex"] : $this->getRegex() );
+			$this->setMinValue( (isset($arr["minValue"])) ? $arr["minValue"] : $this->getMinValue() );
+			$this->setMaxValue( (isset($arr["maxValue"])) ? $arr["maxValue"] : $this->getMaxValue() );
+			$this->setMinLength( (isset($arr["minLength"])) ? $arr["minLength"] : $this->getMinLength() );
+			$this->setMaxLength( (isset($arr["maxLength"])) ? $arr["maxLength"] : $this->getMaxLength() );
+			$this->setClasses( (isset($arr["classes"])) ? $arr["classes"] : $this->getClasses() );
+			$this->setRequired( (isset($arr["required"])) ? $arr["required"] : $this->getRequired() );
+			$this->setEncrypted( (isset($arr["encrypted"])) ? $arr["encrypted"] : $this->getEncrypted() );
+			$this->setFormID( (isset($arr["formID"])) ? $arr["formID"] : $this->getFormID() );
+			$this->setOrder( (isset($arr["order"])) ? $arr["order"] : $this->getOrder() );
+		}
+
 		function save(){
 			$id = $this->getId();
 			$type = $this->getType();

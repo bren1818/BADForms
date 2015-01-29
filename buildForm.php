@@ -1,5 +1,32 @@
 <?php
 	include "includes/include.php";
+
+	$securityKey = 1;
+	$ownerID = 1;
+	$formID = 1;
+	
+/*	
+type, i
+label, v
+name, v
+defaultVal, v
+errorText, v
+placeholder, v
+regex, v
+minVal, i
+maxVal, i
+minLength, i
+maxLength, i
+listID, i
+csList, v
+classes, v
+isRequired, i
+encryptVal, i
+formID, i
+rowOrder, i
+*/
+	
+	
 ?>
 <style>
 	.form_row_object{ width: 800px; margin: 10px auto; }
@@ -127,7 +154,15 @@
 				save.push(  formDataObj );
 			});
 			var saveString = JSON.stringify(save);
-			console.log( saveString  );
+			//console.log( saveString  );
+			
+			$.post( "saveForm.php", { formID: "<?php echo $formID; ?>", securityKey : "<?php echo $securityKey; ?>", ownerID : "<?php echo $ownerID; ?>" form: saveString })
+			  .done(function( data ) {
+				  //check for codes or errors 
+				alert( "Data Loaded: " + data );
+			  });
+			
+			
 		});
 		
 		$( "#sortable" ).sortable({
@@ -146,7 +181,10 @@
 
 <div id="formHolder">
 <ul id="sortable">
-<?php /*
+<?php /* 
+
+load form objecs
+
 <li>
 	<?php
 		include "getFormEntryRow.php";
