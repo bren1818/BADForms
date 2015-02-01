@@ -58,16 +58,19 @@
 	$db = getConnection();
 	
 	$query = "CREATE TABLE  `theform` (
-				`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-				`owner` VARCHAR( 60),
-				`title` VARCHAR( 45 ),
-				`description` VARCHAR( 150),
-				`encrypt_all` INTEGER,
-				`created` DATETIME,
-				`enabled` INTEGER,
-				`sunrise` DATETIME,
-				`sunset` DATETIME
-				);";
+`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+`title` VARCHAR( 100 ),
+`description` VARCHAR( 100 ),
+`encryptionMode` INTEGER,
+`encryptionSalt` VARCHAR( 100 ),
+`created` DATETIME,
+`enabled` INTEGER,
+`sunrise` DATETIME,
+`sunset` DATETIME,
+`jqVersion` VARCHAR( 10 ),
+`jqTheme` VARCHAR( 50 ),
+`owner` INTEGER
+);";
 	
 	createAndTestTable($db, "theform", $query);
 	
