@@ -1,0 +1,32 @@
+.form_row_object{ width: 800px; margin: 10px auto; }
+.row{ margin: 5px 0px; width: 100%; padding: 5px 0px;}
+.row label{ width: 200px; display: inline-block; } 
+
+ul#sortable li:nth-child(odd) {
+	background-color: rgba(0,255,0,.3);
+}
+ul#sortable li:nth-child(even) {
+	background-color: rgba(0,0,255,.3);
+}
+
+ul#sortable{ padding: 0px; margin: 0px; list-style: none; }
+
+ul#sortable li:first-child .tools .butUp{ display: none; } 
+ul#sortable li:last-child .tools .butDown{ display: none; } 
+
+.tools{ clear: both; padding: 10px 0px; width: 100%; }
+.tools .but{ padding: 3px; background-color: #00F105; color: #000; font-weight: bold; display: inline-block; margin: 0px 10px; cursor: pointer; }
+
+.advancedSettings{
+	width: 100%;
+}
+
+li.deleted .tools,
+li.deleted .form_row_object .row{
+	display: none;
+}
+li.deleted .form_row_object .row.hidden{ display: block; }
+
+.CodeMirror{
+	border: 1px solid #000;
+}
