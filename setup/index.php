@@ -141,6 +141,26 @@
 	}
 	
 	
+	
+	
+	
+	$query = "CREATE TABLE IF NOT EXISTS `formcode` (  `id` int(11) NOT NULL AUTO_INCREMENT,  `formID` int(11) NOT NULL,  `codeType` int(11) NOT NULL,  `version` int(11) NOT NULL,  `code` longtext NOT NULL,  PRIMARY KEY (`id`) );";
+	
+	createAndTestTable($db, "formcode", $query);
+	
+	$query = "CREATE TABLE IF NOT EXISTS `jquerythemes` (  `themeName` varchar(55) NOT NULL,  `themeVersion` varchar(6) NOT NULL);";
+	
+	createAndTestTable($db, "jquerythemes", $query);
+	
+	$query = "INSERT INTO `jquerythemes` (`themeName`, `themeVersion`) VALUES ('base', '1.11.2'), ('black-tie', '1.11.2'), ('blitzer', '1.11.2'), ('cupetino', '1.11.2'), ('dark-hive', '1.11.2'), ('dot-luv', '1.11.2'), ('eggplant', '1.11.2'), ('excite-bike', '1.11.2'), ('flick', '1.11.2'), ('hot-sneaks', '1.11.2'), ('humanity', '1.11.2'), ('le-frog', '1.11.2'), ('mint-choc', '1.11.2'), ('overcaset', '1.11.2'), ('pepper-grinder', '1.11.2'), ('redmond', '1.11.2'), ('smoothness', '1.11.2'), ('south-street', '1.11.2'), ('start', '1.11.2'), ('sunny', '1.11.2'), ('swanky-purse', '1.11.2'), ('ui-darkness', '1.11.2'), ('trontastic', '1.11.2'), ('ui-darkness', '1.11.2'), ('ui-lightness', '1.11.2'), ('vader', '1.11.2');";
+	
+	$query = $db->prepare($query);
+	if( $query->execute() ){
+		$count = $query->rowCount();
+		echo "<p>Added ".$count." jquery themes</p>";
+	}
+	
+	
 	echo "<p>Setup Complete... Login <a href='../index.php'>here</a></p>";
 	
 

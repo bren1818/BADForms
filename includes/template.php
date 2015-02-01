@@ -42,7 +42,7 @@
 		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/lib/codemirror.css">
 		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/hint/show-hint.css">
 		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/display/fullscreen.css">
-		<link rel="stylesheet" href="<?php echo CSS_DIR.'/styles.css'; ?>">
+		<link rel="stylesheet" href="<?php echo CSS_DIR.'/style.css'; ?>">
 		<link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>">
 		<style>
 			

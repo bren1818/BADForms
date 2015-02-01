@@ -5,5 +5,5 @@
 	
 	include "base_object.php";
 	
-	
+	include "BrenCrypt.php";
 ?>
