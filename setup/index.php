@@ -73,24 +73,27 @@
 	
 	//tool tip
 	$query = "CREATE TABLE  `formobject` (
-				`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-				`type` INTEGER,
-				`label` VARCHAR( 60 ),
-				`name` VARCHAR( 60 ),
-				`default` VARCHAR( 60 ),
-				`errorText` VARCHAR( 150 ),
-				`placeholder` VARCHAR( 60 ),
-				`regex` VARCHAR( 255 ),
-				`minValue` INTEGER,
-				`maxValue` INTEGER,
-				`minLength` INTEGER,
-				`maxLength` INTEGER,
-				`classes` VARCHAR( 150 ),
-				`required` INTEGER,
-				`encrypted` INTEGER,
-				`formID` INTEGER,
-				`order` INTEGER
-				);";
+`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+`type` INTEGER,
+`label` VARCHAR( 55 ),
+`name` VARCHAR( 55 ),
+`defaultVal` VARCHAR( 55 ),
+`errorText` VARCHAR( 55 ),
+`placeholder` VARCHAR( 55 ),
+`regex` VARCHAR( 255 ),
+`minVal` INTEGER,
+`maxVal` INTEGER,
+`minLength` INTEGER,
+`maxLength` INTEGER,
+`listType` INTEGER,
+`listID` INTEGER,
+`csList` VARCHAR( 255 ),
+`classes` VARCHAR( 100 ),
+`required` INTEGER,
+`encrypted` INTEGER,
+`formID` INTEGER,
+`rowOrder` INTEGER
+);";
 	
 	createAndTestTable($db, "formobject", $query);
 	

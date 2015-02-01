@@ -17,8 +17,10 @@ minVal, i
 maxVal, i
 minLength, i
 maxLength, i
+
 listID, i
 csList, v
+
 classes, v
 isRequired, i
 encryptVal, i
@@ -47,7 +49,17 @@ rowOrder, i
 	
 	.tools{ clear: both; padding: 10px 0px; width: 100%; }
 	.tools .but{ padding: 3px; background-color: #00F105; color: #000; font-weight: bold; display: inline-block; margin: 0px 10px; cursor: pointer; }
-		
+	
+	.advancedSettings{
+		width: 100%;
+	}
+	
+	li.deleted .tools,
+	li.deleted .form_row_object .row{
+		display: none;
+	}
+	li.deleted .form_row_object .row.hidden{ display: block; }
+	
 </style>
 
 
@@ -109,6 +121,9 @@ rowOrder, i
 					moveDown( t );
 				break;
 				case 'butDelete but':
+					$(this).parents('li').addClass('deleted');
+					$(this).parents('li').find('input[name="isDeleted"]').attr('value', 1);
+				
 					window.alert("delete");
 				break;
 				default:
@@ -119,8 +134,8 @@ rowOrder, i
 	}
 
 	function orderItems(){
-		$('#formHolder ul li .form_row_object').each(function(index){
-			$(this).find(":input[name='order']").attr('value',index);
+		$('#formHolder ul li .form_row_object').not('li.deleted').each(function(index){
+			$(this).find(":input[name='rowOrder']").attr('value',index);
 		});
 	}
 	
@@ -156,10 +171,17 @@ rowOrder, i
 			var saveString = JSON.stringify(save);
 			//console.log( saveString  );
 			
-			$.post( "saveForm.php", { formID: "<?php echo $formID; ?>", securityKey : "<?php echo $securityKey; ?>", ownerID : "<?php echo $ownerID; ?>" form: saveString })
+			$.post( "saveForm.php", { formID: "<?php echo $formID; ?>", securityKey : "<?php echo $securityKey; ?>", ownerID : "<?php echo $ownerID; ?>", form: saveString })
 			  .done(function( data ) {
 				  //check for codes or errors 
-				alert( "Data Loaded: " + data );
+				//alert( "Data Loaded: " + data );
+				alert("Saved");
+				
+				var obj = jQuery.parseJSON( data );
+				
+				console.log( obj );
+				
+				
 			  });
 			
 			

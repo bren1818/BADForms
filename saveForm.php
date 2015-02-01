@@ -11,18 +11,37 @@ require_once( "includes/include.php" );
 	
 	$con = getConnection();
 	
+	$ret = array();
+	
 	if( sizeof($formDATA) >= 1 ){
 		foreach( $formDATA as $Formobject){
 			//echo "formRow";
 			$rowObj = new Formobject($con);
-			$rowObj->getFromArray( (array)$Formobject);
+			
+			$fo = (array)$Formobject;
+			
+			$rowObj->getFromArray( $fo );
 			//$rowObj->setId( 0 );
 			
-			echo $rowObj->printFormatted();
+			//echo $rowObj->printFormatted();
 			
-			if( $rowObj->save() > 0 ){
-					echo "Saved";
+			$id = $rowObj->save(); 
+			if( $id > 0 ){
+					//echo "Saved";
+			}else{
+				
 			}
+			
+			$tempID = $fo['tempID'];
+			
+			$ret[] = array("tempID"=>$tempID, "id" => $id, "error" => $rowObj->getErrorText(), "fullRet" =>  $rowObj->asArray());
+		
 		}
+	
+		echo json_encode($ret);
+	
 	}
+	
+	
+	
 ?>

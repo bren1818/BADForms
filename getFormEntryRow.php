@@ -29,12 +29,19 @@ function generateHtml($formID){
 		</label>
 		<input type="text" name="label" value="" />
 	</div>
+	
+	<div class="row">
+		<label for="name">
+			The name of the field (system)
+		</label>
+		<input type="text" name="name" value="" />
+	</div>
 
-	<div class="row default">
-		<label for="default">
+	<div class="row defaultVal">
+		<label for="defaultVal">
 			The default value for form field
 		</label>
-		<input type="text" name="default" value="" />
+		<input type="text" name="defaultVal" value="" />
 	</div>
 
 	<div class="row errorText">
@@ -58,69 +65,101 @@ function generateHtml($formID){
 		<input type="text" name="placeholder" value="" />
 	</div>
 	
-	<div class="row regex">
-		<label for="regex">
-			Regular Expression for validation  
+	<div class="row listType">
+		<label for="listType">
+			List Type
 		</label>
-		<input type="text" name="regex" value="" />
-	</div>
-		
-	<div class="row minLength">
-		<label for="minLength">
-			minimum length of input 
-		</label>
-		<input type="number" name="minLength" value="" />
-	</div>
-	
-	<div class="row maxLength">
-		<label for="maxLength">
-			maximum length of input 
-		</label>
-		<input type="number" name="maxLength" value="" />
-	</div>
-	
-	<div class="row minValue">
-		<label for="minValue">
-			min value of input 
-		</label>
-		<input type="number" name="minValue" value="" />
-	</div>
-	
-	<div class="row maxValue">
-		<label for="maxValue">
-			maximum value of input 
-		</label>
-		<input type="number" name="maxValue" value="" />
-	</div>
-
-	<div class="row cssClass">
-		<label for="cssClass">
-			CSS Class(es) space separated for styling
-		</label>
-		<input type="text" name="cssClass" value="" />
-	</div>
-	
-	<div class="row required">
-		<label for="required">
-			Is this a required field?
-		</label>
-		<input type="checkbox" name="required" value="1" /> Yes
-	</div>
-	
-	<div class="row encrypted">
-		<label for="required">
-			Does this data need to be encrypted?
-		</label>
-		<?php
-			//check parent to see if disabled or nt
-		?>
-		<input type="radio" name="required" value="1" /> Yes <input type="radio" name="required" value="0" checked="checked"/> No
+		Comma Separated <input type="radio" name="listType" value="1" />, Pre-Existing <input type="radio" name="listType" value="2" />
 	</div>	
+	
+	<div class="row csList">
+		<label for="csList">
+			Comma Separated list of values
+		</label>
+		<textarea name="csList"></textarea>
+	</div>
+	
+	<div class="row listID">
+		<label for="listID">
+			Choose a list.
+			<a href="#">Pick List</a>
+		</label>
+		<input type="hidden" name="listID" value="" />
+	</div>
+	
+	<div class="advancedSettings row">
+	
+		<div class="row regex">
+			<label for="regex">
+				Regular Expression for validation  
+			</label>
+			<input type="text" name="regex" value="" />
+		</div>
+			
+		<div class="row minLength">
+			<label for="minLength">
+				minimum length of input 
+			</label>
+			<input type="number" name="minLength" value="" />
+		</div>
+		
+		<div class="row maxLength">
+			<label for="maxLength">
+				maximum length of input 
+			</label>
+			<input type="number" name="maxLength" value="" />
+		</div>
+		
+		<div class="row minVal">
+			<label for="minVal">
+				min value of input 
+			</label>
+			<input type="number" name="minVal" value="" />
+		</div>
+		
+		<div class="row maxVal">
+			<label for="maxVal">
+				maximum value of input 
+			</label>
+			<input type="number" name="maxVal" value="" />
+		</div>
+
+		<div class="row classes">
+			<label for="classes">
+				CSS Class(es) space separated for styling
+			</label>
+			<input type="text" name="classes" value="" />
+		</div>
+		
+		
+		<div class="row encrypted">
+			<label for="encrypted">
+				Does this data need to be encrypted?
+			</label>
+			<?php
+				//check parent to see if disabled or nt
+			?>
+			<input type="radio" name="encrypted" value="1" /> Yes 
+			<input type="radio" name="encrypted" value="0" checked="checked"/> No
+			<?php
+			
+			?>
+		</div>
+		
+		<div class="row required">
+			<label for="required">
+				Is this field required?
+			</label>
+			<input type="radio" name="required" value="1" /> Yes <input type="radio" name="required" value="0" checked="checked"/> No
+		</div>	
+	</div>
 	
 	<div class="row hidden">
 		<input type="hidden" name="formID" value="<?php ?>" />
 		<input type="hidden" name="formObjectID" value="<?php ?>" />
-		<input type="hidden" name="order" value="<?php ?>" />
+		<input type="hidden" name="rowOrder" value="<?php ?>" />
+		<input type="hidden" name="isDeleted" value="<?php ?>" />
+		<input type="hidden" name="tempID" value="<?php echo time(); ?>" />
 	</div>
 </div>
 <?php
