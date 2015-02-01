@@ -14,5 +14,5 @@
 <?php
 	//echo DATABASE_USER;
 ?>
-<a href="createForm.php">Create Form</a>
-<a href="buildForm.php">Add Form Data</a>
+<a href="/views/form/createForm.php">Create Form</a>
+<a href="/views/form/buildForm.php">Add Form Data</a>

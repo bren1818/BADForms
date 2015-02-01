@@ -1,7 +1,0 @@
-CREATE TABLE  `objecttype` (
-`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-`name` VARCHAR( 45 ),
-`description` VARCHAR( 45 ),
-`isListType` INTEGER,
-`ordered` INTEGER
-);

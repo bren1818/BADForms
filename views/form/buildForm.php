@@ -1,5 +1,5 @@
 <?php
-	include "includes/include.php";
+	include "../../includes/include.php";
 
 	$securityKey = 1;
 	$ownerID = 1;
