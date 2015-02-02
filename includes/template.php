@@ -57,6 +57,7 @@
 		$CMPATH = JS_DIR.'/codemirror-4.0';
 	?>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+		<!--code.jquery.com/ui/[version]/themes/[theme name]/jquery-ui.css-->
 		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/lib/codemirror.css">
 		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/hint/show-hint.css">
 		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/display/fullscreen.css">
