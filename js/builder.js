@@ -101,7 +101,7 @@
 			var saveString = JSON.stringify(save);
 			//console.log( saveString  );
 			
-			$.post( "/saveForm.php", { formID: "<?php echo $formID; ?>", securityKey : "<?php echo $securityKey; ?>", ownerID : "<?php echo $ownerID; ?>", form: saveString })
+			$.post( "/saveForm.php", { formID: "<?php echo $formID; ?>", ownerID : "<?php echo $ownerID; ?>", form: saveString })
 			  .done(function( data ) {
 				  //check for codes or errors 
 				//alert( "Data Loaded: " + data );
@@ -109,8 +109,17 @@
 				
 				var obj = jQuery.parseJSON( data );
 				
-				console.log( obj );
+				for(var o = 0; o < obj.length; o++){
+					if( obj[o].tempID != "" && obj[o].id != "" ){
+						console.log( obj[o].tempID + " > " + obj[o].id );
+						
+						
+					}
+				}
 				
+				
+				console.log( obj );
+				//$('.form_row_object 
 				
 			  });
 			
@@ -125,7 +134,7 @@
 			}
 		});
 		
-		$('#addRow').click();
+		//$('#addRow').click();
 		
 		
 	});

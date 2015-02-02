@@ -8,9 +8,18 @@ function generateHtml($formObject){
 		$formObject = new formobject();
 	}
 	
+	//optimize
+	$RowTypes = array();
+	$query = $db->prepare("SELECT * FROM `objecttype` order by `ordered` ASC");		
+	if( $query->execute() ){
+		while( $result = $query->fetchObject("objecttype") ){
+			$RowTypes[$result->getId()] = $result->getName();	
+		}
+	}
+	
 	ob_start();
 ?>
-<div class="form_row_object">
+<div class="form_row_object <?php echo " list-type-".$formObject->getListType(); echo " ".(isset($RowTypes[$formObject->getType()]) ? $RowTypes[$formObject->getType()] : ""); ?>">
 
 	<div class="row type">
 		<label for="type">
@@ -21,7 +30,7 @@ function generateHtml($formObject){
 				$query = $db->prepare("SELECT * FROM `objecttype` order by `ordered` ASC");		
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("objecttype") ){
-						echo '<option data-type="'.$result->getName().'" value="'.$result->getId().'">'.$result->getDescription().'</option>';
+						echo '<option data-type="'.$result->getName().'" value="'.$result->getId().'" '.($result->getId() == $formObject->getType() ? "selected" : "").'>'.$result->getDescription().'</option>';
 					}
 				}
 			?>
@@ -56,13 +65,6 @@ function generateHtml($formObject){
 		<input type="text" name="errorText" value="<?php echo $formObject->getErrorText(); ?>" />
 	</div>
 
-	<div class="row tooltip">
-		<label for="tooltip">
-			The text displayed as a tool tip
-		</label>
-		<input type="text" name="tooltip" value="<?php //echo $formObject->getTooltip(); ?>" />
-	</div>
-
 	<div class="row placeholder">
 		<label for="placeholder">
 			The placeholder text 
@@ -72,9 +74,11 @@ function generateHtml($formObject){
 	
 	<div class="row listType">
 		<label for="listType">
-			List Type
+			List Type:
 		</label>
-		Comma Separated <input type="radio" name="listType" value="1" />, Pre-Existing <input type="radio" name="listType" value="2" />
+		<br />
+		Comma Separated <input type="radio" name="listType" value="1" <?php if( $formObject->getListType() == 1){ echo " checked"; } ?>/><br />
+		Pre-Existing <input type="radio" name="listType" value="2" <?php if( $formObject->getListType() == 2){ echo " checked"; } ?>/>
 	</div>	
 	
 	<div class="row csList">
@@ -144,8 +148,8 @@ function generateHtml($formObject){
 			<?php
 				//check parent to see if disabled or nt
 			?>
-			<input type="radio" name="encrypted" value="1" /> Yes 
-			<input type="radio" name="encrypted" value="0" checked="checked"/> No
+			<input type="radio" name="encrypted" value="1" <?php if( $formObject->getEncrypted() == "1" ){ echo "checked"; } ?>/> Yes 
+			<input type="radio" name="encrypted" value="0" <?php if( $formObject->getEncrypted() == "0" ){ echo "checked"; } ?>/> No
 			<?php
 			
 			?>
@@ -155,15 +159,15 @@ function generateHtml($formObject){
 			<label for="required">
 				Is this field required?
 			</label>
-			<input type="radio" name="required" value="1" /> Yes <input type="radio" name="required" value="0" checked="checked"/> No
+			<input type="radio" name="required" value="1" <?php if( $formObject->getRequired() == "1" ){ echo "checked"; } ?>/> Yes <input type="radio" name="required" value="0" <?php if( $formObject->getRequired() == "0" ){ echo "checked"; } ?>/> No
 		</div>	
 	</div>
 	
 	<div class="row hidden">
 		<input type="hidden" name="formID" value="<?php echo $formObject->getFormID(); ?>" />
 		<input type="hidden" name="formObjectID" value="<?php echo $formObject->getId(); ?>" />
-		<input type="hidden" name="rowOrder" value="<?php ?>" />
-		<input type="hidden" name="isDeleted" value="<?php ?>" />
+		<input type="hidden" name="rowOrder" value="<?php echo $formObject->getRowOrder(); ?>" />
+		<input type="hidden" name="isDeleted" value="<?php echo "0"; ?>" />
 		<input type="hidden" name="tempID" value="<?php echo time(); ?>" />
 	</div>
 </div>
@@ -177,7 +181,10 @@ function generateHtml($formObject){
 
 if( isset($_REQUEST) && isset($_REQUEST['form']) && $_REQUEST['form']  != "" ){
 	$form = $_REQUEST['form'];
-	echo generateHtml( $form );
+	$formObject = new formobject();
+	$formObject->setFormID( $form );
+	
+	echo generateHtml( $formObject );
 }
 
 ?>

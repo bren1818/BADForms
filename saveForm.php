@@ -1,14 +1,8 @@
 <?php
-require_once( "includes/include.php" );
-	//check security key
+	require_once( "includes/include.php" );
 	//check owner id
-
-	//echo '<pre>'.print_r($_POST,true).'</pre>';
 	$formID = $_POST['formID'];
 	$formDATA = json_decode($_POST['form']);
-	
-	//echo '<pre>'.print_r($formDATA,true).'</pre>';
-	
 	$con = getConnection();
 	
 	$ret = array();
@@ -32,16 +26,10 @@ require_once( "includes/include.php" );
 				
 			}
 			
-			$tempID = $fo['tempID'];
-			
-			$ret[] = array("tempID"=>$tempID, "id" => $id, "error" => $rowObj->getErrorText(), "fullRet" =>  $rowObj->asArray());
+			$tempID = $fo['tempID'];	
+			$ret[] = array("tempID"=>$tempID, "id" => $id, "fullRet" =>  $rowObj->asArray());
 		
 		}
-	
 		echo json_encode($ret);
-	
-	}
-	
-	
-	
+	}	
 ?>

@@ -82,10 +82,7 @@ rowOrder, i
 	$query->bindParam(':formID', $formID);
 	
 	if( $query->execute() ){
-		
 		while( $result = $query->fetchObject("formobject") ){
-			//$object = $result;
-			//echo '<li>'.pa($result).'</li>';
 			echo '<li>'.generateHtml( $result ).'</li>';
 		}
 	}
