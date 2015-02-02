@@ -30,6 +30,10 @@ rowOrder, i
 	
 	pageHeader();
 	
+	?>
+	<script src="<?php echo JS_DIR.'/builder.js'; ?>"></script>
+	<?php
+	
 	$conn = getConnection();
 	
 	$query = "Select `id` from `formcode` where `formID` = :formID AND `codeType` = 1";
@@ -70,16 +74,22 @@ rowOrder, i
 
 <div id="formHolder">
 <ul id="sortable">
-<?php /* 
-load form objects
-<li>
-	<?php
-		include "getFormEntryRow.php";
-		$row = generateHtml("");
-		echo $row;
-	?>
-</li>
-*/?>
+<?php 
+	include "../../getFormEntryRow.php";
+	
+	$query = "SELECT * FROM `formobject` WHERE `formID` = :formID";
+	$query = $conn->prepare( $query );
+	$query->bindParam(':formID', $formID);
+	
+	if( $query->execute() ){
+		
+		while( $result = $query->fetchObject("formobject") ){
+			//$object = $result;
+			//echo '<li>'.pa($result).'</li>';
+			echo '<li>'.generateHtml( $result ).'</li>';
+		}
+	}
+?>
 </ul>
 </div>
 

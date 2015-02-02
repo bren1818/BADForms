@@ -67,7 +67,7 @@
 	
 	?>
 	<p>Do not include &lt;style&gt; or &lt;script&gt; tags</p>
-	<p>F11 - Go full screen</p>
+	<p>F11 - Go full screen, ctrl+space for code hint</p>
 	<form method="POST" action="/views/form/formCssJS.php">
 		<div class="row">
 			<textarea name="code" id="code"><?php echo $form->getCode(); ?></textarea>
@@ -86,6 +86,8 @@
 	<script type="text/javascript">
 		var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
 			lineNumbers: true,
+			styleActiveLine: true,
+			matchTags: {bothTags: true},
 		<?php if( $codeType == 1 ){ ?>
 			mode: "text/css", //text/html
 		<?php } else {	?>
@@ -98,7 +100,8 @@
 				"Esc": function(cm) {
 				  if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
 				},
-				"Ctrl-Space": "autocomplete"
+				"Ctrl-Space": "autocomplete",
+				"Ctrl-J": "toMatchingTag"
 			}
 		});
 	  	

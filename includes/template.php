@@ -25,13 +25,31 @@
 		
 		<script src="<?php echo $CMPATH; ?>/lib/codemirror.js"></script>
 		<script src="<?php echo $CMPATH; ?>/addon/hint/show-hint.js"></script>
-		<script src="<?php echo $CMPATH; ?>/addon/hint/xml-hint.js"></script>
+		<!--<script src="<?php echo $CMPATH; ?>/addon/hint/xml-hint.js"></script>-->
 		<script src="<?php echo $CMPATH; ?>/addon/hint/html-hint.js"></script>
+		<script src="<?php echo $CMPATH; ?>/addon/hint/css-hint.js"></script>
+		<script src="<?php echo $CMPATH; ?>/addon/hint/javascript-hint.js"></script>
+		
+		
+		
 		<script src="<?php echo $CMPATH; ?>/mode/xml/xml.js"></script>
 		<script src="<?php echo $CMPATH; ?>/mode/javascript/javascript.js"></script>
 		<script src="<?php echo $CMPATH; ?>/mode/css/css.js"></script>
 		<script src="<?php echo $CMPATH; ?>/mode/htmlmixed/htmlmixed.js"></script>
 		<script src="<?php echo $CMPATH; ?>/addon/display/fullscreen.js"></script>
+		<!--<script src="<?php echo $CMPATH; ?>/addon/search/search.js"></script>
+		
+		<script src="<?php echo $CMPATH; ?>/addon/fold/foldcode.js"></script>
+		<script src="<?php echo $CMPATH; ?>/addon/fold/foldgutter.js"></script>
+		<script src="<?php echo $CMPATH; ?>/addon/fold/comment-fold.js"></script>
+		<script src="<?php echo $CMPATH; ?>/addon/fold/markdown-fold.js"></script>
+		<script src="<?php echo $CMPATH; ?>/addon/fold/xml-fold.js"></script>
+		<script src="<?php echo $CMPATH; ?>/addon/edit/matchtags.js"></script>-->
+		
+		<!--<script src="<?php echo $CMPATH; ?>/addon/search/match-highlighter.js"></script>-->
+		<script src="<?php echo $CMPATH; ?>/addon/search/searchcursor.js"></script>
+		<script src="<?php echo $CMPATH; ?>/addon/selection/active-line.js"></script>
+		<!--<script src="<?php echo $CMPATH; ?>/addon/selection/mark-selection.js"></script>-->
 	<?php
 	}
 	

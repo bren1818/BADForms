@@ -78,7 +78,7 @@
 		$('#addRow').click(function(){
 			unbindToolbar();
 			//window.alert("Go!");
-			$.get( "getFormEntryRow.php?form=1", function( data ) {
+			$.get( "/getFormEntryRow.php?form=1", function( data ) {
 				$( "#formHolder ul" ).append( '<li>' + rowFunctions() + data + '</li>' );
 				orderItems();
 				bindToolbar();
@@ -101,7 +101,7 @@
 			var saveString = JSON.stringify(save);
 			//console.log( saveString  );
 			
-			$.post( "saveForm.php", { formID: "<?php echo $formID; ?>", securityKey : "<?php echo $securityKey; ?>", ownerID : "<?php echo $ownerID; ?>", form: saveString })
+			$.post( "/saveForm.php", { formID: "<?php echo $formID; ?>", securityKey : "<?php echo $securityKey; ?>", ownerID : "<?php echo $ownerID; ?>", form: saveString })
 			  .done(function( data ) {
 				  //check for codes or errors 
 				//alert( "Data Loaded: " + data );

@@ -1,8 +1,13 @@
 <?php
 require_once( "includes/include.php" );
 
-function generateHtml($formID){
+function generateHtml($formObject){
 	$db = getConnection();
+	
+	if( ! isset($formObject) || $formObject == "" || ! is_object($formObject) ){
+		$formObject = new formobject();
+	}
+	
 	ob_start();
 ?>
 <div class="form_row_object">
@@ -27,42 +32,42 @@ function generateHtml($formID){
 		<label for="label">
 			The label text for form field
 		</label>
-		<input type="text" name="label" value="" />
+		<input type="text" name="label" value="<?php echo $formObject->getLabel(); ?>" />
 	</div>
 	
 	<div class="row">
 		<label for="name">
 			The name of the field (system)
 		</label>
-		<input type="text" name="name" value="" />
+		<input type="text" name="name" value="<?php echo $formObject->getName(); ?>" />
 	</div>
 
 	<div class="row defaultVal">
 		<label for="defaultVal">
 			The default value for form field
 		</label>
-		<input type="text" name="defaultVal" value="" />
+		<input type="text" name="defaultVal" value="<?php echo $formObject->getDefaultVal(); ?>" />
 	</div>
 
 	<div class="row errorText">
 		<label for="errorText">
 			The error text if entered incorrectly
 		</label>
-		<input type="text" name="errorText" value="" />
+		<input type="text" name="errorText" value="<?php echo $formObject->getErrorText(); ?>" />
 	</div>
 
 	<div class="row tooltip">
 		<label for="tooltip">
 			The text displayed as a tool tip
 		</label>
-		<input type="text" name="tooltip" value="" />
+		<input type="text" name="tooltip" value="<?php //echo $formObject->getTooltip(); ?>" />
 	</div>
 
 	<div class="row placeholder">
 		<label for="placeholder">
 			The placeholder text 
 		</label>
-		<input type="text" name="placeholder" value="" />
+		<input type="text" name="placeholder" value="<?php echo $formObject->getPlaceholder(); ?>" />
 	</div>
 	
 	<div class="row listType">
@@ -76,7 +81,7 @@ function generateHtml($formID){
 		<label for="csList">
 			Comma Separated list of values
 		</label>
-		<textarea name="csList"></textarea>
+		<textarea name="csList"><?php echo $formObject->getCsList(); ?></textarea>
 	</div>
 	
 	<div class="row listID">
@@ -93,42 +98,42 @@ function generateHtml($formID){
 			<label for="regex">
 				Regular Expression for validation  
 			</label>
-			<input type="text" name="regex" value="" />
+			<input type="text" name="regex" value="<?php echo $formObject->getRegex(); ?>" />
 		</div>
 			
 		<div class="row minLength">
 			<label for="minLength">
 				minimum length of input 
 			</label>
-			<input type="number" name="minLength" value="" />
+			<input type="number" name="minLength" value="<?php echo $formObject->getMinLength(); ?>" />
 		</div>
 		
 		<div class="row maxLength">
 			<label for="maxLength">
 				maximum length of input 
 			</label>
-			<input type="number" name="maxLength" value="" />
+			<input type="number" name="maxLength" value="<?php echo $formObject->getMaxLength(); ?>" />
 		</div>
 		
 		<div class="row minVal">
 			<label for="minVal">
 				min value of input 
 			</label>
-			<input type="number" name="minVal" value="" />
+			<input type="number" name="minVal" value="<?php echo $formObject->getMinVal(); ?>" />
 		</div>
 		
 		<div class="row maxVal">
 			<label for="maxVal">
 				maximum value of input 
 			</label>
-			<input type="number" name="maxVal" value="" />
+			<input type="number" name="maxVal" value="<?php echo $formObject->getMaxVal(); ?>" />
 		</div>
 
 		<div class="row classes">
 			<label for="classes">
 				CSS Class(es) space separated for styling
 			</label>
-			<input type="text" name="classes" value="" />
+			<input type="text" name="classes" value="<?php echo $formObject->getClasses(); ?>" />
 		</div>
 		
 		
@@ -155,8 +160,8 @@ function generateHtml($formID){
 	</div>
 	
 	<div class="row hidden">
-		<input type="hidden" name="formID" value="<?php ?>" />
-		<input type="hidden" name="formObjectID" value="<?php ?>" />
+		<input type="hidden" name="formID" value="<?php echo $formObject->getFormID(); ?>" />
+		<input type="hidden" name="formObjectID" value="<?php echo $formObject->getId(); ?>" />
 		<input type="hidden" name="rowOrder" value="<?php ?>" />
 		<input type="hidden" name="isDeleted" value="<?php ?>" />
 		<input type="hidden" name="tempID" value="<?php echo time(); ?>" />
