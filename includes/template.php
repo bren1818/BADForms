@@ -21,7 +21,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 	
 		<script src="<?php echo JS_DIR.'/scripts.js'; ?>"></script>
-		<script src="<?php echo JS_DIR.'/builder.js'; ?>"></script>
+		<!--<script src="<?php echo JS_DIR.'/builder.js'; ?>"></script>-->
 		
 		<script src="<?php echo $CMPATH; ?>/lib/codemirror.js"></script>
 		<script src="<?php echo $CMPATH; ?>/addon/hint/show-hint.js"></script>

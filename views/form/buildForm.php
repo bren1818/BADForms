@@ -30,12 +30,16 @@ rowOrder, i
 	
 	pageHeader();
 ?>
+<a href="/views/form/formCssJs.php?codeType=1&formID=<?php echo $formID; ?>">Edit Form CSS</a>
+<a href="/views/form/formCssJs.php?codeType=2&formID=<?php echo $formID; ?>">Edit Form Javascript</a>
+
+<!-- pull id if applicable -->
+
+
 <div id="formHolder">
 <ul id="sortable">
 <?php /* 
-
-load form objecs
-
+load form objects
 <li>
 	<?php
 		include "getFormEntryRow.php";
