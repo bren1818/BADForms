@@ -8,5 +8,15 @@
 		file_put_contents($logFile, $preface.$message, FILE_APPEND);
 	}
 
+	function isPostback(){
+		if ( (strtoupper($_SERVER['REQUEST_METHOD']) == 'POST') ){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
+	function pa( $arr ){
+		echo '<pre>'.print_r($arr,true).'</pre>';
+	}
 ?>
