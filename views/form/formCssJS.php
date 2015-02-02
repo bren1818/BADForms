@@ -12,25 +12,26 @@
 	$conn = getConnection();
 	$form = new Formcode($conn);
 	
-	if( isset($_REQUEST) && isset($_REQUEST['id']) ){
-		$codeID = $_REQUEST['id'];
-		$form->load( $codeID );
+	if( !isPostback() ){
+
+		if( isset($_REQUEST) && isset($_REQUEST['id']) ){
+			$codeID = $_REQUEST['id'];
+			$form = $form->load( $codeID );
+			$codeType = $form->getCodeType();
+		}else{
+	
+			if( isset($_REQUEST) ){	
+				$formID = $_REQUEST['formID'];
+				$codeType = $_REQUEST['codeType'];
+				
+				$form->setFormID( $formID);
+				$form->setCodeType( $codeType );
+			
+			}
+		}
 	}
 	
-	if( isset($_REQUEST) ){	
-		$formID = $_REQUEST['formID'];
-		$codeType = $_REQUEST['codeType'];
-	}
 	
-	if( $codeType == 1 ){
-		//CSS
-		echo '<h2>Edit FORM CSS</h2>';
-	}
-	
-	if( $codeType == 2 ){
-		//JS
-		echo '<h2>Edit FORM JS</h2>';
-	}
 	
 	
 	if( isPostback() ){
@@ -52,21 +53,27 @@
 		if( $form->save() > 0 ){
 			echo "<p>Saved</p>";
 		}
-	}else{
-		//from request
-		$form->setCodeType( $codeType  );
-		$form->setFormID( $formID );
 	}
 	
+	if( $form->getCodeType() == 1 ){
+		//CSS
+		echo '<h2>Edit FORM CSS</h2>';
+	}
+	
+	if( $form->getCodeType() == 2 ){
+		//JS
+		echo '<h2>Edit FORM JS</h2>';
+	}
 	
 	?>
 	<p>Do not include &lt;style&gt; or &lt;script&gt; tags</p>
+	<p>F11 - Go full screen</p>
 	<form method="POST" action="/views/form/formCssJS.php">
 		<div class="row">
 			<textarea name="code" id="code"><?php echo $form->getCode(); ?></textarea>
 		</div>
 		<div class="row">
-			<button id="save">Save</button>
+			<button id="save">Save</button> 
 		</div>
 		<input type="hidden" name="id" value="<?php echo $form->getId(); ?>" />
 		<input type="hidden" name="formID" value="<?php echo $form->getFormID(); ?>" />
@@ -96,6 +103,8 @@
 		});
 	  	
 	</script>
+	
+	<a href="/views/form/buildForm.php?formID=<?php echo $form->getFormID(); ?>">Go back to Form Builder</a>
 	
 	<?php
 	

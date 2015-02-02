@@ -29,9 +29,41 @@ rowOrder, i
 */
 	
 	pageHeader();
+	
+	$conn = getConnection();
+	
+	$query = "Select `id` from `formcode` where `formID` = :formID AND `codeType` = 1";
+	$query = $conn->prepare( $query );
+	$query->bindParam(':formID', $formID);
+	
+	$css = "";
+	if( $query->execute() ){
+		$css = $query->fetchAll(PDO::FETCH_ASSOC);
+		if( isset($css) && isset( $css[0]['id'] ) ){
+			$css = "&id=".$css[0]['id'];
+		}else{
+			$css = "";
+		}
+	}
+	
+	$query = "Select `id` from `formcode` where `formID` = :formID AND `codeType` = 2";
+	$query = $conn->prepare( $query );
+	$query->bindParam(':formID', $formID);
+	$js = "";
+	if( $query->execute() ){
+		$js = $query->fetchAll(PDO::FETCH_ASSOC);
+		
+		if( isset($js) && isset( $js[0]['id'] ) ){
+			$js = "&id=".$js[0]['id'];
+		}else{
+			$js = "";
+		}
+	}
+
+	
 ?>
-<a href="/views/form/formCssJs.php?codeType=1&formID=<?php echo $formID; ?>">Edit Form CSS</a>
-<a href="/views/form/formCssJs.php?codeType=2&formID=<?php echo $formID; ?>">Edit Form Javascript</a>
+<a href="/views/form/formCssJs.php?codeType=1&formID=<?php echo $formID; echo $css;?>">Edit Form CSS</a>
+<a href="/views/form/formCssJs.php?codeType=2&formID=<?php echo $formID; echo $js; ?>">Edit Form Javascript</a>
 
 <!-- pull id if applicable -->
 
