@@ -19,7 +19,8 @@ function generateHtml($formObject){
 	
 	ob_start();
 ?>
-<div class="form_row_object <?php echo " list-type-".$formObject->getListType(); echo " ".(isset($RowTypes[$formObject->getType()]) ? $RowTypes[$formObject->getType()] : ""); ?>">
+<li class="<?php echo " list-type-".$formObject->getListType(); echo " ".(isset($RowTypes[$formObject->getType()]) ? $RowTypes[$formObject->getType()] : "no-type-select"); ?>">
+<div class="form_row_object">
 
 	<div class="row type">
 		<label for="type">
@@ -159,18 +160,20 @@ function generateHtml($formObject){
 			<label for="required">
 				Is this field required?
 			</label>
-			<input type="radio" name="required" value="1" <?php if( $formObject->getRequired() == "1" ){ echo "checked"; } ?>/> Yes <input type="radio" name="required" value="0" <?php if( $formObject->getRequired() == "0" ){ echo "checked"; } ?>/> No
+			<input type="radio" name="required" value="1" <?php if( $formObject->getRequired() == "1" ){ echo 'checked="checked"'; } ?>/> Yes
+			<input type="radio" name="required" value="0" <?php if( $formObject->getRequired() == "0" ){ echo 'checked="checked"'; } ?>/> No
 		</div>	
 	</div>
 	
 	<div class="row hidden">
 		<input type="hidden" name="formID" value="<?php echo $formObject->getFormID(); ?>" />
-		<input type="hidden" name="formObjectID" value="<?php echo $formObject->getId(); ?>" />
+		<input type="hidden" name="id" value="<?php echo $formObject->getId(); ?>" />
 		<input type="hidden" name="rowOrder" value="<?php echo $formObject->getRowOrder(); ?>" />
 		<input type="hidden" name="isDeleted" value="<?php echo "0"; ?>" />
 		<input type="hidden" name="tempID" value="<?php echo time(); ?>" />
 	</div>
 </div>
+</li>
 <?php
 	$component = ob_get_contents();
 	ob_end_clean();

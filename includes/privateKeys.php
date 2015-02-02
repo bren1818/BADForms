@@ -13,7 +13,7 @@
 	
 	/*Local Database : Mode 1*/
 	define("LOCAL_DATABASE_USER", 	"root");
-	define("LOCAL_DATABASE_PASS", 	"");
+	define("LOCAL_DATABASE_PASS", 	"usbw");
 	define("LOCAL_DATABASE", 		"badforms");
 	define("LOCAL_HOST", 			"localhost");
 	

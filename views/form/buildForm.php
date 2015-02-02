@@ -32,6 +32,7 @@ rowOrder, i
 	
 	?>
 	<script src="<?php echo JS_DIR.'/builder.js'; ?>"></script>
+	<link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>"/>
 	<?php
 	
 	$conn = getConnection();
@@ -83,7 +84,7 @@ rowOrder, i
 	
 	if( $query->execute() ){
 		while( $result = $query->fetchObject("formobject") ){
-			echo '<li>'.generateHtml( $result ).'</li>';
+			echo generateHtml( $result );
 		}
 	}
 ?>

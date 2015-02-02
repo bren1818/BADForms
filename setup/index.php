@@ -113,6 +113,7 @@
 	echo "<p>Creating types...</p>";
 	
 	$query = "INSERT INTO `objecttype` (`id`, `name`, `description`, `isListType`, `ordered`) VALUES 
+	(NULL, 'no-type-select', 					'-=Select=-', '0', '0'),
 	(NULL, 'input', 			'Input box - max chars 60', '0', '1'),
 	(NULL, 'textarea', 			'Textarea  - max chars 255', '0', '2'),
 	(NULL, 'checkboxsingle', 	'Checkbox - single choice', '0', '3'),

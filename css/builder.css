@@ -30,3 +30,64 @@ li.deleted .form_row_object .row.hidden{ display: block; }
 .CodeMirror{
 	border: 1px solid #000;
 }
+
+/*************************************************************/
+
+li.no-type-select .form_row_object .row{ display: none; }
+li.no-type-select .form_row_object .row.type{ display: block; }
+
+/*input*/
+li.input .form_row_object .row.minVal,
+li.input .form_row_object .row.maxVal,
+li.input .form_row_object .row.listType,
+li.input .form_row_object .row.listID,
+li.input .form_row_object .row.csList{ display: none; }
+
+/*textarea*/
+li.textarea .form_row_object .row.minVal,
+li.textarea .form_row_object .row.maxVal,
+li.textarea .form_row_object .row.listType,
+li.textarea .form_row_object .row.listID,
+li.textarea .form_row_object .row.csList{ display: none; }
+
+/*checkboxsingle*/
+li.checkboxsingle .form_row_object .row.regex,
+li.checkboxsingle .form_row_object .row.placeholder,
+li.checkboxsingle .form_row_object .row.minVal,
+li.checkboxsingle .form_row_object .row.maxVal,
+li.checkboxsingle .form_row_object .row.minLength,
+li.checkboxsingle .form_row_object .row.maxLength,
+li.checkboxsingle .form_row_object .row.listType,
+li.checkboxsingle .form_row_object .row.listID,
+li.checkboxsingle .form_row_object .row.csList,
+li.checkboxsingle .form_row_object .row.encrypted{ display: none; }
+
+/*checkboxmutiple*/
+li.checkboxsingle .form_row_object .row.regex,
+li.checkboxsingle .form_row_object .row.placeholder,
+li.checkboxsingle .form_row_object .row.minLength,
+li.checkboxsingle .form_row_object .row.maxLength{ display: none; }
+
+/*look at different list type selection*/
+
+li .row.csList,
+li .row.listID{ display: none; }
+
+li.list-type-2 .form_row_object .row.listID{ display: block; }
+li.list-type-1 .form_row_object .row.csList{ display: block; }
+
+/*selectbox*/
+/*radiobutton*/
+/*date*/
+/*time*/
+/*datetime*/
+
+
+
+
+
+
+
+
+
+

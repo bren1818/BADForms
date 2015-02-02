@@ -32,28 +32,30 @@
 		
 		$('select.select.type').change(function(event){
 			var t = $(this).find('option:selected').attr('data-type');
-			$(this).parents('li').attr('class', t );
-			console.log( t );
+			$(this).parents('li').attr('class', t ); // remove non type related classes and then add current
+			//console.log( t );
 		});
 		
-		//console.log("bind");
+		$('input[name="listType"]').click(function(){
+			var p = $(this).parents('li');//.attr('class'
+				$(p).removeClass('list-type-1 list-type-2');
+				$(p).addClass('list-type-' + $(this).attr('value') );
+		});
+		
+		
 		$('.but').click(function(){
-			//console.log("click");
 			var t = $(this).parent().parent();
 			var c = $(this).attr('class');
 			switch( c ){
 				case 'butUp but':
-					//window.alert("up");
 					moveUp( t );
 				break;
 				case 'butDown but':
-					//window.alert("down");
 					moveDown( t );
 				break;
 				case 'butDelete but':
 					$(this).parents('li').addClass('deleted');
 					$(this).parents('li').find('input[name="isDeleted"]').attr('value', 1);
-				
 					window.alert("delete");
 				break;
 				default:
@@ -77,9 +79,9 @@
 	$(function(){
 		$('#addRow').click(function(){
 			unbindToolbar();
-			//window.alert("Go!");
 			$.get( "/getFormEntryRow.php?form=1", function( data ) {
-				$( "#formHolder ul" ).append( '<li>' + rowFunctions() + data + '</li>' );
+				$( "#formHolder ul" ).append( data );
+				$( "#formHolder ul li" ).last().prepend( rowFunctions() );
 				orderItems();
 				bindToolbar();
 			});
@@ -93,7 +95,14 @@
 				var formDataObj = {};
 				$(this).find(":input").not("[type='submit']").not("[type='reset']").each(function(){
 					var thisInput = $(this);
-					formDataObj[thisInput.attr("name")] = thisInput.val();
+					if( $(this).attr('type') == "radio" ){
+						//radio - only record if it is selected
+						if( $(this).is(':checked') ){
+							formDataObj[thisInput.attr("name")] = thisInput.val();
+						}
+					}else{
+						formDataObj[thisInput.attr("name")] = thisInput.val();
+					}
 				});
 				//console.log( formDataObj );
 				save.push(  formDataObj );
@@ -103,27 +112,18 @@
 			
 			$.post( "/saveForm.php", { formID: "<?php echo $formID; ?>", ownerID : "<?php echo $ownerID; ?>", form: saveString })
 			  .done(function( data ) {
-				  //check for codes or errors 
-				//alert( "Data Loaded: " + data );
-				alert("Saved");
-				
+				 //check for codes or errors 
 				var obj = jQuery.parseJSON( data );
-				
-				for(var o = 0; o < obj.length; o++){
-					if( obj[o].tempID != "" && obj[o].id != "" ){
-						console.log( obj[o].tempID + " > " + obj[o].id );
-						
-						
+				if( obj !== null ){
+					for(var o = 0; o < obj.length; o++){
+						if( obj[o].tempID != "" && obj[o].id != "" ){
+							console.log( obj[o].tempID + " > " + obj[o].id );
+							$('.form_row_object .row.hidden input[value="' + obj[o].tempID + '"]').parent().find('input[name="id"]').attr('value', obj[o].id);
+						}
 					}
 				}
-				
-				
-				console.log( obj );
-				//$('.form_row_object 
-				
+				alert("Saved"); //disable overlay?
 			  });
-			
-			
 		});
 		
 		$( "#sortable" ).sortable({
@@ -134,7 +134,7 @@
 			}
 		});
 		
-		//$('#addRow').click();
-		
-		
+		//initilize
+		$( "#formHolder ul li" ).prepend( rowFunctions() );
+		bindToolbar();
 	});
