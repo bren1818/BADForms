@@ -5,4 +5,6 @@
 	include "form_code.php";
 	include "base_object.php";
 	include "BrenCrypt.php";
+	
+	include "render".DIRECTORY_SEPARATOR."includes.php";
 ?>

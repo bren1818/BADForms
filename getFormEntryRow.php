@@ -21,7 +21,6 @@ function generateHtml($formObject){
 ?>
 <li class="<?php echo " list-type-".$formObject->getListType(); echo " ".(isset($RowTypes[$formObject->getType()]) ? $RowTypes[$formObject->getType()] : "no-type-select"); ?>">
 <div class="form_row_object">
-
 	<div class="row type">
 		<label for="type">
 			Choose input type:
@@ -98,7 +97,6 @@ function generateHtml($formObject){
 	</div>
 	
 	<div class="advancedSettings row">
-	
 		<div class="row regex">
 			<label for="regex">
 				Regular Expression for validation  

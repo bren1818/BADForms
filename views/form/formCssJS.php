@@ -88,7 +88,7 @@
 			lineNumbers: true,
 			styleActiveLine: true,
 			matchTags: {bothTags: true},
-		<?php if( $codeType == 1 ){ ?>
+		<?php if( $form->getCodeType() == 1 ){ ?>
 			mode: "text/css", //text/html
 		<?php } else {	?>
 			mode: "text/javascript", //text/html

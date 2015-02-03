@@ -69,6 +69,7 @@ rowOrder, i
 ?>
 <a href="/views/form/formCssJs.php?codeType=1&formID=<?php echo $formID; echo $css;?>">Edit Form CSS</a>
 <a href="/views/form/formCssJs.php?codeType=2&formID=<?php echo $formID; echo $js; ?>">Edit Form Javascript</a>
+<a href="/renderForm.php?formID=<?php echo $formID; ?>">Preview Form</a>
 
 <!-- pull id if applicable -->
 
