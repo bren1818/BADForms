@@ -63,10 +63,13 @@ li.checkboxsingle .form_row_object .row.csList,
 li.checkboxsingle .form_row_object .row.encrypted{ display: none; }
 
 /*checkboxmutiple*/
-li.checkboxsingle .form_row_object .row.regex,
-li.checkboxsingle .form_row_object .row.placeholder,
-li.checkboxsingle .form_row_object .row.minLength,
-li.checkboxsingle .form_row_object .row.maxLength{ display: none; }
+li.checkboxmutiple .form_row_object .row.regex,
+li.checkboxmutiple .form_row_object .row.placeholder,
+li.checkboxmutiple .form_row_object .row.minLength,
+li.checkboxmutiple .form_row_object .row.maxLength,
+li.checkboxmutiple .form_row_object .row.minVal,
+li.checkboxmutiple .form_row_object .row.maxVal,
+li.checkboxmutiple .form_row_object .row.encrypted{ display: none; }
 
 /*look at different list type selection*/
 
@@ -77,11 +80,58 @@ li.list-type-2 .form_row_object .row.listID{ display: block; }
 li.list-type-1 .form_row_object .row.csList{ display: block; }
 
 /*selectbox*/
-/*radiobutton*/
-/*date*/
-/*time*/
-/*datetime*/
+li.selectbox  .form_row_object .row.regex,
+li.selectbox  .form_row_object .row.placeholder,
+li.selectbox  .form_row_object .row.minLength,
+li.selectbox  .form_row_object .row.maxLength,
+li.selectbox  .form_row_object .row.minVal,
+li.selectbox  .form_row_object .row.maxVal,
+li.selectbox  .form_row_object .row.encrypted{ display: none; }
 
+/*radiobutton*/
+li.radiobutton  .form_row_object .row.regex,
+li.radiobutton  .form_row_object .row.placeholder,
+li.radiobutton  .form_row_object .row.minLength,
+li.radiobutton  .form_row_object .row.maxLength,
+li.radiobutton  .form_row_object .row.minVal,
+li.radiobutton  .form_row_object .row.maxVal,
+li.radiobutton  .form_row_object .row.encrypted{ display: none; }
+
+/*date*/
+li.date .form_row_object .row.regex,
+li.date  .form_row_object .row.placeholder,
+li.date  .form_row_object .row.listType,
+li.date  .form_row_object .row.csList,
+li.date  .form_row_object .row.listID,
+li.date  .form_row_object .row.minLength,
+li.date  .form_row_object .row.maxLength,
+li.date  .form_row_object .row.minVal,
+li.date  .form_row_object .row.maxVal,
+li.date  .form_row_object .row.encrypted{ display: none; }
+
+/*time*/
+li.time .form_row_object .row.regex,
+li.time  .form_row_object .row.placeholder,
+li.time  .form_row_object .row.listType,
+li.time  .form_row_object .row.csList,
+li.time  .form_row_object .row.listID,
+li.time  .form_row_object .row.minLength,
+li.time  .form_row_object .row.maxLength,
+li.time  .form_row_object .row.minVal,
+li.time  .form_row_object .row.maxVal,
+li.time  .form_row_object .row.encrypted{ display: none; }
+
+/*datetime*/
+li.datetime .form_row_object .row.regex,
+li.datetime  .form_row_object .row.placeholder,
+li.datetime  .form_row_object .row.listType,
+li.datetime  .form_row_object .row.csList,
+li.datetime  .form_row_object .row.listID,
+li.datetime  .form_row_object .row.minLength,
+li.datetime  .form_row_object .row.maxLength,
+li.datetime  .form_row_object .row.minVal,
+li.datetime  .form_row_object .row.maxVal,
+li.datetime  .form_row_object .row.encrypted{ display: none; }
 
 
 
