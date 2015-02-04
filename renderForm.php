@@ -31,14 +31,20 @@
 			
 			$type = "".$listTypes[ $result->getType() ];
 			
-			$class = new $type($result);
+			if( class_exists( $type ) ){
 			
-			echo '<div class="formRow">';
-			$class->render();
-			echo '</div>';
+				$class = new $type($result);
 			
-			//pa( $result );
-			//echo '<hr>';
+				echo '<div id="form-item-'.$result->getId().'" class="formRow type-'.$type.'">';
+					$class->render();
+				echo '</div>';
+			}else{
+				echo '<div class="formRow">';
+					echo "Error, Class: ".$type." does not exist";
+				echo '</div>';	
+			}
+			
+			
 		}
 	}
 	echo '<div class="formRow">';

@@ -26,20 +26,28 @@
 	function unbindToolbar(){
 		$('.but').unbind();
 		$('select.select.type').unbind();
+		$('input[name="listType"]').unbind();
 	}
 	
 	function bindToolbar(){
 		
 		$('select.select.type').change(function(event){
 			var t = $(this).find('option:selected').attr('data-type');
-			$(this).parents('li').attr('class', t ); // remove non type related classes and then add current
+			$(this).closest('li').first().attr('class', t ); // remove non type related classes and then add current
 			//console.log( t );
 		});
 		
-		$('input[name="listType"]').click(function(){
-			var p = $(this).parents('li');//.attr('class'
-				$(p).removeClass('list-type-1 list-type-2');
+		$('input[name="listType"]').click(function(event){
+			//event.preventDefault();
+			
+			
+			
+			var p = $(this).closest('li'); //().parent().parent();//.attr('class'
+				$(p).removeClass('list-type-1 list-type-2 list-type-');
 				$(p).addClass('list-type-' + $(this).attr('value') );
+				
+			//	event.stopPropagation();
+				 
 		});
 		
 		

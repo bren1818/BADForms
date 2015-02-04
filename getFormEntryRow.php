@@ -20,6 +20,7 @@ function generateHtml($formObject){
 	ob_start();
 ?>
 <li class="<?php echo " list-type-".$formObject->getListType(); echo " ".(isset($RowTypes[$formObject->getType()]) ? $RowTypes[$formObject->getType()] : "no-type-select"); ?>">
+<form>
 <div class="form_row_object">
 	<div class="row type">
 		<label for="type">
@@ -168,9 +169,10 @@ function generateHtml($formObject){
 		<input type="hidden" name="id" value="<?php echo $formObject->getId(); ?>" />
 		<input type="hidden" name="rowOrder" value="<?php echo $formObject->getRowOrder(); ?>" />
 		<input type="hidden" name="isDeleted" value="<?php echo "0"; ?>" />
-		<input type="hidden" name="tempID" value="<?php echo time(); ?>" />
+		<input type="hidden" name="tempID" value="<?php md5($formObject->getId()) ?>" />
 	</div>
 </div>
+</form>
 </li>
 <?php
 	$component = ob_get_contents();

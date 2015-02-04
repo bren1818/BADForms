@@ -69,6 +69,7 @@ li.checkboxmutiple .form_row_object .row.minLength,
 li.checkboxmutiple .form_row_object .row.maxLength,
 li.checkboxmutiple .form_row_object .row.minVal,
 li.checkboxmutiple .form_row_object .row.maxVal,
+li.checkboxmutiple .form_row_object .row.required,
 li.checkboxmutiple .form_row_object .row.encrypted{ display: none; }
 
 /*look at different list type selection*/
