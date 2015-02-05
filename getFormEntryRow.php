@@ -98,7 +98,11 @@ function generateHtml($formObject){
 	</div>
 	
 	<div class="advancedSettings row">
-		<div class="row regex">
+    	<div class="row showSettings">
+        	Show Advanced
+        </div>
+		
+        <div class="row regex">
 			<label for="regex">
 				Regular Expression for validation  
 			</label>

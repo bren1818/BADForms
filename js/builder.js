@@ -27,6 +27,7 @@
 		$('.but').unbind();
 		$('select.select.type').unbind();
 		$('input[name="listType"]').unbind();
+		$('.showSettings').unbind();
 	}
 	
 	function bindToolbar(){
@@ -37,11 +38,17 @@
 			//console.log( t );
 		});
 		
+		$('.showSettings').click(function(){
+			$(this).closest('.advancedSettings').toggleClass('show');
+			if( $(this).closest('.advancedSettings').hasClass('show') ){
+				$(this).html('Hide Advanced');
+			}else{
+				$(this).html('Show Advanced');
+			}
+		});
+		
 		$('input[name="listType"]').click(function(event){
 			//event.preventDefault();
-			
-			
-			
 			var p = $(this).closest('li'); //().parent().parent();//.attr('class'
 				$(p).removeClass('list-type-1 list-type-2 list-type-');
 				$(p).addClass('list-type-' + $(this).attr('value') );

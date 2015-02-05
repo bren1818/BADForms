@@ -95,6 +95,7 @@ rowOrder, i
 <button id="addRow">Add Row</button>
 <button id="save">Save</button>
 
+<a href="/renderForm.php?formID=<?php echo $formID; ?>">Preview Form</a>
 <?php
 	pageFooter();
 

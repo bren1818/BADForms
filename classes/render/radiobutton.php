@@ -1,5 +1,5 @@
 <?php
-	class checkboxmutiple  {
+	class radiobutton  {
 		
 		private $formObject;
 		
@@ -31,8 +31,8 @@
 						for($cb = 0; $cb < sizeof($items); $cb++){ 
 							$item = $items[$cb];
 					?>
-                    <br />
-                            <input type="checkbox"
+                    		<br />
+                            <input type="radio"
                             name="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>"  
                             class="<?php echo $this->formObject->getClasses(); ?>" 
                             id="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>"

@@ -120,10 +120,16 @@
 	(NULL, 'checkboxmutiple', 	'Checkbox - list', '1', '4'),
 	(NULL, 'selectbox', 		'Select box', '1', '5'),
 	(NULL, 'radiobutton', 		'Radio Button', '1', '6'),
-	(NULL, 'date', 				'Date Picker', '0', '7'),
-	(NULL, 'time', 				'Time Picker', '0', '8'),
-	(NULL, 'datetime', 			'Date & Time Picker', '0', '9')
-	;";
+	(NULL, 'datepicker', 				'Date Picker', '0', '7'),
+	
+	(NULL, 'rangeslider', 				'Range Slider', '0', '8'),
+	(NULL, 'hidden', 				'Hidden', '0', '9'),
+	(NULL, 'email', 				'Email', '0', '10'),
+	(NULL, 'phone', 				'Phone Number', '0', '11');";
+	
+	//(NULL, 'timepicker', 				'Time Picker', '0', '8'),
+	//(NULL, 'datetimepicker', 			'Date & Time Picker', '0', '9')
+	//;";
 	
 	//multi-select
 	//hidden - email on submit (admin submit)

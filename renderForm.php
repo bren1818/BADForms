@@ -21,10 +21,11 @@
 	
 	pageHeader();
 	?>
-	<link rel="stylesheet" href="/getCss.php?formID=<?php echo $formID; ?>" />
+	<link rel="stylesheet" href="/css/formPreview.css" />
+    <link rel="stylesheet" href="/getCss.php?formID=<?php echo $formID; ?>" />
 	<?php
-	echo '<form method="POST" action="">';
-	
+	echo '<form method="POST" action="/captureForm.php?formID='.$formID.'">';
+	$formJS = "";
 	if( $query->execute() ){
 		while( $result = $query->fetchObject("formobject") ){
 			//echo generateHtml( $result );
@@ -38,6 +39,11 @@
 				echo '<div id="form-item-'.$result->getId().'" class="formRow type-'.$type.'">';
 					$class->render();
 				echo '</div>';
+				
+				if( method_exists($class, "getJS") ){
+					$formJS = $formJS.$class->getJS();
+				}
+				
 			}else{
 				echo '<div class="formRow">';
 					echo "Error, Class: ".$type." does not exist";
@@ -53,6 +59,9 @@
 	echo '<input type="hidden" name="formID" value="'.$formID.'"/>';
 	echo "</form>";
 ?>
+<script type="text/javascript">
+	<?php echo $formJS; ?>
+</script>
 <script src="/getJS.php?formID=<?php echo $formID; ?>" type="text/javascript"></script>
 <?php
 pageFooter();
