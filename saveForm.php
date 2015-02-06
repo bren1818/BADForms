@@ -38,6 +38,8 @@
 				$new++;
 			}
 			
+			
+			
 			$type = $rowObj->getType();
 			
 			if( isset( $listTypes ) && isset($type) && $type != "" && isset($listTypes[$type]) ){

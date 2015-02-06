@@ -9,6 +9,8 @@
 	define("CSS_DIR",		'/'."css");
 	define("JS_DIR",		'/'."js");
 	
+	define("BASE_ENCRYPTION_SALT", "tempSaltEncKey");//An Instance level salt so DB and  Server would need to be comprimised to 
+	
 	define("DATABASE_MODE", 1 );
 	
 	/*Local Database : Mode 1*/

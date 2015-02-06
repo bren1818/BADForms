@@ -9,6 +9,10 @@
 		}
 		
 		function getPattern($pattern, $minLength, $maxLength){
+			
+			if( $minLength == 0 ){ $minLength = ""; }
+			if( $maxLength == 0 ){ $maxLength = ""; }
+			
 			if( trim($pattern) != "" ){
 				return $pattern;
 			}else{
@@ -63,7 +67,7 @@
 						data-max-length="<?php echo $this->formObject->getMaxLength(); ?>"
                         <?php } ?>
                         
-                        <?php if( $this->formObject->getMaxLength() != ""){ ?>
+                        <?php if( $this->formObject->getMaxLength() != "" && $this->formObject->getMaxLength() != 0){ ?>
 						maxlength="<?php echo $this->formObject->getMaxLength(); ?>"
                         <?php } ?>
                         

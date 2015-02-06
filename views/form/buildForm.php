@@ -79,7 +79,7 @@ rowOrder, i
 <?php 
 	include "../../getFormEntryRow.php";
 	
-	$query = "SELECT * FROM `formobject` WHERE `formID` = :formID";
+	$query = "SELECT * FROM `formobject` WHERE `formID` = :formID order by `rowOrder` ASC";
 	$query = $conn->prepare( $query );
 	$query->bindParam(':formID', $formID);
 	

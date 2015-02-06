@@ -33,7 +33,7 @@
 					?>
                     <br />
                             <input type="checkbox"
-                            name="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>"  
+                            name="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>[]"  
                             class="<?php echo $this->formObject->getClasses(); ?>" 
                             id="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>"
                             value="<?php echo $item; ?>" 
