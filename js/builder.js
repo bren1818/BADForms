@@ -23,6 +23,41 @@
 		orderItems();
 	}
 	
+	function addBefore(item){
+		//window.alert("Add Before");
+		
+		unbindToolbar();
+		$.get( "/getFormEntryRow.php?form=1", function( data ) {
+			$( "#formHolder ul" ).append( data );
+			$( "#formHolder ul li" ).last().prepend( rowFunctions() );
+			
+			$( "#formHolder ul li" ).last().detach().insertBefore( $(item) );
+			
+			orderItems();
+			bindToolbar();
+		});	
+		
+	}
+	
+	function addAfter(item){
+		//window.alert("Add After");
+		
+		unbindToolbar();
+		$.get( "/getFormEntryRow.php?form=1", function( data ) {
+			$( "#formHolder ul" ).append( data );
+			$( "#formHolder ul li" ).last().prepend( rowFunctions() );
+			
+			
+			
+			  $( "#formHolder ul li" ).last().detach().insertAfter( $(item) );
+			
+			//.insertAfter(  );
+			
+			orderItems();
+			bindToolbar();
+		});	
+	}
+	
 	function unbindToolbar(){
 		$('.but').unbind();
 		$('select.select.type').unbind();
@@ -68,13 +103,19 @@
 				case 'butDown but':
 					moveDown( t );
 				break;
+				case 'butAddBefore but':
+					addBefore( t );
+				break;
+				case 'butAddAfter but':
+					addAfter( t );
+				break;
 				case 'butDelete but':
 					$(this).parents('li').addClass('deleted');
 					$(this).parents('li').find('input[name="isDeleted"]').attr('value', 1);
 					window.alert("delete");
 				break;
 				default:
-					console.log( c );
+					//console.log( c );
 				break;
 			}
 		});
@@ -88,7 +129,13 @@
 	
 	function rowFunctions(){
 		//for sorting up down and delete?
-		return '<div class="tools"><div class="butUp but">up</div><div class="butDown but">down</div><div class="butDelete but">Delete</div></div>'
+		return '<div class="tools">' +
+					'<div class="butUp but">up</div>' +
+					'<div class="butDown but">down</div>' +
+					'<div class="butAddBefore but">Add Item Before</div>' +
+					'<div class="butAddAfter but">Add Item After</div>' +
+					'<div class="butDelete but">Delete</div>' +
+				'</div>';
 	}
 	
 	$(function(){
@@ -99,8 +146,7 @@
 				$( "#formHolder ul li" ).last().prepend( rowFunctions() );
 				orderItems();
 				bindToolbar();
-			});
-						
+			});			
 		});
 		
 		$('#save').click(function(){

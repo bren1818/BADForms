@@ -76,27 +76,27 @@
 	
 	//tool tip
 	$query = "CREATE TABLE  `formobject` (
-`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-`type` INTEGER,
-`label` VARCHAR( 55 ),
-`name` VARCHAR( 55 ),
-`defaultVal` VARCHAR( 55 ),
-`errorText` VARCHAR( 55 ),
-`placeholder` VARCHAR( 55 ),
-`regex` VARCHAR( 255 ),
-`minVal` INTEGER,
-`maxVal` INTEGER,
-`minLength` INTEGER,
-`maxLength` INTEGER,
-`listType` INTEGER,
-`listID` INTEGER,
-`csList` VARCHAR( 255 ),
-`classes` VARCHAR( 100 ),
-`required` INTEGER,
-`encrypted` INTEGER,
-`formID` INTEGER,
-`rowOrder` INTEGER
-);";
+		`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+		`type` INTEGER,
+		`label` VARCHAR( 55 ),
+		`name` VARCHAR( 55 ),
+		`defaultVal` VARCHAR( 55 ),
+		`errorText` VARCHAR( 55 ),
+		`placeholder` VARCHAR( 55 ),
+		`regex` VARCHAR( 255 ),
+		`minVal` INTEGER,
+		`maxVal` INTEGER,
+		`minLength` INTEGER,
+		`maxLength` INTEGER,
+		`listType` INTEGER,
+		`listID` INTEGER,
+		`csList` VARCHAR( 255 ),
+		`classes` VARCHAR( 100 ),
+		`required` INTEGER,
+		`encrypted` INTEGER,
+		`formID` INTEGER,
+		`rowOrder` INTEGER
+		);";
 	
 	createAndTestTable($db, "formobject", $query);
 	
@@ -113,19 +113,19 @@
 	echo "<p>Creating types...</p>";
 	
 	$query = "INSERT INTO `objecttype` (`id`, `name`, `description`, `isListType`, `ordered`) VALUES 
-	(NULL, 'no-type-select', 					'-=Select=-', '0', '0'),
-	(NULL, 'input', 			'Input box - max chars 60', '0', '1'),
-	(NULL, 'textarea', 			'Textarea  - max chars 255', '0', '2'),
-	(NULL, 'checkboxsingle', 	'Checkbox - single choice', '0', '3'),
-	(NULL, 'checkboxmutiple', 	'Checkbox - list', '1', '4'),
-	(NULL, 'selectbox', 		'Select box', '1', '5'),
-	(NULL, 'radiobutton', 		'Radio Button', '1', '6'),
-	(NULL, 'datepicker', 				'Date Picker', '0', '7'),
-	
-	(NULL, 'rangeslider', 				'Range Slider', '0', '8'),
-	(NULL, 'hidden', 				'Hidden', '0', '9'),
-	(NULL, 'email', 				'Email', '0', '10'),
-	(NULL, 'phone', 				'Phone Number', '0', '11');";
+				(NULL, 'no-type-select', 	'-=Select=-', '0', '0'),
+				(NULL, 'input', 			'Input box - max chars 60', '0', '1'),
+				(NULL, 'textarea', 			'Textarea  - max chars 255', '0', '2'),
+				(NULL, 'checkboxsingle', 	'Checkbox - single choice', '0', '3'),
+				(NULL, 'checkboxmutiple', 	'Checkbox - list', '1', '4'),
+				(NULL, 'selectbox', 		'Select box', '1', '5'),
+				(NULL, 'radiobutton', 		'Radio Button', '1', '6'),
+				(NULL, 'datepicker', 		'Date Picker', '0', '7'),
+				
+				(NULL, 'rangeslider', 		'Range Slider', '0', '8'),
+				(NULL, 'hidden', 			'Hidden', '0', '9'),
+				(NULL, 'email', 			'Email', '0', '10'),
+				(NULL, 'phone', 			'Phone Number', '0', '11');";
 	
 	//(NULL, 'timepicker', 				'Time Picker', '0', '8'),
 	//(NULL, 'datetimepicker', 			'Date & Time Picker', '0', '9')
@@ -141,8 +141,6 @@
 	
 	
 	//list items
-	
-	
 	
 	$query = $db->prepare($query);
 	if( $query->execute() ){
@@ -170,6 +168,35 @@
 		echo "<p>Added ".$count." jquery themes</p>";
 	}
 	
+	$query = "CREATE TABLE  IF NOT EXISTS `listset` (
+`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+`formID` INTEGER,
+`listName` VARCHAR( 60 ),
+`listType` INTEGER,
+`defaultValue` VARCHAR( 60 )
+);";
+createAndTestTable($db, "listset", $query);
+	
+	
+	$query = "CREATE TABLE IF NOT EXISTS `listitem` (
+`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+`formID` INTEGER,
+`listID` INTEGER,
+`item` VARCHAR( 60 ),
+`itemOrder` INTEGER
+);";
+	createAndTestTable($db, "listitem", $query);
+	
+	$query = "CREATE TABLE  `listitemkv` (
+`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+`formID` INTEGER,
+`listID` INTEGER,
+`itemkey` VARCHAR( 60 ),
+`item` VARCHAR( 60 ),
+`itemOrder` INTEGER);";
+createAndTestTable($db, "listitemkv", $query);
+
+
 	
 	echo "<p>Setup Complete... Login <a href='../index.php'>here</a></p>";
 	
