@@ -98,8 +98,8 @@ function generateHtml($formObject){
 	</div>
 	
 	<div class="advancedSettings row">
-    	<div class="row showSettings">
-        	Show Advanced
+    	<div class="showSettings btn">
+        	<i class="fa fa-cogs"></i> Show Advanced
         </div>
 		
         <div class="row regex">

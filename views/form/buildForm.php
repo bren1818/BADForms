@@ -67,10 +67,13 @@ rowOrder, i
 
 	
 ?>
-<a href="/views/form/formCssJs.php?codeType=1&formID=<?php echo $formID; echo $css;?>">Edit Form CSS</a>
-<a href="/views/form/formCssJs.php?codeType=2&formID=<?php echo $formID; echo $js; ?>">Edit Form Javascript</a>
-<a href="/renderForm.php?formID=<?php echo $formID; ?>">Preview Form</a>
+<div class="formOptions">
 
+<a class="btn" href="/views/form/formCssJs.php?codeType=1&formID=<?php echo $formID; echo $css;?>"><i class="fa fa-pencil-square-o"></i> Edit Form CSS</a>
+<a class="btn" href="/views/form/formCssJs.php?codeType=2&formID=<?php echo $formID; echo $js; ?>"><i class="fa fa-code"></i> Edit Form Javascript</a>
+<a class="btn" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
+
+</div>
 <!-- pull id if applicable -->
 
 
@@ -92,10 +95,9 @@ rowOrder, i
 </ul>
 </div>
 
-<button id="addRow">Add Row</button>
-<button id="save">Save</button>
+<button class="btn" id="addRow"><i class="fa fa-plus"></i> Add Row</button> <button class="btn" id="save"><i class="fa fa-floppy-o"></i> Save</button>
 
-<a href="/renderForm.php?formID=<?php echo $formID; ?>">Preview Form</a>
+<a class="btn" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
 <?php
 	pageFooter();
 

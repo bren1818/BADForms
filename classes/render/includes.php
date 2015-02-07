@@ -6,6 +6,7 @@
 	include "selectbox.php";
 	include "radiobutton.php";
 	include "datepicker.php";
+	include "rangeslider.php";
 	//include "timepicker.php";
 	//include "datetimepicker.php";	
 ?>

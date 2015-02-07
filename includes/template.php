@@ -58,9 +58,11 @@
 	?>
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
 		<!--code.jquery.com/ui/[version]/themes/[theme name]/jquery-ui.css-->
-		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/lib/codemirror.css">
-		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/hint/show-hint.css">
-		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/display/fullscreen.css">
+        <link rel="stylesheet" href="<?php echo CSS_DIR.'/font-awesome/font-awesome.min.css'; ?>" />
+        
+		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/lib/codemirror.css" />
+		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/hint/show-hint.css" />
+		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/display/fullscreen.css" />
 		<link rel="stylesheet" href="<?php echo CSS_DIR.'/style.css'; ?>">
 		<!--<link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>">-->
 		<style>

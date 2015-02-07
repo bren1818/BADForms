@@ -32,29 +32,32 @@
 			
 			$type = "".$listTypes[ $result->getType() ];
 			
-			if( class_exists( $type ) ){
+			if( $type != "no-type-select" ){
 			
-				$class = new $type($result);
-			
-				echo '<div id="form-item-'.$result->getId().'" class="formRow type-'.$type.'">';
-					$class->render();
-				echo '</div>';
+				if( class_exists( $type ) ){
 				
-				if( method_exists($class, "getJS") ){
-					$formJS = $formJS.$class->getJS();
+					$class = new $type($result);
+				
+					echo '<div id="form-item-'.$result->getId().'" class="formRow type-'.$type.'">';
+						$class->render();
+					echo '</div>';
+					
+					if( method_exists($class, "getJS") ){
+						$formJS = $formJS.$class->getJS();
+					}
+					
+				}else{
+					echo '<div class="formRow">';
+						echo "Error, Class: ".$type." does not exist";
+					echo '</div>';	
 				}
 				
-			}else{
-				echo '<div class="formRow">';
-					echo "Error, Class: ".$type." does not exist";
-				echo '</div>';	
 			}
-			
 			
 		}
 	}
 	echo '<div class="formRow">';
-	echo '<input type="submit" value="SUBMIT" />';
+	echo '<input class="btn" type="submit" value="SUBMIT" />';
 	echo '</div>';
 	echo '<input type="hidden" name="formID" value="'.$formID.'"/>';
 	echo "</form>";

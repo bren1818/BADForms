@@ -1,3 +1,5 @@
+	var formID = 1, formOwner = 1;
+	
 	function moveUp(item) {
 		var prev = item.prev();
 		if (prev.length == 0)
@@ -30,6 +32,7 @@
 		$.get( "/getFormEntryRow.php?form=1", function( data ) {
 			$( "#formHolder ul" ).append( data );
 			$( "#formHolder ul li" ).last().prepend( rowFunctions() );
+			//$( "#formHolder ul li select").last().selectmenu();
 			
 			$( "#formHolder ul li" ).last().detach().insertBefore( $(item) );
 			
@@ -47,12 +50,10 @@
 			$( "#formHolder ul" ).append( data );
 			$( "#formHolder ul li" ).last().prepend( rowFunctions() );
 			
+			//$( "#formHolder ul li select").last().selectmenu();
 			
-			
-			  $( "#formHolder ul li" ).last().detach().insertAfter( $(item) );
-			
-			//.insertAfter(  );
-			
+			$( "#formHolder ul li" ).last().detach().insertAfter( $(item) );
+		
 			orderItems();
 			bindToolbar();
 		});	
@@ -76,9 +77,9 @@
 		$('.showSettings').click(function(){
 			$(this).closest('.advancedSettings').toggleClass('show');
 			if( $(this).closest('.advancedSettings').hasClass('show') ){
-				$(this).html('Hide Advanced');
+				$(this).html('<i class="fa fa-cog"></i> Hide Advanced');
 			}else{
-				$(this).html('Show Advanced');
+				$(this).html('<i class="fa fa-cogs"></i> Show Advanced');
 			}
 		});
 		
@@ -97,22 +98,24 @@
 			var t = $(this).parent().parent();
 			var c = $(this).attr('class');
 			switch( c ){
-				case 'butUp but':
+				case 'butUp but btn':
 					moveUp( t );
 				break;
-				case 'butDown but':
+				case 'butDown but btn':
 					moveDown( t );
 				break;
-				case 'butAddBefore but':
+				case 'butAddBefore but btn':
 					addBefore( t );
 				break;
-				case 'butAddAfter but':
+				case 'butAddAfter but btn':
 					addAfter( t );
 				break;
-				case 'butDelete but':
+				case 'butDelete but btn':
 					$(this).parents('li').addClass('deleted');
 					$(this).parents('li').find('input[name="isDeleted"]').attr('value', 1);
 					window.alert("delete");
+					//if no id, just remove
+					
 				break;
 				default:
 					//console.log( c );
@@ -130,11 +133,11 @@
 	function rowFunctions(){
 		//for sorting up down and delete?
 		return '<div class="tools">' +
-					'<div class="butUp but">up</div>' +
-					'<div class="butDown but">down</div>' +
-					'<div class="butAddBefore but">Add Item Before</div>' +
-					'<div class="butAddAfter but">Add Item After</div>' +
-					'<div class="butDelete but">Delete</div>' +
+					'<div class="butUp but btn"><i class="fa fa-angle-double-up"></i></div>' +
+					'<div class="butDown but btn"><i class="fa fa-angle-double-down"></i></div>' +
+					'<div class="butAddBefore but btn"><i class="fa fa-caret-square-o-up"></i> Add Before</div>' +
+					'<div class="butAddAfter but btn"><i class="fa fa-caret-square-o-down"></i> Add After</div>' +
+					'<div class="butDelete but btn"><i class="fa fa-trash"></i></div>' +
 				'</div>';
 	}
 	
@@ -144,6 +147,7 @@
 			$.get( "/getFormEntryRow.php?form=1", function( data ) {
 				$( "#formHolder ul" ).append( data );
 				$( "#formHolder ul li" ).last().prepend( rowFunctions() );
+				//$( "#formHolder ul li select").last().selectmenu();
 				orderItems();
 				bindToolbar();
 			});			
@@ -171,7 +175,7 @@
 			var saveString = JSON.stringify(save);
 			//console.log( saveString  );
 			
-			$.post( "/saveForm.php", { formID: "<?php echo $formID; ?>", ownerID : "<?php echo $ownerID; ?>", form: saveString })
+			$.post( "/saveForm.php", { formID: formID , ownerID : formOwner, form: saveString })
 			  .done(function( data ) {
 				 //check for codes or errors 
 				var obj = jQuery.parseJSON( data );
@@ -198,4 +202,7 @@
 		//initilize
 		$( "#formHolder ul li" ).prepend( rowFunctions() );
 		bindToolbar();
+		//$("#formHolder ul li select.select.type").selectmenu();
+		
+		//console.log("initialized");
 	});
