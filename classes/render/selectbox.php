@@ -8,10 +8,18 @@
 			$this->formObject = $formObject;
 		}	
 		
+		function getJS(){
+			return "";
+		}
+		
 		function render(){
 			?>
-				<label for="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>">
-					<?php echo $this->formObject->getLabel(); ?>
+				<div class="formRowLabel">
+				<label for="selectBox_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>">
+					<span class="labelText"><?php echo $this->formObject->getLabel(); ?></span>
+                </label>
+                </div>
+                <div class="formRowInput">
                     <?php
 						$listType = $this->formObject->getListType();
 						if( $listType == 1 ){
@@ -23,34 +31,26 @@
 								//-kv list
 								//-std list
 						}
-						//$preSelected = explode(",", $this->formObject->getDefaultVal() );
-						//$preSelected = array_map('trim',$preSelected); //trim the strings
-						$preSelected = trim( $this->formObject->getDefaultVal() );
-						// value="<?php echo $item;  
-                        //    if( in_array( $item, $preSelected, false ) ){ echo "checked"; }
-                        //    echo trim($item); <br />
 						
+						$preSelected = trim( $this->formObject->getDefaultVal() );
 						
 						?>
                         <select
                             name="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>"  
-                            class="<?php echo $this->formObject->getClasses(); ?>" 
-                            id="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>"
+                            class="selectBox <?php echo $this->formObject->getClasses(); ?>" 
+                            id="selectBox_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>"
                             >
                             <option value="">-</option>
-                     
                         <?php
 						//need logic for key value
 						for($cb = 0; $cb < sizeof($items); $cb++){ 
 							$item = $items[$cb];
-							?>
+						?>
                             <option value="<?php echo $item; ?>"<?php if($item == $preSelected){ echo " selected"; } ?>><?php echo $item; ?></option>
-                     <?php } ?>
+                     	<?php } ?>
                      </select>
-				</label>
+				</div>
 			<?php
 		}
-		
-		
 	}
 ?>

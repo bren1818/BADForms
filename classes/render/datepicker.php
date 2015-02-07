@@ -11,20 +11,24 @@
 		}
 		
 		function getJS(){
-			return "$('#input_". $this->formObject->getFormID().'_'.$this->formObject->getId()."').datepicker();";
+			return "$('#datePicker_". $this->formObject->getFormID().'_'.$this->formObject->getId()."').datepicker();";
 		}
 		
 		function render(){
 			?>
-				<label for="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>">
-					<?php echo $this->formObject->getLabel(); ?>
+				<div class="formRowLabel">
+				<label for="datePicker_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>">
+					<span class="labelText"><?php echo $this->formObject->getLabel(); ?></span>
+                </label>
+                </div>
+                <div class="formRowInput">
 					<input 
                     	name="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>" 
-						class=" datepicker<?php echo $this->formObject->getClasses(); ?>" 
-						id="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>" 
+						class="datepicker <?php echo $this->formObject->getClasses(); ?>" 
+						id="datePicker_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>" 
 						type="text" placeholder="<?php echo $this->formObject->getPlaceHolder(); ?>" 
 						<?php if( $this->formObject->getRequired() ){ echo 'required="required"'; } ?>/>
-				</label>
+				</div>
 			<?php
 			//value=" echo $this->formObject->getDefaultVal(); "
 		}

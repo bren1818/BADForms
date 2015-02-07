@@ -8,10 +8,18 @@
 			$this->formObject = $formObject;
 		}	
 		
+		function getJS(){
+			return "";
+		}
+		
 		function render(){
 			?>
-				<label for="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>">
-					<?php echo $this->formObject->getLabel(); ?>
+				<div class="formRowLabel">
+				<label for="checkboxMultiple_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>">
+					<span class="labelText"><?php echo $this->formObject->getLabel(); ?></span>
+                </label>
+                </div>
+                <div class="formRowInput">
                     <?php
 						$listType = $this->formObject->getListType();
 						$items = array();
@@ -26,21 +34,31 @@
 						}
 						$preSelected = explode(",", $this->formObject->getDefaultVal() );
 						$preSelected = array_map('trim',$preSelected); //trim the strings
-						
+						?>
+						<div id="checkboxMultiple_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>" class="checkboxList">
+                        <?php
 						//need logic for key value
 						for($cb = 0; $cb < sizeof($items); $cb++){ 
 							$item = $items[$cb];
-					?>
-                    <br />
-                            <input type="checkbox"
-                            name="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>[]"  
-                            class="<?php echo $this->formObject->getClasses(); ?>" 
-                            id="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>"
-                            value="<?php echo $item; ?>" 
-                            <?php if( in_array( $item, $preSelected, false ) ){ echo "checked"; }?>
-                            /> <?php echo trim($item); ?><br />
+							?>
+                            <div class="checkBoxItem checkBoxItem-<?php echo ($cb+1); ?>">
+                                <div class="checkBox">
+                                    <input type="checkbox"
+                                    name="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>[]"  
+                                    class="checkBoxItem <?php echo $this->formObject->getClasses(); ?>" 
+                                    id="check_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>_<?php echo ($cb + 1); ?>"
+                                    value="<?php echo $item; ?>" 
+                                    <?php if( in_array( $item, $preSelected, false ) ){ echo "checked"; }?>
+                                    /> 
+                                </div>
+                                <div class="checkBoxValue">
+                                	<label for="check_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>_<?php echo ($cb + 1); ?>"><?php echo trim($item); ?></label>
+                                </div>
+                            </div>
                      <?php } ?>
-				</label>
+                     <div class="clear"></div>
+                     </div>
+				</div>
 			<?php
 		}
 		

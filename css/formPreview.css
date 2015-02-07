@@ -1,1 +1,46 @@
+.clear{ clear:both; }
+
 .labelText{ font-weight: bold; min-width: 100px; display: inline-block; }
+
+.formRowLabel, .formRowInput{ padding: 5px;  width: 100%; }
+
+textarea,
+input[type="text"]{ padding: 5px; width: 300px; }
+
+textarea{ min-height: 80px; }
+
+input[type="text"]{ height: 40px; line-height: 40px; border: 1px solid #000; }
+
+input[type="text"]:invalid {
+	background-color: rgba(255,0,0,.3);
+	border: 1px solid rgb(255,0,0);
+}
+
+input[type="text"]:valid {
+	background-color: rgba(0,144,0,.3);
+	border: 1px solid rgb(0,144,0);
+}
+
+textarea:valid,
+input[type="checkbox"]:valid{
+	border: 1px solid rgb(0,144,0);
+}
+
+textarea:invalid,
+input[type="checkbox"]:invalid{
+	border: 1px solid rgb(255,0,0);
+}
+
+.checkboxList{ width: 100%; overflow: hidden; }
+	div.checkBoxItem{ width: 50%; float: left; margin: 3px 0px; }
+ 		div.checkBox{ text-align: center; width: 10%; display: inline-block; }
+		div.checkBoxValue{ text-align: left; width: 90%; display: inline-block; float: right;}
+		
+.radioButtonList{ width: 100%; overflow: hidden; }
+	div.radioButtonItem{ width: 50%; float: left; margin: 3px 0px; }
+ 		div.radioButton{ text-align: center; width: 10%; display: inline-block; }
+		div.radioButtonValue{ text-align: left; width: 90%; display: inline-block; float: right;}
+
+.formRowInput select{
+	min-width: 300px;
+}

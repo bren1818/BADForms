@@ -28,10 +28,18 @@
 			}
 		}
 		
+		function getJS(){
+			return "";
+		}
+		
 		function render(){
 			?>
-				<label for="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>">
-					<span class="labelText"><?php echo $this->formObject->getLabel(); ?></span>
+            	<div class="formRowLabel">
+                    <label for="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>">
+                        <span class="labelText"><?php echo $this->formObject->getLabel(); ?></span>
+                    </label>
+                </div>
+                <div class="formRowInput">
 					<textarea
                     
                     	name="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>"
@@ -58,7 +66,7 @@
                         <?php } ?>
                         
 						<?php if( $this->formObject->getRequired() ){ echo 'required="required"'; } ?>><?php echo $this->formObject->getDefaultVal(); ?></textarea>
-				</label>
+				</div>
 			<?php
 		}
 		

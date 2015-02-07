@@ -75,8 +75,6 @@
 				$counter++;
 			}
 			
-			
-			
 		}
 		echo "Stored Data";
 		pa( $capturedData );	
