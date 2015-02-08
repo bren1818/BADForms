@@ -4,6 +4,9 @@
 	
 	if( isPostback() ){
 		
+		echo "Posted Data";
+		pa( $_POST );
+		
 		$conn = getConnection();
 		$formID = "";
 		$encryptor = "";
@@ -78,8 +81,7 @@
 		}
 		echo "Stored Data";
 		pa( $capturedData );	
-		echo "Posted Data";
-		pa( $_POST );
+		
 		
 		//echo "Test Decrypt Each<br />";
 		
