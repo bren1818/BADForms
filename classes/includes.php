@@ -6,5 +6,9 @@
 	include "base_object.php";
 	include "BrenCrypt.php";
 	
+	include "listSet.php";
+	include "listItem.php";
+	include "listItemKV.php";
+	
 	include "render".DIRECTORY_SEPARATOR."includes.php";
 ?>

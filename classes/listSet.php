@@ -7,6 +7,8 @@
 	listName, v
 	listType, i
 	defaultValue, v
+	owner, i
+	private, i
 
 */
 
@@ -19,6 +21,8 @@
 		private $listName;
 		private $listType;
 		private $defaultValue;
+		private $owner;
+		private $private;
 
 
 		/*Constructor*/
@@ -91,6 +95,22 @@
 			$this->defaultValue = $defaultValue;
 		}
 
+		function getOwner(){
+			return $this->owner;
+		}
+
+		function setOwner($owner){
+			$this->owner = $owner;
+		}
+
+		function getPrivate(){
+			return $this->private;
+		}
+
+		function setPrivate($private){
+			$this->private = $private;
+		}
+
 		/*Special Functions*/
 		function load($id = null){
 			if( $this->connection ){
@@ -118,6 +138,8 @@
 			$this->setListName( (isset($_POST["listName"])) ? $_POST["listName"] : $this->getListName() );
 			$this->setListType( (isset($_POST["listType"])) ? $_POST["listType"] : $this->getListType() );
 			$this->setDefaultValue( (isset($_POST["defaultValue"])) ? $_POST["defaultValue"] : $this->getDefaultValue() );
+			$this->setOwner( (isset($_POST["owner"])) ? $_POST["owner"] : $this->getOwner() );
+			$this->setPrivate( (isset($_POST["private"])) ? $_POST["private"] : $this->getPrivate() );
 		}
 
 		function getFromRequest(){
@@ -125,6 +147,8 @@
 			$this->setListName( (isset($_REQUEST["listName"])) ? $_REQUEST["listName"] : $this->getListName() );
 			$this->setListType( (isset($_REQUEST["listType"])) ? $_REQUEST["listType"] : $this->getListType() );
 			$this->setDefaultValue( (isset($_REQUEST["defaultValue"])) ? $_REQUEST["defaultValue"] : $this->getDefaultValue() );
+			$this->setOwner( (isset($_REQUEST["owner"])) ? $_REQUEST["owner"] : $this->getOwner() );
+			$this->setPrivate( (isset($_REQUEST["private"])) ? $_REQUEST["private"] : $this->getPrivate() );
 		}
 
 		function getFromArray($arr){
@@ -132,6 +156,8 @@
 			$this->setListName( (isset($arr["listName"])) ? $arr["listName"] : $this->getListName() );
 			$this->setListType( (isset($arr["listType"])) ? $arr["listType"] : $this->getListType() );
 			$this->setDefaultValue( (isset($arr["defaultValue"])) ? $arr["defaultValue"] : $this->getDefaultValue() );
+			$this->setOwner( (isset($arr["owner"])) ? $arr["owner"] : $this->getOwner() );
+			$this->setPrivate( (isset($arr["private"])) ? $arr["private"] : $this->getPrivate() );
 		}
 
 		function compareTo($listset){
@@ -176,6 +202,16 @@
 			}else{
 				$log["DefaultValue"] = "un-modified";
 			}
+			if($this->getOwner() != $listset->getOwner() ){
+				$log["Owner"] = "modified";
+			}else{
+				$log["Owner"] = "un-modified";
+			}
+			if($this->getPrivate() != $listset->getPrivate() ){
+				$log["Private"] = "modified";
+			}else{
+				$log["Private"] = "un-modified";
+			}
 		return $log;
 		}
 
@@ -185,14 +221,18 @@
 			$listName = $this->getListName();
 			$listType = $this->getListType();
 			$defaultValue = $this->getDefaultValue();
+			$owner = $this->getOwner();
+			$private = $this->getPrivate();
 			if( $this->connection ){
 				if( $id != "" ){
 					/*Perform Update Operation*/
-					$query = $this->connection->prepare("UPDATE  `listset` SET `formID` = :formID ,`listName` = :listName ,`listType` = :listType ,`defaultValue` = :defaultValue WHERE `id` = :id");
+					$query = $this->connection->prepare("UPDATE  `listset` SET `formID` = :formID ,`listName` = :listName ,`listType` = :listType ,`defaultValue` = :defaultValue ,`owner` = :owner ,`private` = :private WHERE `id` = :id");
 					$query->bindParam('formID', $formID);
 					$query->bindParam('listName', $listName);
 					$query->bindParam('listType', $listType);
 					$query->bindParam('defaultValue', $defaultValue);
+					$query->bindParam('owner', $owner);
+					$query->bindParam('private', $private);
 					$query->bindParam('id', $id);
 					if( $query->execute() ){
 						return $id;
@@ -202,11 +242,13 @@
 
 				}else{
 					/*Perform Insert Operation*/
-					$query = $this->connection->prepare("INSERT INTO `listset` (`id`,`formID`,`listName`,`listType`,`defaultValue`) VALUES (NULL,:formID,:listName,:listType,:defaultValue);");
+					$query = $this->connection->prepare("INSERT INTO `listset` (`id`,`formID`,`listName`,`listType`,`defaultValue`,`owner`,`private`) VALUES (NULL,:formID,:listName,:listType,:defaultValue,:owner,:private);");
 					$query->bindParam(':formID', $formID);
 					$query->bindParam(':listName', $listName);
 					$query->bindParam(':listType', $listType);
 					$query->bindParam(':defaultValue', $defaultValue);
+					$query->bindParam(':owner', $owner);
+					$query->bindParam(':private', $private);
 
 					if( $query->execute() ){
 						$this->setId( $this->connection->lastInsertId() );
@@ -353,6 +395,52 @@
 			}
 		}
 
+		function getByOwner($owner){
+			if( $this->connection ){
+				if( $owner == null && $this->getOwner() != ""){
+					$owner = $this->getOwner();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `listset` WHERE `owner` = :owner LIMIT 1");
+				$query->bindParam(':owner', $owner);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("listset") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByPrivate($private){
+			if( $this->connection ){
+				if( $private == null && $this->getPrivate() != ""){
+					$private = $this->getPrivate();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `listset` WHERE `private` = :private LIMIT 1");
+				$query->bindParam(':private', $private);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("listset") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
 
 		function getListById($id=null){
 			if( $this->connection ){
@@ -459,6 +547,54 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `listset` WHERE `defaultValue` = :defaultValue");
 				$query->bindParam(':defaultValue', $defaultValue);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("listset") ){
+						$listsets[] = $result;
+					}
+					if( is_array( $listsets ) ){
+						return $listsets;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByOwner($owner=null){
+			if( $this->connection ){
+				if( $owner == null && $this->getOwner() != ""){
+					$owner = $this->getOwner();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `listset` WHERE `owner` = :owner");
+				$query->bindParam(':owner', $owner);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("listset") ){
+						$listsets[] = $result;
+					}
+					if( is_array( $listsets ) ){
+						return $listsets;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByPrivate($private=null){
+			if( $this->connection ){
+				if( $private == null && $this->getPrivate() != ""){
+					$private = $this->getPrivate();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `listset` WHERE `private` = :private");
+				$query->bindParam(':private', $private);
 
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("listset") ){

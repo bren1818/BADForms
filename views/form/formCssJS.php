@@ -8,7 +8,9 @@
 	//include "../../classes/includes.php";
 
 	pageHeader();
-	
+	?>
+	<link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>"/>
+	<?php
 	$conn = getConnection();
 	$form = new Formcode($conn);
 	
@@ -33,7 +35,6 @@
 	
 	
 	
-	
 	if( isPostback() ){
 		
 		$form->getFromPost();
@@ -51,7 +52,7 @@
 		}
 		
 		if( $form->save() > 0 ){
-			echo "<p>Saved</p>";
+			echo "<p><span class='saveMsg'><i class='fa fa-floppy-o'></i> Saved<span></p>";
 		}
 	}
 	
@@ -65,15 +66,16 @@
 		echo '<h2>Edit FORM JS</h2>';
 	}
 	
+	
 	?>
 	<p>Do not include &lt;style&gt; or &lt;script&gt; tags</p>
 	<p>F11 - Go full screen, ctrl+space for code hint</p>
-	<form method="POST" action="/views/form/formCssJS.php">
+	<form id="codeForm" method="POST" action="/views/form/formCssJS.php">
 		<div class="row">
 			<textarea name="code" id="code"><?php echo $form->getCode(); ?></textarea>
 		</div>
 		<div class="row">
-			<button id="save">Save</button> 
+			<button class="btn" id="save"><i class="fa fa-floppy-o"></i> Save</button> 
 		</div>
 		<input type="hidden" name="id" value="<?php echo $form->getId(); ?>" />
 		<input type="hidden" name="formID" value="<?php echo $form->getFormID(); ?>" />
@@ -104,10 +106,29 @@
 				"Ctrl-J": "toMatchingTag"
 			}
 		});
-	  	
+		
+		
+		$(window).bind('keydown', function(event) {
+			if (event.ctrlKey || event.metaKey) {
+				switch (String.fromCharCode(event.which).toLowerCase()) {
+				case 's':
+					event.preventDefault();
+					//alert('ctrl-s');
+					$('#codeForm').submit();
+					break;
+				}
+			}
+		});
+		
+		$(function(){
+			if( $('p span.saveMsg').length ){
+				$('p span.saveMsg').fadeOut(2500);	
+			}
+		});
 	</script>
+   
 	
-	<a href="/views/form/buildForm.php?formID=<?php echo $form->getFormID(); ?>">Go back to Form Builder</a>
+	<a class="btn" href="/views/form/buildForm.php?formID=<?php echo $form->getFormID(); ?>"><i class="fa fa-pencil"></i> Go back to Form Builder</a>
 	
 	<?php
 	

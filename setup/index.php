@@ -173,7 +173,9 @@
 `formID` INTEGER,
 `listName` VARCHAR( 60 ),
 `listType` INTEGER,
-`defaultValue` VARCHAR( 60 )
+`defaultValue` VARCHAR( 60 ),
+`owner`, INTEGER,
+`private`, INTEGER
 );";
 createAndTestTable($db, "listset", $query);
 	
