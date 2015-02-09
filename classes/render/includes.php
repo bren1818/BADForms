@@ -4,6 +4,7 @@
 	include "checkboxsingle.php";
 	include "checkboxmultiple.php";
 	include "selectbox.php";
+	include "selectboxJQ.php";
 	include "radiobutton.php";
 	include "datepicker.php";
 	include "rangeslider.php";

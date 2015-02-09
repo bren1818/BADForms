@@ -125,7 +125,8 @@
 				(NULL, 'rangeslider', 		'Range Slider', '0', '8'),
 				(NULL, 'hidden', 			'Hidden', '0', '9'),
 				(NULL, 'email', 			'Email', '0', '10'),
-				(NULL, 'phone', 			'Phone Number', '0', '11');";
+				(NULL, 'phone', 			'Phone Number', '0', '11'),
+				(NULL, 'selectboxJQ', 			'Select Box - JQuery UI', '0', '12');";
 	
 	//(NULL, 'timepicker', 				'Time Picker', '0', '8'),
 	//(NULL, 'datetimepicker', 			'Date & Time Picker', '0', '9')
