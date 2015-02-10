@@ -30,7 +30,7 @@
 			exit;
 		}
 	
-		$query = "SELECT * FROM `formobject` WHERE `formID` = :formID order by `rowOrder` ASC";
+		$query = "SELECT * FROM `formobject` WHERE `formID` = :formID order by `rowOrder` ASC"; //type no nt chosen
 		$query = $conn->prepare( $query );
 		$query->bindParam(':formID', $formID);
 	

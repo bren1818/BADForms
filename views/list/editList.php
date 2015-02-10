@@ -2,23 +2,20 @@
 	include "../../includes/include.php";
 	$conn = getConnection();
 	pageHeader();
+	$listset = "";
 	
-	$listset = new Listset( $conn ); //$conn 
-	if(strtoupper($_SERVER["REQUEST_METHOD"]) === "POST") {
-		$listset->getFromPost();
-		if( $listset->save() > 1){
-			$listID = $listset->getId();
-			header("Location: /views/list/editList.php?listID=".$listID);
-		}else{
-			pa($listset);
-			echo $listset->getErrors();
-		}
+	if( isset($_REQUEST) && isset($_REQUEST['listID']) ){
+		$listID = $_REQUEST['listID'];
+		$listset = new Listset( $conn );
+		$listset = $listset->load( $listID );
+		
+		//pa( $listset );
+		
+	}else{
+		echo "Could not load list";
 	}
 	
 ?>
-<h1>Build List</h1>
-
-
 <form name="listset" id="listset" method="POST" action="" enctype="multipart/form-data">
 	<!--
     <div class="formRow">
@@ -51,7 +48,7 @@
 			} ?>
 			<select name="listType" required="required" >
 				<?php for($v=0; $v < sizeof($listType_values); $v++){ ?>
-					<option value="<?php echo $v; ?>" <?php if($listType_values[$v] ==  $listType_selected ){ echo "selected"; } ?>><?php echo $listType_values[$v]; ?></option>
+					<option value="<?php echo $listType_values[$v]; ?>" <?php if($listType_values[$v] ==  $listType_selected ){ echo "selected"; } ?>><?php echo $listType_values[$v]; ?></option>
 				<?php } ?>
 			</select>
 		</div>
@@ -97,6 +94,25 @@
 	</div>
 </form>
 
+<hr />
 
+<?php
+	if( $listset->getListType() == 1){
+		//1 keyval default
+		echo "<h2>Key-Value List</h2>";
+	}else{
+		//0 - val-val
+		echo "<h2>Value List</h2>";
+	}
+?>
 
-<?php pageFooter(); ?>
+<ul>
+	<li></li>
+</ul>
+
+<hr />
+<button class="btn">Save List</button>
+
+<?php
+	pageFooter();
+?>
