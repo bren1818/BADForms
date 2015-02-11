@@ -183,20 +183,18 @@ createAndTestTable($db, "listset", $query);
 	
 	$query = "CREATE TABLE IF NOT EXISTS `listitem` (
 `id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-`formID` INTEGER,
 `listID` INTEGER,
 `item` VARCHAR( 60 ),
-`itemOrder` INTEGER
+`rowOrder` INTEGER
 );";
 	createAndTestTable($db, "listitem", $query);
 	
 	$query = "CREATE TABLE  `listitemkv` (
 `id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-`formID` INTEGER,
 `listID` INTEGER,
 `itemkey` VARCHAR( 60 ),
 `item` VARCHAR( 60 ),
-`itemOrder` INTEGER);";
+`rowOrder` INTEGER);";
 createAndTestTable($db, "listitemkv", $query);
 
 

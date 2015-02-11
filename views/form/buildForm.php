@@ -5,28 +5,6 @@
 	$ownerID = 1;
 	$formID = 1;
 	
-/*	
-type, i
-label, v
-name, v
-defaultVal, v
-errorText, v
-placeholder, v
-regex, v
-minVal, i
-maxVal, i
-minLength, i
-maxLength, i
-
-listID, i
-csList, v
-
-classes, v
-isRequired, i
-encryptVal, i
-formID, i
-rowOrder, i
-*/
 	
 	pageHeader();
 	

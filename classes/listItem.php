@@ -3,10 +3,9 @@
 
 	Class: Listitem
 
-	formID, i
 	listID, i
 	item, v
-	itemOrder, i
+	rowOrder, i
 
 */
 
@@ -15,10 +14,9 @@
 		private $connection;
 		private $errors;
 		private $errorCount;
-		private $formID;
 		private $listID;
 		private $item;
-		private $itemOrder;
+		private $rowOrder;
 
 
 		/*Constructor*/
@@ -59,14 +57,6 @@
 			$this->errorCount = $errorCount;
 		}
 
-		function getFormID(){
-			return $this->formID;
-		}
-
-		function setFormID($formID){
-			$this->formID = $formID;
-		}
-
 		function getListID(){
 			return $this->listID;
 		}
@@ -83,12 +73,12 @@
 			$this->item = $item;
 		}
 
-		function getItemOrder(){
-			return $this->itemOrder;
+		function getRowOrder(){
+			return $this->rowOrder;
 		}
 
-		function setItemOrder($itemOrder){
-			$this->itemOrder = $itemOrder;
+		function setRowOrder($rowOrder){
+			$this->rowOrder = $rowOrder;
 		}
 
 		/*Special Functions*/
@@ -114,24 +104,21 @@
 		}
 
 		function getFromPost(){
-			$this->setFormID( (isset($_POST["formID"])) ? $_POST["formID"] : $this->getFormID() );
 			$this->setListID( (isset($_POST["listID"])) ? $_POST["listID"] : $this->getListID() );
 			$this->setItem( (isset($_POST["item"])) ? $_POST["item"] : $this->getItem() );
-			$this->setItemOrder( (isset($_POST["itemOrder"])) ? $_POST["itemOrder"] : $this->getItemOrder() );
+			$this->setRowOrder( (isset($_POST["rowOrder"])) ? $_POST["rowOrder"] : $this->getRowOrder() );
 		}
 
 		function getFromRequest(){
-			$this->setFormID( (isset($_REQUEST["formID"])) ? $_REQUEST["formID"] : $this->getFormID() );
 			$this->setListID( (isset($_REQUEST["listID"])) ? $_REQUEST["listID"] : $this->getListID() );
 			$this->setItem( (isset($_REQUEST["item"])) ? $_REQUEST["item"] : $this->getItem() );
-			$this->setItemOrder( (isset($_REQUEST["itemOrder"])) ? $_REQUEST["itemOrder"] : $this->getItemOrder() );
+			$this->setRowOrder( (isset($_REQUEST["rowOrder"])) ? $_REQUEST["rowOrder"] : $this->getRowOrder() );
 		}
 
 		function getFromArray($arr){
-			$this->setFormID( (isset($arr["formID"])) ? $arr["formID"] : $this->getFormID() );
 			$this->setListID( (isset($arr["listID"])) ? $arr["listID"] : $this->getListID() );
 			$this->setItem( (isset($arr["item"])) ? $arr["item"] : $this->getItem() );
-			$this->setItemOrder( (isset($arr["itemOrder"])) ? $arr["itemOrder"] : $this->getItemOrder() );
+			$this->setRowOrder( (isset($arr["rowOrder"])) ? $arr["rowOrder"] : $this->getRowOrder() );
 		}
 
 		function compareTo($listitem){
@@ -156,11 +143,6 @@
 			}else{
 				$log["ErrorCount"] = "un-modified";
 			}
-			if($this->getFormID() != $listitem->getFormID() ){
-				$log["FormID"] = "modified";
-			}else{
-				$log["FormID"] = "un-modified";
-			}
 			if($this->getListID() != $listitem->getListID() ){
 				$log["ListID"] = "modified";
 			}else{
@@ -171,28 +153,26 @@
 			}else{
 				$log["Item"] = "un-modified";
 			}
-			if($this->getItemOrder() != $listitem->getItemOrder() ){
-				$log["ItemOrder"] = "modified";
+			if($this->getRowOrder() != $listitem->getRowOrder() ){
+				$log["RowOrder"] = "modified";
 			}else{
-				$log["ItemOrder"] = "un-modified";
+				$log["RowOrder"] = "un-modified";
 			}
 		return $log;
 		}
 
 		function save(){
 			$id = $this->getId();
-			$formID = $this->getFormID();
 			$listID = $this->getListID();
 			$item = $this->getItem();
-			$itemOrder = $this->getItemOrder();
+			$rowOrder = $this->getRowOrder();
 			if( $this->connection ){
 				if( $id != "" ){
 					/*Perform Update Operation*/
-					$query = $this->connection->prepare("UPDATE  `listitem` SET `formID` = :formID ,`listID` = :listID ,`item` = :item ,`itemOrder` = :itemOrder WHERE `id` = :id");
-					$query->bindParam('formID', $formID);
+					$query = $this->connection->prepare("UPDATE  `listitem` SET `listID` = :listID ,`item` = :item ,`rowOrder` = :rowOrder WHERE `id` = :id");
 					$query->bindParam('listID', $listID);
 					$query->bindParam('item', $item);
-					$query->bindParam('itemOrder', $itemOrder);
+					$query->bindParam('rowOrder', $rowOrder);
 					$query->bindParam('id', $id);
 					if( $query->execute() ){
 						return $id;
@@ -202,11 +182,10 @@
 
 				}else{
 					/*Perform Insert Operation*/
-					$query = $this->connection->prepare("INSERT INTO `listitem` (`id`,`formID`,`listID`,`item`,`itemOrder`) VALUES (NULL,:formID,:listID,:item,:itemOrder);");
-					$query->bindParam(':formID', $formID);
+					$query = $this->connection->prepare("INSERT INTO `listitem` (`id`,`listID`,`item`,`rowOrder`) VALUES (NULL,:listID,:item,:rowOrder);");
 					$query->bindParam(':listID', $listID);
 					$query->bindParam(':item', $item);
-					$query->bindParam(':itemOrder', $itemOrder);
+					$query->bindParam(':rowOrder', $rowOrder);
 
 					if( $query->execute() ){
 						$this->setId( $this->connection->lastInsertId() );
@@ -247,29 +226,6 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `listitem` WHERE `id` = :id LIMIT 1");
 				$query->bindParam(':id', $id);
-				$object = null;
-
-				if( $query->execute() ){
-					while( $result = $query->fetchObject("listitem") ){
-						$object = $result;
-					}
-
-				}
-				if( is_object( $object ) ){
-					return $object;
-				}
-			}
-		}
-
-		function getByFormID($formID){
-			if( $this->connection ){
-				if( $formID == null && $this->getFormID() != ""){
-					$formID = $this->getFormID();
-				}
-
-				/*Perform Query*/
-				$query = $this->connection->prepare("SELECT * FROM `listitem` WHERE `formID` = :formID LIMIT 1");
-				$query->bindParam(':formID', $formID);
 				$object = null;
 
 				if( $query->execute() ){
@@ -330,15 +286,15 @@
 			}
 		}
 
-		function getByItemOrder($itemOrder){
+		function getByRowOrder($rowOrder){
 			if( $this->connection ){
-				if( $itemOrder == null && $this->getItemOrder() != ""){
-					$itemOrder = $this->getItemOrder();
+				if( $rowOrder == null && $this->getRowOrder() != ""){
+					$rowOrder = $this->getRowOrder();
 				}
 
 				/*Perform Query*/
-				$query = $this->connection->prepare("SELECT * FROM `listitem` WHERE `itemOrder` = :itemOrder LIMIT 1");
-				$query->bindParam(':itemOrder', $itemOrder);
+				$query = $this->connection->prepare("SELECT * FROM `listitem` WHERE `rowOrder` = :rowOrder LIMIT 1");
+				$query->bindParam(':rowOrder', $rowOrder);
 				$object = null;
 
 				if( $query->execute() ){
@@ -363,30 +319,6 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `listitem` WHERE `id` = :id");
 				$query->bindParam(':id', $id);
-
-				if( $query->execute() ){
-					while( $result = $query->fetchObject("listitem") ){
-						$listitems[] = $result;
-					}
-					if( is_array( $listitems ) ){
-						return $listitems;
-					}else{
-						return array();
-					}
-
-				}
-			}
-		}
-
-		function getListByFormID($formID=null){
-			if( $this->connection ){
-				if( $formID == null && $this->getFormID() != ""){
-					$formID = $this->getFormID();
-				}
-
-				/*Perform Query*/
-				$query = $this->connection->prepare("SELECT * FROM `listitem` WHERE `formID` = :formID");
-				$query->bindParam(':formID', $formID);
 
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("listitem") ){
@@ -450,15 +382,15 @@
 			}
 		}
 
-		function getListByItemOrder($itemOrder=null){
+		function getListByRowOrder($rowOrder=null){
 			if( $this->connection ){
-				if( $itemOrder == null && $this->getItemOrder() != ""){
-					$itemOrder = $this->getItemOrder();
+				if( $rowOrder == null && $this->getRowOrder() != ""){
+					$rowOrder = $this->getRowOrder();
 				}
 
 				/*Perform Query*/
-				$query = $this->connection->prepare("SELECT * FROM `listitem` WHERE `itemOrder` = :itemOrder");
-				$query->bindParam(':itemOrder', $itemOrder);
+				$query = $this->connection->prepare("SELECT * FROM `listitem` WHERE `rowOrder` = :rowOrder");
+				$query->bindParam(':rowOrder', $rowOrder);
 
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("listitem") ){
