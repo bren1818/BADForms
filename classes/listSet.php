@@ -3,7 +3,6 @@
 
 	Class: Listset
 
-	formID, i
 	listName, v
 	listType, i
 	defaultValue, v
@@ -17,7 +16,6 @@
 		private $connection;
 		private $errors;
 		private $errorCount;
-		private $formID;
 		private $listName;
 		private $listType;
 		private $defaultValue;
@@ -61,14 +59,6 @@
 
 		function setErrorCount($errorCount){
 			$this->errorCount = $errorCount;
-		}
-
-		function getFormID(){
-			return $this->formID;
-		}
-
-		function setFormID($formID){
-			$this->formID = $formID;
 		}
 
 		function getListName(){
@@ -134,7 +124,6 @@
 		}
 
 		function getFromPost(){
-			$this->setFormID( (isset($_POST["formID"])) ? $_POST["formID"] : $this->getFormID() );
 			$this->setListName( (isset($_POST["listName"])) ? $_POST["listName"] : $this->getListName() );
 			$this->setListType( (isset($_POST["listType"])) ? $_POST["listType"] : $this->getListType() );
 			$this->setDefaultValue( (isset($_POST["defaultValue"])) ? $_POST["defaultValue"] : $this->getDefaultValue() );
@@ -143,7 +132,6 @@
 		}
 
 		function getFromRequest(){
-			$this->setFormID( (isset($_REQUEST["formID"])) ? $_REQUEST["formID"] : $this->getFormID() );
 			$this->setListName( (isset($_REQUEST["listName"])) ? $_REQUEST["listName"] : $this->getListName() );
 			$this->setListType( (isset($_REQUEST["listType"])) ? $_REQUEST["listType"] : $this->getListType() );
 			$this->setDefaultValue( (isset($_REQUEST["defaultValue"])) ? $_REQUEST["defaultValue"] : $this->getDefaultValue() );
@@ -152,7 +140,6 @@
 		}
 
 		function getFromArray($arr){
-			$this->setFormID( (isset($arr["formID"])) ? $arr["formID"] : $this->getFormID() );
 			$this->setListName( (isset($arr["listName"])) ? $arr["listName"] : $this->getListName() );
 			$this->setListType( (isset($arr["listType"])) ? $arr["listType"] : $this->getListType() );
 			$this->setDefaultValue( (isset($arr["defaultValue"])) ? $arr["defaultValue"] : $this->getDefaultValue() );
@@ -181,11 +168,6 @@
 				$log["ErrorCount"] = "modified";
 			}else{
 				$log["ErrorCount"] = "un-modified";
-			}
-			if($this->getFormID() != $listset->getFormID() ){
-				$log["FormID"] = "modified";
-			}else{
-				$log["FormID"] = "un-modified";
 			}
 			if($this->getListName() != $listset->getListName() ){
 				$log["ListName"] = "modified";
@@ -217,7 +199,6 @@
 
 		function save(){
 			$id = $this->getId();
-			$formID = $this->getFormID();
 			$listName = $this->getListName();
 			$listType = $this->getListType();
 			$defaultValue = $this->getDefaultValue();
@@ -226,8 +207,7 @@
 			if( $this->connection ){
 				if( $id != "" ){
 					/*Perform Update Operation*/
-					$query = $this->connection->prepare("UPDATE  `listset` SET `formID` = :formID ,`listName` = :listName ,`listType` = :listType ,`defaultValue` = :defaultValue ,`owner` = :owner ,`private` = :private WHERE `id` = :id");
-					$query->bindParam('formID', $formID);
+					$query = $this->connection->prepare("UPDATE  `listset` SET `listName` = :listName ,`listType` = :listType ,`defaultValue` = :defaultValue ,`owner` = :owner ,`private` = :private WHERE `id` = :id");
 					$query->bindParam('listName', $listName);
 					$query->bindParam('listType', $listType);
 					$query->bindParam('defaultValue', $defaultValue);
@@ -242,8 +222,7 @@
 
 				}else{
 					/*Perform Insert Operation*/
-					$query = $this->connection->prepare("INSERT INTO `listset` (`id`,`formID`,`listName`,`listType`,`defaultValue`,`owner`,`private`) VALUES (NULL,:formID,:listName,:listType,:defaultValue,:owner,:private);");
-					$query->bindParam(':formID', $formID);
+					$query = $this->connection->prepare("INSERT INTO `listset` (`id`,`listName`,`listType`,`defaultValue`,`owner`,`private`) VALUES (NULL,:listName,:listType,:defaultValue,:owner,:private);");
 					$query->bindParam(':listName', $listName);
 					$query->bindParam(':listType', $listType);
 					$query->bindParam(':defaultValue', $defaultValue);
@@ -289,29 +268,6 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `listset` WHERE `id` = :id LIMIT 1");
 				$query->bindParam(':id', $id);
-				$object = null;
-
-				if( $query->execute() ){
-					while( $result = $query->fetchObject("listset") ){
-						$object = $result;
-					}
-
-				}
-				if( is_object( $object ) ){
-					return $object;
-				}
-			}
-		}
-
-		function getByFormID($formID){
-			if( $this->connection ){
-				if( $formID == null && $this->getFormID() != ""){
-					$formID = $this->getFormID();
-				}
-
-				/*Perform Query*/
-				$query = $this->connection->prepare("SELECT * FROM `listset` WHERE `formID` = :formID LIMIT 1");
-				$query->bindParam(':formID', $formID);
 				$object = null;
 
 				if( $query->execute() ){
@@ -451,30 +407,6 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `listset` WHERE `id` = :id");
 				$query->bindParam(':id', $id);
-
-				if( $query->execute() ){
-					while( $result = $query->fetchObject("listset") ){
-						$listsets[] = $result;
-					}
-					if( is_array( $listsets ) ){
-						return $listsets;
-					}else{
-						return array();
-					}
-
-				}
-			}
-		}
-
-		function getListByFormID($formID=null){
-			if( $this->connection ){
-				if( $formID == null && $this->getFormID() != ""){
-					$formID = $this->getFormID();
-				}
-
-				/*Perform Query*/
-				$query = $this->connection->prepare("SELECT * FROM `listset` WHERE `formID` = :formID");
-				$query->bindParam(':formID', $formID);
 
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("listset") ){
