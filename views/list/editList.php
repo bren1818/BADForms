@@ -104,16 +104,17 @@
 	if( $query->execute() ){
 		while( $result = $query->fetchObject("listitemkv") ){
 			?>
-			<li class="item <?php if($listset->getListType() == 1){ echo "itemKV"; }else{ echo "itemVal"; } ?>">
+			<li id="list-item-<?php echo $result->getId(); ?>" class="item <?php if($listset->getListType() == 1){ echo "itemKV"; }else{ echo "itemVal"; } ?>">
 				<form class="listItem_row" id="listitem_<?php echo $result->getId(); ?>">
 					<i class="fa fa-bars"></i>
+                    <input type="hidden" name="tempID" value="<?php echo $result->getId(); ?>" />
 					<input type="hidden" name="rowOrder" value="<?php echo $result->getRowOrder(); ?>" />
 					<input type="hidden" name="id" value="<?php echo $result->getId(); ?>" />
 					<input type="hidden" name="deleted" value="0" />
 					<?php if( $listset->getListType() == 1){ ?>
 					<label for="listitem_<?php echo $result->getId(); ?>_key">Key: <input id="listitem_<?php echo $result->getId(); ?>_key" type="text" name="itemKey" value="<?php echo $result->getItemKey(); ?>"></label>
 					<?php } ?>
-					<label for="listitem_<?php echo $result->getId(); ?>_val">Value: <input id="listitem_<?php echo $result->getId(); ?>_val" type="text" name="itemVal" value="<?php echo $result->getItem(); ?>"></label>
+					<label for="listitem_<?php echo $result->getId(); ?>_val">Value: <input id="listitem_<?php echo $result->getId(); ?>_val" type="text" name="item" value="<?php echo $result->getItem(); ?>"></label>
 					<label><button class="deleteItem"><i class="fa fa-trash-o"></i> Delete</button></label>
 				</form>
 			</li>
@@ -176,14 +177,15 @@
 		$('.btn.addRow').click(function(event){
 			var tempID = new Date().getTime();
 			
-			var html = 	'<li class="item <?php if($listset->getListType() == 1){ echo "itemKV"; }else{ echo "itemVal"; } ?>">' +
+			var html = 	'<li id="list-item-' + tempID + '" class="item <?php if($listset->getListType() == 1){ echo "itemKV"; }else{ echo "itemVal"; } ?>">' +
 						'<form class="listItem_row" id="listitem_' + tempID + '">' +
 						'<i class="fa fa-bars"></i>' + 
+						'<input type="hidden" name="tempID" value="' + tempID + '"/>' +
 						'<input type="hidden" name="rowOrder" value="" />' + 
 						'<input type="hidden" name="id" value="" />' +
 						'<input type="hidden" name="deleted" value="0" />' +
-						<?php if( $listset->getListType() == 1){ ?>'<label for="listitem_' + tempID + '_key">Key: <input id="listitem_' + tempID + '_key" type="text" name="itemKey" value=""></label>' +<?php }	 ?>	 
-						'<label for="listitem_' + tempID + '_val">Value: <input id="listitem_' + tempID + '_val" type="text" name="itemVal" value=""></label>' +
+						<?php if( $listset->getListType() == 1){ ?>'<label for="listitem_' + tempID + '_key">Key: <input id="listitem_' + tempID + '_key" type="text" name="itemkey" value=""></label>' +<?php }	 ?>	 
+						'<label for="listitem_' + tempID + '_val">Value: <input id="listitem_' + tempID + '_val" type="text" name="item" value=""></label>' +
 						'<label><button class="deleteItem"><i class="fa fa-trash-o"></i> Delete</button></label>' +
 						'</form>' +
 						'</li>';
@@ -225,10 +227,15 @@
 			var saveString = JSON.stringify(save);
 			console.log( saveString  );
 			
-			/*
-			$.post( "/saveForm.php", { listID: "<?php echo $listset->getId(); ?>", key: "<?php echo md5( $listset->getId().BASE_ENCRYPTION_SALT ); ?>", items: saveString })
+			
+			$.post( "/views/list/saveList.php", { listID: "<?php echo $listset->getId(); ?>", listType: "<?php echo $listset->getListType(); ?>", key: "<?php echo md5( $listset->getId().BASE_ENCRYPTION_SALT.$listset->getListType() ); ?>", items: saveString })
 			  .done(function( data ) {
 				 //check for codes or errors 
+				 console.log( data );
+				 
+				 //Check Save Date
+				 
+				 /*
 				var obj = jQuery.parseJSON( data );
 				if( obj !== null ){
 					for(var o = 0; o < obj.length; o++){
@@ -240,8 +247,9 @@
 				}
 				alert("Saved"); //disable overlay?
 				//remove deleted??
+				*/
 			});
-			*/
+			
 			
 		});
 		
