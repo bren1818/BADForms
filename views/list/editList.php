@@ -112,7 +112,7 @@
 					<input type="hidden" name="id" value="<?php echo $result->getId(); ?>" />
 					<input type="hidden" name="deleted" value="0" />
 					<?php if( $listset->getListType() == 1){ ?>
-					<label for="listitem_<?php echo $result->getId(); ?>_key">Key: <input id="listitem_<?php echo $result->getId(); ?>_key" type="text" name="itemKey" value="<?php echo $result->getItemKey(); ?>"></label>
+					<label for="listitem_<?php echo $result->getId(); ?>_key">Key: <input id="listitem_<?php echo $result->getId(); ?>_key" type="text" name="itemkey" value="<?php echo $result->getItemKey(); ?>"></label>
 					<?php } ?>
 					<label for="listitem_<?php echo $result->getId(); ?>_val">Value: <input id="listitem_<?php echo $result->getId(); ?>_val" type="text" name="item" value="<?php echo $result->getItem(); ?>"></label>
 					<label><button class="deleteItem"><i class="fa fa-trash-o"></i> Delete</button></label>
@@ -126,7 +126,17 @@
 <button class="btn addRow"><i class="fa fa-plus"></i> Add Row</button> <button class="btn save"><i class="fa fa-floppy-o"></i> Save</button>
 </div>
 <hr />
-<style>
+
+<h2>Preview (as Select Box)</h2>
+<select>
+	<?php if( $listset->getListType() == 1){ ?>
+    
+    <?php }else if( $listset->getListType() == 0 ){ ?>
+    
+    <?php } ?>
+</select>
+
+<style type="text/css">
 	li.item{ list-style: none; }
 
 	li.item label{ margin-right: 10px; }

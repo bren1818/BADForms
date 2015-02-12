@@ -27,6 +27,8 @@
 				
 				$listItem->getFromArray( $data  );
 				
+				//pa( $listItem );
+				
 				if( isset( $data["id"] ) ){
 					$listItem->setId( $data["id"] );
 				}
