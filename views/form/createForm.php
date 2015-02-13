@@ -11,9 +11,11 @@
 		$theform->setEnabled(1);
 		$theform->setCreated( time() );
 		
-		$theform->save();
+		if( $theform->save() > 0 ){
+			header("Location: /views/form/buildForm.php?formID=".$theform->getId());
+		}
 		
-		echo $theform->printFormatted();
+		//echo $theform->printFormatted();
 	}
 ?>
 

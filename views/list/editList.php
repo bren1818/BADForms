@@ -17,6 +17,26 @@
 	}
 	
 ?>
+<link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>"/>
+<style type="text/css">
+	ul#sortable{ margin: 20px 0px; }
+	ul#sortable li{ padding: 5px; margin: 5px 0px; width: auto; }
+	
+	li.item{ list-style: none; }
+
+	li.item label{ margin-right: 10px; }
+
+	i.fa-bars{
+		cursor: move;
+		margin-right: 10px;
+	}
+	
+	li.item.deleted i,
+	li.item.deleted label{
+		display: none;
+	}
+</style>
+
 <form name="listset" id="listset" method="POST" action="" enctype="multipart/form-data">
 
 	<div class="formRow">
@@ -75,7 +95,8 @@
 		</div>
 	</div>
 	<div class="formRow rowCenter">
-		<button id="updateList"><i class="fa fa-floppy-o"></i> Update List Info</button>
+    	<br />
+		<button class="btn" id="updateList"><i class="fa fa-floppy-o"></i> Update List Info</button> <a class="btn" href="/"><i class="fa fa-home"></i> Home</a>
         <input type="hidden" name="listID" value="<?php echo $listset->getId(); ?>"/>
 	</div>
 </form>
@@ -96,13 +117,16 @@
 <?php
 	if( $listset->getListType() == 1){ //1 key-val list
 		$query = $conn->prepare("SELECT * FROM `listitemkv` WHERE `listID` = :listID order by `rowOrder` ASC");
+		$object = "listitemkv";
 	}else{								//0 val list
 		$query = $conn->prepare("SELECT * FROM `listitem` WHERE `listID` = :listID order by `rowOrder` ASC");
+		$object = "listitem";
 	}	
 	
 	$query->bindParam(':listID', $listID);			
 	if( $query->execute() ){
-		while( $result = $query->fetchObject("listitemkv") ){
+		
+		while( $result = $query->fetchObject($object) ){
 			?>
 			<li id="list-item-<?php echo $result->getId(); ?>" class="item <?php if($listset->getListType() == 1){ echo "itemKV"; }else{ echo "itemVal"; } ?>">
 				<form class="listItem_row" id="listitem_<?php echo $result->getId(); ?>">
@@ -115,7 +139,7 @@
 					<label for="listitem_<?php echo $result->getId(); ?>_key">Key: <input id="listitem_<?php echo $result->getId(); ?>_key" type="text" name="itemkey" value="<?php echo $result->getItemKey(); ?>"></label>
 					<?php } ?>
 					<label for="listitem_<?php echo $result->getId(); ?>_val">Value: <input id="listitem_<?php echo $result->getId(); ?>_val" type="text" name="item" value="<?php echo $result->getItem(); ?>"></label>
-					<label><button class="deleteItem"><i class="fa fa-trash-o"></i> Delete</button></label>
+					<label><button class="btn deleteItem"><i class="fa fa-trash-o"></i> Delete</button></label>
 				</form>
 			</li>
 		<?php
@@ -128,29 +152,37 @@
 <hr />
 
 <h2>Preview (as Select Box)</h2>
+<p>Save changes and refresh to see new preview</p>
 <select>
-	<?php if( $listset->getListType() == 1){ ?>
-    
-    <?php }else if( $listset->getListType() == 0 ){ ?>
-    
-    <?php } ?>
+<?php
+	//NEED TO GET THE DEFAULT!
+	$default = $listset->getDefaultValue();
+
+	if( $listset->getListType() == 1){ //1 key-val list
+		$query = $conn->prepare("SELECT * FROM `listitemkv` WHERE `listID` = :listID order by `rowOrder` ASC");
+		$object = "listitemkv";
+	}else{								//0 val list
+		$query = $conn->prepare("SELECT * FROM `listitem` WHERE `listID` = :listID order by `rowOrder` ASC");
+		$object = "listitem";
+	}	
+	$query->bindParam(':listID', $listset->getId());			
+	echo '<option value=""> - </option>';
+	if( $query->execute() ){
+		while( $result = $query->fetchObject($object) ){
+			 if( $listset->getListType() == 1){
+    			//key value
+				echo '<option value="'.$result->getItemKey().'" '.(trim($default) == trim($result->getItemKey()) ? ' selected' : '').'>'.$result->getItem().'</option>';
+    		 }else if( $listset->getListType() == 0 ){
+    			//value value
+				echo '<option value="'.$result->getItem().'" '.(trim($default) == trim($result->getItemKey()) ? ' selected' : '').'>'.$result->getItem().'</option>';
+    		 }
+    	}
+	}
+	?>
 </select>
+<br /><br /><br />
+<a class="btn" href="/"><i class="fa fa-home"></i> Home</a>
 
-<style type="text/css">
-	li.item{ list-style: none; }
-
-	li.item label{ margin-right: 10px; }
-
-	i.fa-bars{
-		cursor: move;
-		margin-right: 10px;
-	}
-	
-	li.item.deleted i,
-	li.item.deleted label{
-		display: none;
-	}
-</style>
 <script type="text/javascript">
 	function orderItems(){
 		$('#ListItems ul li .listItem_row').not('li.deleted').each(function(index){
@@ -180,9 +212,6 @@
 	}
 
 	$(function(){
-		$('#updateList').click(function(event){
-			window.alert("update");
-		});
 		
 		$('.btn.addRow').click(function(event){
 			var tempID = new Date().getTime();
@@ -196,7 +225,7 @@
 						'<input type="hidden" name="deleted" value="0" />' +
 						<?php if( $listset->getListType() == 1){ ?>'<label for="listitem_' + tempID + '_key">Key: <input id="listitem_' + tempID + '_key" type="text" name="itemkey" value=""></label>' +<?php }	 ?>	 
 						'<label for="listitem_' + tempID + '_val">Value: <input id="listitem_' + tempID + '_val" type="text" name="item" value=""></label>' +
-						'<label><button class="deleteItem"><i class="fa fa-trash-o"></i> Delete</button></label>' +
+						'<label><button class="btn deleteItem"><i class="fa fa-trash-o"></i> Delete</button></label>' +
 						'</form>' +
 						'</li>';
 
@@ -243,6 +272,7 @@
 				 //check for codes or errors 
 				 console.log( data );
 				 
+				 window.alert("saved");
 				 //Check Save Date
 				 
 				 /*
@@ -263,6 +293,43 @@
 			
 		});
 		
+		$('#updateList').click(function(event){
+			event.preventDefault();
+			
+			var save = [];
+			$('#listset').each(function(index){
+				var formDataObj = {};
+				$(this).find(":input").not("[type='submit']").not("[type='reset']").not('button').each(function(){
+					var thisInput = $(this);
+					if( $(this).attr('type') == "radio" ){
+						//radio - only record if it is selected
+						if( $(this).is(':checked') ){
+							formDataObj[thisInput.attr("name")] = thisInput.val();
+						}
+					}else{
+						formDataObj[thisInput.attr("name")] = thisInput.val();
+					}
+				});
+				save.push(  formDataObj );
+			});
+			
+			
+			var saveString = JSON.stringify(save);
+			console.log( saveString  );
+			window.alert(" To do - save this: " );
+			
+			/*
+			$.post( "/views/list/saveList.php", { listID: "<?php echo $listset->getId(); ?>", listType: "<?php echo $listset->getListType(); ?>", key: "<?php echo md5( $listset->getId().BASE_ENCRYPTION_SALT.$listset->getListType() ); ?>", formData: saveString })
+			  .done(function( data ) {
+				 //check for codes or errors 
+				 console.log( data );
+				 
+				 window.alert("saved");
+				
+			});
+			*/
+			
+		});
 		
 	});
 </script>

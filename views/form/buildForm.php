@@ -3,8 +3,12 @@
 
 	$securityKey = 1;
 	$ownerID = 1;
-	$formID = 1;
 	
+	if( isset($_REQUEST) && isset($_REQUEST['formID']) ){
+		$formID = $_REQUEST['formID'];
+	}else{
+		$formID = 1;
+	}
 	
 	pageHeader();
 	
@@ -49,12 +53,29 @@
 
 <a class="btn" href="/views/form/formCssJs.php?codeType=1&formID=<?php echo $formID; echo $css;?>"><i class="fa fa-pencil-square-o"></i> Edit Form CSS</a>
 <a class="btn" href="/views/form/formCssJs.php?codeType=2&formID=<?php echo $formID; echo $js; ?>"><i class="fa fa-code"></i> Edit Form Javascript</a>
+<a class="btn" href="/views/form/editForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-pencil-square-o"></i> Edit Form Information</a>
 <a class="btn" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
 
 </div>
 <!-- pull id if applicable -->
+<?php
+	$theForm = ""; //container
+	$query = "SELECT * FROM `theform` WHERE `id` = :formID";
+	$query = $conn->prepare( $query );
+	$query->bindParam(':formID', $formID);
+	
+	if( $query->execute() ){
+		$theForm = $query->fetchObject("theform");
+	}
+?>
 
 
+<h2><?php if( is_object($theForm)){ echo $theForm->getTitle(); } ?></h2>
+<p><?php if( is_object($theForm)){ echo $theForm->getDescription(); } ?></p>
+
+<br />
+<hr />
+<h3>Form Fields</h3>
 <div id="formHolder">
 <ul id="sortable">
 <?php 
