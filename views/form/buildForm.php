@@ -57,6 +57,9 @@
 <a class="btn" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
 
 </div>
+
+<div id="listPicker"></div>
+
 <!-- pull id if applicable -->
 <?php
 	$theForm = ""; //container

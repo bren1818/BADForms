@@ -1,5 +1,43 @@
 	var formID = 1, formOwner = 1;
 	
+	var chosenlist = "";
+	
+	function pickList(){
+		window.alert("pick it!");
+		//update chosenList
+		
+		var dialog;
+		dialog = $( "#listPicker" ).dialog({
+		  autoOpen: true,
+		  height: 600,
+		  width: 600,
+		  modal: true,
+		  title: "List Picker",
+		  buttons: {
+			Cancel: function() {
+			  dialog.dialog( "close" );
+			}
+		  },
+		  close: function() {
+			//form[ 0 ].reset();
+			//allFields.removeClass( "ui-state-error" );
+			chosenlist = "";
+		  },
+		  open: function(){
+			  //$('#listPicker').html('' + new Date().getTime() );
+			  $('#listPicker').html('<div id="availableLists"></div>');
+			  $('#availableLists').load( "/views/list/listLists.php", function() {
+					  alert( "Load was performed." );
+					  //bind events
+			  });
+			  
+			  //bind click data
+		  }
+    	});
+	
+	}
+	
+	
 	function moveUp(item) {
 		var prev = item.prev();
 		if (prev.length == 0)
