@@ -35,6 +35,21 @@
 	li.item.deleted label{
 		display: none;
 	}
+	
+	#preview{
+		width: auto;
+		float: left;
+		min-width: 100px;
+		min-height: 20px;
+		padding: 5px;
+		border: 1px solid #000;
+	}
+	
+	#preview.loading{
+		background-image: url('/css/images/ajax-loader.gif');
+		background-position: center center;	
+		background-repeat: no-repeat;
+	}
 </style>
 
 <form name="listset" id="listset" method="POST" action="" enctype="multipart/form-data">
@@ -69,7 +84,7 @@
 	</div>
 	<div class="formRow">
 		<div class="rowLabel">
-			<label for="defaultValue">Default Value for List:</label>
+			<label for="defaultValue">Default Value for List: (Key in Key-Value Lists)</label>
 		</div>
 		<div class="rowField">
 			<input type="text" name="defaultValue" id="defaultValue" value="<?php echo (isset($listset) ?  $listset->getDefaultValue() : ''); ?>"  title="" />
@@ -153,34 +168,16 @@
 
 <h2>Preview (as Select Box)</h2>
 <p>Save changes and refresh to see new preview</p>
-<select>
-<?php
-	//NEED TO GET THE DEFAULT!
-	$default = $listset->getDefaultValue();
 
-	if( $listset->getListType() == 1){ //1 key-val list
-		$query = $conn->prepare("SELECT * FROM `listitemkv` WHERE `listID` = :listID order by `rowOrder` ASC");
-		$object = "listitemkv";
-	}else{								//0 val list
-		$query = $conn->prepare("SELECT * FROM `listitem` WHERE `listID` = :listID order by `rowOrder` ASC");
-		$object = "listitem";
-	}	
-	$query->bindParam(':listID', $listset->getId());			
-	echo '<option value=""> - </option>';
-	if( $query->execute() ){
-		while( $result = $query->fetchObject($object) ){
-			 if( $listset->getListType() == 1){
-    			//key value
-				echo '<option value="'.$result->getItemKey().'" '.(trim($default) == trim($result->getItemKey()) ? ' selected' : '').'>'.$result->getItem().'</option>';
-    		 }else if( $listset->getListType() == 0 ){
-    			//value value
-				echo '<option value="'.$result->getItem().'" '.(trim($default) == trim($result->getItemKey()) ? ' selected' : '').'>'.$result->getItem().'</option>';
-    		 }
-    	}
-	}
-	?>
-</select>
-<br /><br /><br />
+<div id="preview">
+
+</div>
+
+<button class="btn" id="previewBtn"><i class="fa fa-desktop"></i> Preview</button>
+
+
+<hr />
+<br /><br />
 <a class="btn" href="/"><i class="fa fa-home"></i> Home</a>
 
 <script type="text/javascript">
@@ -198,12 +195,20 @@
 			//check if this item has an id
 			if( $(this).parents('.listItem_row').find("input[name='id']").attr('value') == "" ){
 				//no value has been assigned
-				console.log("No Value");
 				$(this).parents('li').remove();
 			}else{
 				//flag for deletion - hide other elements
 				$(this).parents('.listItem_row').find("input[name='deleted']").attr('value', 1);
 				$(this).parents('li').addClass('deleted');
+				
+				$(this).parents('li').append('<button class="undo btn">Undo</button>');
+				
+				$(this).parents('li').find('.undo.btn').click(function(event){
+					event.preventDefault();	
+					$(this).parent().find('.listItem_row').find("input[name='deleted']").attr('value', 0);
+					$(this).parent().removeClass('deleted');
+					$(this).remove();
+				});
 			}
 			
 			
@@ -264,30 +269,33 @@
 			
 			
 			var saveString = JSON.stringify(save);
-			console.log( saveString  );
+			//console.log( saveString  );
 			
 			
 			$.post( "/views/list/saveList.php", { listID: "<?php echo $listset->getId(); ?>", listType: "<?php echo $listset->getListType(); ?>", key: "<?php echo md5( $listset->getId().BASE_ENCRYPTION_SALT.$listset->getListType() ); ?>", items: saveString })
 			  .done(function( data ) {
 				 //check for codes or errors 
-				 console.log( data );
-				 
-				 window.alert("saved");
-				 //Check Save Date
-				 
-				 /*
+				var deleted = 0;
+				//window.alert( data );
 				var obj = jQuery.parseJSON( data );
 				if( obj !== null ){
 					for(var o = 0; o < obj.length; o++){
-						if( obj[o].tempID != "" && obj[o].id != "" ){
-							console.log( obj[o].tempID + " > " + obj[o].id );
-							$('.form_row_object .row.hidden input[value="' + obj[o].tempID + '"]').parent().find('input[name="id"]').attr('value', obj[o].id);
+						
+						if( obj[o].tempID != "" && obj[o].id != "" && obj[o].deleted != "" ){
+							if( obj[o].deleted == 1 ){
+								$('li#list-item-' + obj[o].tempID).remove();
+								deleted++;
+							}
 						}
 					}
+					window.alert("Updated List - " + (obj.length - deleted) + " saved, " + deleted + " deleted.");
 				}
-				alert("Saved"); //disable overlay?
-				//remove deleted??
-				*/
+				 
+				 
+				 
+				 
+				
+				 
 			});
 			
 			
@@ -315,19 +323,28 @@
 			
 			
 			var saveString = JSON.stringify(save);
-			console.log( saveString  );
-			window.alert(" To do - save this: " );
 			
-			/*
-			$.post( "/views/list/saveList.php", { listID: "<?php echo $listset->getId(); ?>", listType: "<?php echo $listset->getListType(); ?>", key: "<?php echo md5( $listset->getId().BASE_ENCRYPTION_SALT.$listset->getListType() ); ?>", formData: saveString })
+			
+			$.post( "/views/list/saveListInfo.php", { listID: "<?php echo $listset->getId(); ?>", listType: "<?php echo $listset->getListType(); ?>", key: "<?php echo md5( $listset->getId().BASE_ENCRYPTION_SALT.$listset->getListType() ); ?>", formData: saveString })
 			  .done(function( data ) {
-				 //check for codes or errors 
-				 console.log( data );
-				 
-				 window.alert("saved");
+				 if( $.trim(data) == "Saved"){
+					 window.alert("saved");
+				 }else{
+					window.alert( data ); 
+				 }
 				
 			});
-			*/
+			
+			
+		});
+		
+		$('#previewBtn').click(function(event){
+			event.preventDefault();
+			$('#preview').html('');
+			$('#preview').addClass('loading');	
+			$('#preview').load('/views/list/previewList.php?listID=<?php echo $listset->getId(); ?>', function(){
+				$('#preview').removeClass('loading');	
+			});
 			
 		});
 		

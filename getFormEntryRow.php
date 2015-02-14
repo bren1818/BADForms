@@ -94,8 +94,16 @@ function generateHtml($formObject){
 			Choose a list.
 			<a class="btn" onClick="pickList(this)"><i class="fa fa-list-alt"></i> Pick List</a>
 		</label>
-		<input type="hidden" name="listID" value="" />
-        <label class="listName" for="listName"></label>
+		<input type="hidden" name="listID" value="<?php if( $formObject->getListType() == 2){ if(  $formObject->getListID() != "" ){ echo $formObject->getListID(); } } ?>" />
+        <label class="listName" for="listName">
+        	<?php 
+				if( $formObject->getListType() == 2 &&  $formObject->getListID() != "" ){	
+					$Listset = new Listset( $db);
+					$Listset = $Listset->load( $formObject->getListID() );
+					echo '<b>Chosen List</b>: &ldquo;' . $Listset->getListName() . '&rdquo;  <a class="clearPick" onClick="clearPick(this);"><i class="fa fa-times"></i></a>'; 
+				}
+			?>
+        </label>
 	</div>
 	
 	<div class="advancedSettings row">
