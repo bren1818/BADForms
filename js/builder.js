@@ -1,12 +1,12 @@
 	var formID = 1, formOwner = 1;
 	
+	
+	var dialog; //for JQuery UI
 	var chosenlist = "";
 	
-	function pickList(){
-		window.alert("pick it!");
-		//update chosenList
+	function pickList(obj){
+		chosenlist = obj;
 		
-		var dialog;
 		dialog = $( "#listPicker" ).dialog({
 		  autoOpen: true,
 		  height: 600,
@@ -27,14 +27,26 @@
 			  //$('#listPicker').html('' + new Date().getTime() );
 			  $('#listPicker').html('<div id="availableLists"></div>');
 			  $('#availableLists').load( "/views/list/listLists.php", function() {
-					  alert( "Load was performed." );
+					  //alert( "Load was performed." );
 					  //bind events
 			  });
-			  
-			  //bind click data
 		  }
     	});
 	
+	}
+	
+	function pickListItem(listID, listName){
+		var row = $(chosenlist).closest('div.listID');
+		$(row).find('input[name="listID"]').attr('value', listID);
+		$(row).find('label.listName').html( '<b>Chosen List</b>: &ldquo;' + listName + '&rdquo;  <a class="clearPick" onClick="clearPick(this);"><i class="fa fa-times"></i></a>');
+		dialog.dialog("close");	
+	}
+	
+	function clearPick(obj){
+		//to do clear the pick
+		var row = $(obj).closest('div.listID');
+		$(row).find('input[name="listID"]').attr('value', '');
+		$(row).find('label.listName').html( '');
 	}
 	
 	

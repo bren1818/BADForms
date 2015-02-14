@@ -184,7 +184,8 @@ li.datetimepicker .form_row_object .row.encrypted{ display: none; }
 
 
 
-
+#availableLists{ overflow-y: scroll; }
+.clearPick{ cursor: pointer; }
 
 
 

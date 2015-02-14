@@ -92,10 +92,10 @@ function generateHtml($formObject){
 	<div class="row listID">
 		<label for="listID">
 			Choose a list.
-			<a class="btn" onClick="pickList()"><i class="fa fa-list-alt"></i> Pick List</a>
+			<a class="btn" onClick="pickList(this)"><i class="fa fa-list-alt"></i> Pick List</a>
 		</label>
 		<input type="hidden" name="listID" value="" />
-        <label for="listName"></label>
+        <label class="listName" for="listName"></label>
 	</div>
 	
 	<div class="advancedSettings row">
