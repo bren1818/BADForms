@@ -25,10 +25,11 @@
 		  },
 		  open: function(){
 			  //$('#listPicker').html('' + new Date().getTime() );
-			  $('#listPicker').html('<div id="availableLists"></div>');
+			  $('#listPicker').html('<div id="availableLists" class="loading"></div>');
 			  $('#availableLists').load( "/views/list/listLists.php", function() {
 					  //alert( "Load was performed." );
 					  //bind events
+					  $('#availableLists').removeClass('loading');
 			  });
 		  }
     	});

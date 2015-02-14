@@ -184,9 +184,13 @@ li.datetimepicker .form_row_object .row.encrypted{ display: none; }
 
 
 
-#availableLists{ overflow-y: scroll; }
+#availableLists{ overflow-y: auto; overflow-x: hidden; max-height: 500px; }
 .clearPick{ cursor: pointer; }
-
+#availableLists.loading{
+	background-image: url('/css/images/ajax-loader.gif');
+	background-position: center center;	
+	background-repeat: no-repeat;
+}
 
 
 

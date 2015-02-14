@@ -211,8 +211,6 @@
 				});
 			}
 			
-			
-			//window.alert("delete");
 		});	
 	}
 
@@ -269,8 +267,6 @@
 			
 			
 			var saveString = JSON.stringify(save);
-			//console.log( saveString  );
-			
 			
 			$.post( "/views/list/saveList.php", { listID: "<?php echo $listset->getId(); ?>", listType: "<?php echo $listset->getListType(); ?>", key: "<?php echo md5( $listset->getId().BASE_ENCRYPTION_SALT.$listset->getListType() ); ?>", items: saveString })
 			  .done(function( data ) {
@@ -291,14 +287,7 @@
 					window.alert("Updated List - " + (obj.length - deleted) + " saved, " + deleted + " deleted.");
 				}
 				 
-				 
-				 
-				 
-				
-				 
 			});
-			
-			
 		});
 		
 		$('#updateList').click(function(event){
