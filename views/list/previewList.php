@@ -25,9 +25,9 @@
 			 if( $listset->getListType() == 1){
     			//key value
 				echo '<option value="'.$result->getItemKey().'" '.(trim($default) == trim($result->getItemKey()) ? ' selected' : '').'>'.$result->getItem().'</option>';
-    		 }else if( $listset->getListType() == 0 ){
+    		 }else {
     			//value value
-				echo '<option value="'.$result->getItem().'" '.(trim($default) == trim($result->getItemKey()) ? ' selected' : '').'>'.$result->getItem().'</option>';
+				echo '<option value="'.$result->getItem().'" '.(trim($default) == trim($result->getItem()) ? ' selected' : '').'>'.$result->getItem().'</option>';
     		 }
     	}
 	}
