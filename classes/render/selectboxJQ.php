@@ -20,16 +20,12 @@
                 </label>
                 </div>
                 <div class="formRowInput">
-                    <?php
+                   <?php
 						$listType = $this->formObject->getListType();
 						if( $listType == 1 ){
 							//csv
 							$items = explode(",", $this->formObject->getCsList() );	
 							$items = array_map('trim',$items);
-						}else{
-							//existing
-								//-kv list
-								//-std list
 						}
 						
 						$preSelected = trim( $this->formObject->getDefaultVal() );
@@ -42,12 +38,45 @@
                             >
                             <option value="">-</option>
                         <?php
-						//need logic for key value
-						for($cb = 0; $cb < sizeof($items); $cb++){ 
-							$item = $items[$cb];
-						?>
+						if( $listType == 1 ){
+							for($cb = 0; $cb < sizeof($items); $cb++){ 
+								$item = $items[$cb];
+							?>
                             <option value="<?php echo $item; ?>"<?php if($item == $preSelected){ echo " selected"; } ?>><?php echo $item; ?></option>
-                     	<?php } ?>
+                     	<?php } 
+						}else{
+							$conn = getConnection();
+							
+							$listset = new Listset( $conn );
+							$listset = $listset->load( $this->formObject->getListID() );
+							
+							$default = $listset->getDefaultValue();
+							
+							if( $listset->getListType() == 1){ //1 key-val list
+								$query = $conn->prepare("SELECT * FROM `listitemkv` WHERE `listID` = :listID order by `rowOrder` ASC");
+								$object = "listitemkv";
+							}else{								//0 val list
+								$query = $conn->prepare("SELECT * FROM `listitem` WHERE `listID` = :listID order by `rowOrder` ASC");
+								$object = "listitem";
+							}
+								
+							$query->bindParam(':listID', $listset->getId());			
+							//echo '<option value=""> - </option>';
+							if( $query->execute() ){
+								while( $result = $query->fetchObject($object) ){
+									 if( $listset->getListType() == 1){
+										//key value
+										echo '<option value="'.$result->getItemKey().'" '.(trim($default) == trim($result->getItemKey()) ? ' selected' : '').'>'.$result->getItem().'</option>';
+									 }else {
+										//value value
+										echo '<option value="'.$result->getItem().'" '.(trim($default) == trim($result->getItem()) ? ' selected' : '').'>'.$result->getItem().'</option>';
+									 }
+								}
+							}
+													
+						
+						}
+						?>
                      </select>
 				</div>
 			<?php

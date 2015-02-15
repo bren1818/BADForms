@@ -35,6 +35,8 @@
 			if( $type != "no-type-select" ){
 			
 				if( class_exists( $type ) ){
+					
+					//echo $type;
 				
 					$class = new $type($result);
 				

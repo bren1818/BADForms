@@ -99,7 +99,7 @@
 
 <button class="btn" id="addRow"><i class="fa fa-plus"></i> Add Row</button> <button class="btn" id="save"><i class="fa fa-floppy-o"></i> Save</button>
 
-<a class="btn" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
+<a class="btn" target="_blank" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
 <?php
 	pageFooter();
 

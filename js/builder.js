@@ -47,7 +47,7 @@
 		//to do clear the pick
 		var row = $(obj).closest('div.listID');
 		$(row).find('input[name="listID"]').attr('value', '');
-		$(row).find('label.listName').html( '');
+		$(row).find('label.listName').html('');
 	}
 	
 	
