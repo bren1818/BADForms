@@ -26,7 +26,7 @@ function generateHtml($formObject){
 		<label for="type">
 			Choose input type:
 		</label>
-		<select class="select type" name="type">
+		<select class="select type" name="type" title="Select the type of entry object you wish to add to the form">
 			<?php
 				$query = $db->prepare("SELECT * FROM `objecttype` order by `ordered` ASC");		
 				if( $query->execute() ){
@@ -38,39 +38,39 @@ function generateHtml($formObject){
 		</select>
 	</div>
 
-	<div class="row">
+	<div class="row rowLabel">
 		<label for="label">
 			The label text for form field
 		</label>
-		<input type="text" name="label" value="<?php echo $formObject->getLabel(); ?>" />
+		<input type="text" name="label" value="<?php echo $formObject->getLabel(); ?>" required="required" title="This is what will be shown beside the entry field to the form user"/>
 	</div>
 	
-	<div class="row">
+	<div class="row rowName">
 		<label for="name">
 			The name of the field (system)
 		</label>
-		<input type="text" name="name" value="<?php echo $formObject->getName(); ?>" />
+		<input type="text" name="name" value="<?php echo $formObject->getName(); ?>" required="required" title="This is for the admin/data collectors convenience - should be unique name for what this field is"/>
 	</div>
 
 	<div class="row defaultVal">
 		<label for="defaultVal">
 			The default value for form field
 		</label>
-		<input type="text" name="defaultVal" value="<?php echo $formObject->getDefaultVal(); ?>" />
+		<input type="text" name="defaultVal" value="<?php echo $formObject->getDefaultVal(); ?>" title="This is the default value which pre-populates the form"/>
 	</div>
 
 	<div class="row errorText">
 		<label for="errorText">
-			The error text if entered incorrectly
+			The error/title text if entered incorrectly/to give hints
 		</label>
-		<input type="text" name="errorText" value="<?php echo $formObject->getErrorText(); ?>" />
+		<input type="text" name="errorText" value="<?php echo $formObject->getErrorText(); ?>" title="See this popup? This is what it is, this text will also be shown as an error message back to the user on invalid submission"/>
 	</div>
 
 	<div class="row placeholder">
 		<label for="placeholder">
 			The placeholder text 
 		</label>
-		<input type="text" name="placeholder" value="<?php echo $formObject->getPlaceholder(); ?>" />
+		<input type="text" name="placeholder" value="<?php echo $formObject->getPlaceholder(); ?>" title="This is the hint text shown to user - similar to default but when submitted the placeholder has no value"/>
 	</div>
 	
 	<div class="row listType">
@@ -86,13 +86,13 @@ function generateHtml($formObject){
 		<label for="csList">
 			Comma Separated list of values
 		</label>
-		<textarea name="csList"><?php echo $formObject->getCsList(); ?></textarea>
+		<textarea name="csList" title="This is a comma separated list of values which is turned into something the form user can choose from."><?php echo $formObject->getCsList(); ?></textarea>
 	</div>
 	
 	<div class="row listID">
 		<label for="listID">
 			Choose a list.
-			<a class="btn" onClick="pickList(this)"><i class="fa fa-list-alt"></i> Pick List</a>
+			<a class="btn" onClick="pickList(this)" title="clicking this will allow you to choose from your pre-created lists"><i class="fa fa-list-alt"></i> Pick List</a>
 		</label>
 		<input type="hidden" name="listID" value="<?php if( $formObject->getListType() == 2){ if(  $formObject->getListID() != "" ){ echo $formObject->getListID(); } } ?>" />
         <label class="listName" for="listName">
@@ -115,7 +115,7 @@ function generateHtml($formObject){
 			<label for="regex">
 				Regular Expression for validation  
 			</label>
-			<input type="text" name="regex" value="<?php echo $formObject->getRegex(); ?>" />
+			<input type="text" name="regex" title="For power users only - this allows you to write a custom Regular expression to validate input" value="<?php echo $formObject->getRegex(); ?>" />
 		</div>
 			
 		<div class="row minLength">
@@ -150,7 +150,7 @@ function generateHtml($formObject){
 			<label for="classes">
 				CSS Class(es) space separated for styling
 			</label>
-			<input type="text" name="classes" value="<?php echo $formObject->getClasses(); ?>" />
+			<input type="text" name="classes" value="<?php echo $formObject->getClasses(); ?>" title="Used in conjunction with CSS to help style the form elements if required."/>
 		</div>
 		
 		

@@ -76,6 +76,9 @@
 			<?php } ?>
 		</div>
 	</div>
+    <div class="formRow">
+    	*Note Encryption cannot be modified after creation
+    </div>
 	<div class="formRow encryptionSalt encryption-mode-<?php echo $theform->getEncryptionMode();  ?>">
 		<div class="rowLabel">
 			<label for="encryptionSalt"><i class="fa fa-key"></i> Encryption Salt:</label>

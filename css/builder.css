@@ -121,7 +121,14 @@ li.checkboxmutiple .form_row_object .row.maxLength,
 li.checkboxmutiple .form_row_object .row.minVal,
 li.checkboxmutiple .form_row_object .row.maxVal,
 li.checkboxmutiple .form_row_object .row.required,
-li.checkboxmutiple .form_row_object .row.encrypted{ display: none; }
+li.checkboxmutiple .form_row_object .row.encrypted,
+li.checkboxmutiple .form_row_object .advancedSettings .showSettings.btn{ display: none; }
+
+li.checkboxmutiple .form_row_object .advancedSettings{
+	display: block;
+	height: auto;
+}
+
 
 /*look at different list type selection*/
 
@@ -142,6 +149,16 @@ li.selectbox  .form_row_object .row.maxLength,
 li.selectbox  .form_row_object .row.minVal,
 li.selectbox  .form_row_object .row.maxVal,
 li.selectbox  .form_row_object .row.encrypted{ display: none; }
+
+
+/*selectbox*/
+li.selectboxJQ  .form_row_object .row.regex,
+li.selectboxJQ  .form_row_object .row.placeholder,
+li.selectboxJQ  .form_row_object .row.minLength,
+li.selectboxJQ  .form_row_object .row.maxLength,
+li.selectboxJQ  .form_row_object .row.minVal,
+li.selectboxJQ  .form_row_object .row.maxVal,
+li.selectboxJQ  .form_row_object .row.encrypted{ display: none; }
 
 /*radiobutton*/
 li.radiobutton  .form_row_object .row.regex,
@@ -197,6 +214,94 @@ li.datetimepicker .form_row_object .row.encrypted{ display: none; }
 	background-position: center center;	
 	background-repeat: no-repeat;
 }
+
+/*Range Slider*/
+li.rangeslider .form_row_object .row.regex,
+li.rangeslider .form_row_object .row.listType,
+li.rangeslider .form_row_object .row.listID,
+li.rangeslider .form_row_object .row.csList,
+li.rangeslider .form_row_object .row.minLength,
+li.rangeslider .form_row_object .row.maxLength,
+li.rangeslider .form_row_object .row.encrypted,
+li.rangeslider .form_row_object .row.placeholder,
+li.rangeslider .form_row_object .row.required,
+li.rangeslider .form_row_object .advancedSettings .showSettings.btn{
+	display: none;	
+}
+
+li.rangeslider .form_row_object .advancedSettings{
+	display: block;
+	height: auto;
+}
+
+/*Hidden*/
+li.hidden .form_row_object .advancedSettings .showSettings.btn,
+li.hidden .form_row_object .advancedSettings,
+li.hidden .form_row_object .row.rowLabel,
+li.hidden .form_row_object .errorText,
+li.hidden .form_row_object .row.placeholder,
+li.hidden .form_row_object .row.regex,
+li.hidden .form_row_object .row.listType,
+li.hidden .form_row_object .row.listID,
+li.hidden .form_row_object .row.csList{
+	display: none;
+}
+
+/*Email*/
+
+li.email .form_row_object .advancedSettings .showSettings.btn,
+li.email .form_row_object .row.regex,
+li.email .form_row_object .row.listType,
+li.email .form_row_object .row.listID,
+li.email .form_row_object .row.csList,
+li.email .form_row_object .row.minVal,
+li.email .form_row_object .row.maxVal{
+	display: none;
+}
+
+li.email .form_row_object .advancedSettings{
+	display: block;
+	height: auto;
+}
+
+/*Phone Number*/
+li.phone .form_row_object .row.listType,
+li.phone .form_row_object .advancedSettings .showSettings.btn,
+li.phone .form_row_object .row.listID,
+li.phone .form_row_object .row.csList,
+li.phone .form_row_object .row.minVal,
+li.phone .form_row_object .row.maxVal{
+	display: none;
+}
+
+
+
+#formHolder.encrypt-mode-2 li .form_row_object .row.encrypted{
+	display: none!important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

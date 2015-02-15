@@ -7,7 +7,9 @@
 	if( isset($_REQUEST) && isset($_REQUEST['formID']) ){
 		$formID = $_REQUEST['formID'];
 	}else{
-		$formID = 1;
+		//$formID = 1;
+		echo "No Form ID Supplied";
+		exit;
 	}
 	
 	pageHeader();
@@ -80,7 +82,7 @@
 <br />
 <hr />
 <h3>Form Fields</h3>
-<div id="formHolder">
+<div id="formHolder" class="encrypt-mode-<?php echo $theForm->getEncryptionMode(); ?>">
 <ul id="sortable">
 <?php 
 	include "../../getFormEntryRow.php";

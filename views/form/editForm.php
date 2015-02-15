@@ -79,7 +79,7 @@
 			<textarea name="description" id="Description"  title="" ><?php echo (isset($theform) ?  $theform->getDescription() : ''); ?></textarea>
 		</div>
 	</div>
-     <!--
+    
 	<div class="formRow">
 		<div class="rowLabel">
 			<label for="encryptionMode"><i class="fa fa-unlock-alt"></i> Encryption Mode:*</label>
@@ -87,12 +87,20 @@
 		<div class="rowField">
 			<?php $encryptionMode_values = array("All", " Some", " None"); ?>
             <?php if( $theform->getEncryptionMode() == ""){ $theform->setEncryptionMode(2); } /*Default to no Encryption*/ ?>
-			<?php for($sm = 0; $sm < sizeof( $encryptionMode_values); $sm++){ ?>
-				<label><?php echo $encryptionMode_values[$sm]; ?>: <input type="radio" name="encryptionMode" id="encryptionMode" value="<?php echo $sm; ?>" <?php if( ( is_object($theform) &&  $theform->getEncryptionMode() ?  $theform->getEncryptionMode()  : '') == $sm){ echo " checked"; } ?>  required="required" /></label><br />
-			<?php } ?>
+			<?php for($sm = 0; $sm < sizeof( $encryptionMode_values); $sm++){ 
+				if( $sm == $theform->getEncryptionMode() ){
+				?>
+				<label><?php echo $encryptionMode_values[$sm]; ?>: <input disabled="disabled" type="radio" name="encryptionMode" id="encryptionMode" value="<?php echo $sm; ?>" <?php if( ( is_object($theform) &&  $theform->getEncryptionMode() ?  $theform->getEncryptionMode()  : '') == $sm){ echo " checked"; } ?> /></label><br />
+			<?php
+				}
+			 } ?>
 		</div>
 	</div>
-   
+    <div class="formRow">
+    	*Note Encryption cannot be modified after creation
+    </div>
+    
+   <!--
 	<div class="formRow encryptionSalt encryption-mode-<?php echo $theform->getEncryptionMode();  ?>">
 		<div class="rowLabel">
 			<label for="encryptionSalt"><i class="fa fa-key"></i> Encryption Salt:</label>
