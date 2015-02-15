@@ -1,4 +1,4 @@
-	var formID = 1, formOwner = 1;
+	var formOwner = 1;
 	
 	
 	var dialog; //for JQuery UI
@@ -25,7 +25,7 @@
 		  },
 		  open: function(){
 			  //$('#listPicker').html('' + new Date().getTime() );
-			  $('#listPicker').html('<div id="availableLists" class="loading"></div>');
+			  $('#listPicker').html('<div id="availableLists" class="loading" style="height: 400px;"></div>');
 			  $('#availableLists').load( "/views/list/listLists.php", function() {
 					  //alert( "Load was performed." );
 					  //bind events
@@ -77,32 +77,22 @@
 	}
 	
 	function addBefore(item){
-		//window.alert("Add Before");
-		
 		unbindToolbar();
 		$.get( "/getFormEntryRow.php?form=1", function( data ) {
 			$( "#formHolder ul" ).append( data );
 			$( "#formHolder ul li" ).last().prepend( rowFunctions() );
-			//$( "#formHolder ul li select").last().selectmenu();
-			
 			$( "#formHolder ul li" ).last().detach().insertBefore( $(item) );
 			
 			orderItems();
 			bindToolbar();
 		});	
-		
 	}
 	
 	function addAfter(item){
-		//window.alert("Add After");
-		
 		unbindToolbar();
 		$.get( "/getFormEntryRow.php?form=1", function( data ) {
 			$( "#formHolder ul" ).append( data );
 			$( "#formHolder ul li" ).last().prepend( rowFunctions() );
-			
-			//$( "#formHolder ul li select").last().selectmenu();
-			
 			$( "#formHolder ul li" ).last().detach().insertAfter( $(item) );
 		
 			orderItems();
@@ -162,11 +152,27 @@
 					addAfter( t );
 				break;
 				case 'butDelete but btn':
-					$(this).parents('li').addClass('deleted');
-					$(this).parents('li').find('input[name="isDeleted"]').attr('value', 1);
-					window.alert("delete");
-					//if no id, just remove
+					//$(this).parents('li').addClass('deleted');
+					//$(this).parents('li').find('input[name="isDeleted"]').attr('value', 1);
 					
+					if( $(this).parents('li').find("input[name='id']").attr('value') == "" ){
+						//no value has been assigned
+						$(this).parents('li').remove();
+					}else{
+						//flag for deletion - hide other elements
+						$(this).parents('.listItem_row').find("input[name='isDeleted']").attr('value', 1);
+						$(this).parents('li').addClass('deleted');
+						
+						$(this).parents('li').find('form .form_row_object').append('<div class="row undo"><button class="undo btn">Undo Delete</button></div>');
+						
+						$(this).parents('li').find('form .form_row_object').find('.undo.btn').click(function(event){
+							event.preventDefault();	
+							$(this).parents('li').find('.listItem_row').find("input[name='isDeleted']").attr('value', 0);
+							$(this).parents('li').removeClass('deleted');
+							$(this).parent().remove();
+						});
+					}
+
 				break;
 				default:
 					//console.log( c );

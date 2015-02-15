@@ -13,6 +13,7 @@
 	pageHeader();
 	
 	?>
+    <script type="text/javascript">var formID = <?php echo $formID; ?>;</script>
 	<script src="<?php echo JS_DIR.'/builder.js'; ?>"></script>
 	<link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>"/>
 	<?php

@@ -21,7 +21,7 @@ function generateHtml($formObject){
 ?>
 <li class="<?php echo " list-type-".$formObject->getListType(); echo " ".(isset($RowTypes[$formObject->getType()]) ? $RowTypes[$formObject->getType()] : "no-type-select"); ?>">
 <form>
-<div class="form_row_object">
+<div class="form_row_object <?php ?>">
 	<div class="row type">
 		<label for="type">
 			Choose input type:

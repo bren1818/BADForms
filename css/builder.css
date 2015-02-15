@@ -32,11 +32,12 @@ ul#sortable li:last-child .tools .butDown{ display: none; }
 .advancedSettings.show{ height: auto; }
 
 
-
 li.deleted .tools,
 li.deleted .form_row_object .row{
 	display: none;
 }
+
+li.deleted .form_row_object .row.undo,
 li.deleted .form_row_object .row.hidden{ display: block; }
 
 .CodeMirror{
@@ -81,8 +82,10 @@ li.deleted .form_row_object .row.hidden{ display: block; }
 
 /*************************************************************/
 
+li.no-type-select.deleted .form_row_object .row.type,
 li.no-type-select .form_row_object .row{ display: none; }
 li.no-type-select .form_row_object .row.type{ display: block; }
+
 
 /*input*/
 li.input .form_row_object .row.minVal,
@@ -125,7 +128,10 @@ li.checkboxmutiple .form_row_object .row.encrypted{ display: none; }
 li .row.csList,
 li .row.listID{ display: none; }
 
+li.list-type-2 .form_row_object .row.defaultVal{ display: none; }
+
 li.list-type-2 .form_row_object .row.listID{ display: block; }
+
 li.list-type-1 .form_row_object .row.csList{ display: block; }
 
 /*selectbox*/
