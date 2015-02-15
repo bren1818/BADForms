@@ -19,4 +19,16 @@
 	function pa( $arr ){
 		echo '<pre>'.print_r($arr,true).'</pre>';
 	}
+	
+	function getdatetime($dateString){
+			return date('Y-m-d H:i:s', strtotime($dateString) );
+	}
+	
+	function getinputdate($datetime){
+		if( $datetime == "" || $datetime == "0000-00-00 00:00:00"){
+			return "";
+		}else{
+			return date('m/d/Y',strtotime($datetime) );
+		}
+	}
 ?>
