@@ -54,25 +54,25 @@
 					if( $isListType ){
 						if( is_array($_POST[$postBackID]) ){
 							$arr = $_POST[$postBackID];
-							$posBackValue = implode(",",$arr);
+							$postBackValue = implode(",",$arr);
 						}else{
-							$posBackValue = $_POST[$postBackID];
+							$postBackValue = (isset($_POST[$postBackID]) ? $_POST[$postBackID] : "");
 						}
 					}else{
-						$posBackValue = $_POST[$postBackID];
+						$postBackValue = (isset($_POST[$postBackID]) ? $_POST[$postBackID] : "");
 					}
 				}
 				
-				if( $posBackValue != "" && $encryptData ){
-					$encryptedD = $encryptor->encrypt( $posBackValue );
-					$posBackValue = $encryptedD;
+				if( $postBackValue != "" && $encryptData ){
+					$encryptedD = $encryptor->encrypt( $postBackValue );
+					$postBackValue = $encryptedD;
 				}
 				
 				//check the data for errors...
 				if( isset( $inputName ) && $inputName != "" ){
-					$capturedData[ $counter."_$inputName" ] = $posBackValue;		
+					$capturedData[ $counter."_$inputName" ] = $postBackValue;		
 				}else{
-					$capturedData[ $counter."_$postBackID" ] = $posBackValue;
+					$capturedData[ $counter."_$postBackID" ] = $postBackValue;
 				}
 				
 				$counter++;
