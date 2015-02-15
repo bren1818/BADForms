@@ -9,10 +9,14 @@
 	if( $query->execute() ){
 		while( $result = $query->fetchObject("Theform") ){	
 			echo '<div class="row">';
-				echo '<p><a target="_blank" href="/views/form/buildForm.php?formID='.$result->getId().'"><i class="fa fa-pencil"></i> '.$result->getTitle().' </a> - <a target="_blank" href="/renderForm.php?formID='.$result->getId().'"><i class="fa fa-desktop"></i> Preview Form</a></p>';
+				//active?
+				//last modified
+				//created
+			
+				echo '<p><a  href="/views/form/buildForm.php?formID='.$result->getId().'"><i class="fa fa-pencil"></i> &ldquo;'.$result->getTitle().'&rdquo; </a> - <a target="_blank" href="/renderForm.php?formID='.$result->getId().'"><i class="fa fa-desktop"></i> Preview Form</a></p>';
 			echo '</div>';
 		}
 	}
 	
-	echo '<div class="row"><a class="btn" target="_blank" href="/views/form/createForm.php"><i class="fa fa-list-alt"></i> Create Form</a></div>';
+	echo '<div class="row"><a class="btn" href="/views/form/createForm.php"><i class="fa fa-plus"></i> Create Form</a></div>';
 ?>

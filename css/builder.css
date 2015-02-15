@@ -62,7 +62,7 @@ li.deleted .form_row_object .row.hidden{ display: block; }
   -moz-box-shadow: 0px 1px 3px #666666;
   box-shadow: 0px 1px 3px #666666;
   font-family: Arial;
-  color: #ffffff;
+  color: #ffffff !important;
   font-size: 15px;
   padding: 10px 10px 10px 10px;
   text-decoration: none;

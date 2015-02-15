@@ -17,11 +17,12 @@
 	}
 	
 ?>
-<h1>Build List</h1>
-
+<link rel="stylesheet" href="<?php echo CSS_DIR.'/formBuilder.css'; ?>"/>
 
 <form name="listset" id="listset" method="POST" action="" enctype="multipart/form-data">
-
+	<div class="formRow">
+    	<h1>Build List</h1>
+    </div>
 	<div class="formRow">
 		<div class="rowLabel">
 			<label for="listName">List Name:*</label>

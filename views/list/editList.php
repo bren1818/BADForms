@@ -18,6 +18,7 @@
 	
 ?>
 <link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>"/>
+<link rel="stylesheet" href="<?php echo CSS_DIR.'/formBuilder.css'; ?>"/>
 <style type="text/css">
 	ul#sortable{ margin: 20px 0px; }
 	ul#sortable li{ padding: 5px; margin: 5px 0px; width: auto; }
@@ -117,6 +118,7 @@
 </form>
 
 <hr />
+<div class="formRow">
 <div id="ListItems">
 <?php
 	if( $listset->getListType() == 1){
@@ -180,6 +182,7 @@
 <br /><br />
 <a class="btn" href="/"><i class="fa fa-home"></i> Home</a>
 
+</div>
 <script type="text/javascript">
 	function orderItems(){
 		$('#ListItems ul li .listItem_row').not('li.deleted').each(function(index){
