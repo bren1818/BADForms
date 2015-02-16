@@ -8,6 +8,11 @@
 	include "radiobutton.php";
 	include "datepicker.php";
 	include "rangeslider.php";
+	
+	include "email.php";
+	include "hidden.php";
+	include "phone.php";
+	
 	//include "timepicker.php";
 	//include "datetimepicker.php";	
 ?>

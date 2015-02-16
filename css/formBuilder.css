@@ -35,9 +35,6 @@ select:valid{
 
 input:valid{
 	box-shadow: none;
-	background-image: url('images/correct.png');
-	background-position: 95%;
-	background-repeat: no-repeat;
 	border: 1px solid #0f0;
 }
 

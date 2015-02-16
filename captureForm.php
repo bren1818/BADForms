@@ -14,6 +14,13 @@
 		if( isset($_POST) && isset($_POST['formID']) ){
 			if( is_int( (int)$_POST['formID'] ) ){
 				$formID = $_POST['formID'];
+				
+				//load formID
+				//sunrise
+				//sunset
+				//encryption mode
+				//encryption key
+				
 				$encryptionKey = BASE_ENCRYPTION_SALT."";
 				
 				//if requires Encryption
@@ -82,19 +89,9 @@
 		echo "Stored Data";
 		pa( $capturedData );	
 		
-		
-		//echo "Test Decrypt Each<br />";
-		
-		//foreach($capturedData as $key => $value){
-		//	echo $key." -> ".$encryptor->decrypt($value).'<br />';
-		//}
-	
-	
-	
-	
-	
-	
-	
+		//store in DB as flat JSON or as key-value 
+		//submission (id) - form (id) - date - ip
+		//submissionID-key-value
 	
 	
 		exit;
