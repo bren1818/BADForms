@@ -160,14 +160,14 @@
 						$(this).parents('li').remove();
 					}else{
 						//flag for deletion - hide other elements
-						$(this).parents('.listItem_row').find("input[name='isDeleted']").attr('value', 1);
+						$(this).parents('li').find("input[name='isDeleted']").attr('value', 1);
 						$(this).parents('li').addClass('deleted');
 						
 						$(this).parents('li').find('form .form_row_object').append('<div class="row undo"><button class="undo btn">Undo Delete</button></div>');
 						
 						$(this).parents('li').find('form .form_row_object').find('.undo.btn').click(function(event){
 							event.preventDefault();	
-							$(this).parents('li').find('.listItem_row').find("input[name='isDeleted']").attr('value', 0);
+							$(this).parents('li').find("input[name='isDeleted']").attr('value', 0);
 							$(this).parents('li').removeClass('deleted');
 							$(this).parent().remove();
 						});
@@ -239,8 +239,11 @@
 				if( obj !== null ){
 					for(var o = 0; o < obj.length; o++){
 						if( obj[o].tempID != "" && obj[o].id != "" ){
-							console.log( obj[o].tempID + " > " + obj[o].id );
-							$('.form_row_object .row.hidden input[value="' + obj[o].tempID + '"]').parent().find('input[name="id"]').attr('value', obj[o].id);
+							if( obj[o].deleted == 1 ){
+								$('#' + obj[o].tempID).parents('li').remove();
+							}else{
+								$('.form_row_object .row.hidden input[value="' + obj[o].tempID + '"]').parent().find('input[name="id"]').attr('value', obj[o].id);
+							}
 						}
 					}
 				}

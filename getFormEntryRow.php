@@ -3,6 +3,7 @@ require_once( "includes/include.php" );
 
 function generateHtml($formObject){
 	$db = getConnection();
+	$tempID = filter_var(microtime(true), FILTER_SANITIZE_NUMBER_INT);
 	
 	if( ! isset($formObject) || $formObject == "" || ! is_object($formObject) ){
 		$formObject = new formobject();
@@ -20,8 +21,8 @@ function generateHtml($formObject){
 	ob_start();
 ?>
 <li class="<?php echo " list-type-".$formObject->getListType(); echo " ".(isset($RowTypes[$formObject->getType()]) ? $RowTypes[$formObject->getType()] : "no-type-select"); ?>">
-<form>
-<div class="form_row_object <?php ?>">
+<form id="<?php if( isset($formObject) && $formObject->getId() != ""){ echo $formObject->getId(); $tempID = $formObject->getId(); }else{ echo $tempID;  } ?>">
+<div class="form_row_object">
 	<div class="row type">
 		<label for="type">
 			Choose input type:
@@ -182,7 +183,7 @@ function generateHtml($formObject){
 		<input type="hidden" name="id" value="<?php echo $formObject->getId(); ?>" />
 		<input type="hidden" name="rowOrder" value="<?php echo $formObject->getRowOrder(); ?>" />
 		<input type="hidden" name="isDeleted" value="<?php echo "0"; ?>" />
-		<input type="hidden" name="tempID" value="<?php md5($formObject->getId()) ?>" />
+		<input type="hidden" name="tempID" value="<?php echo $tempID; ?>" />
 	</div>
 </div>
 </form>
