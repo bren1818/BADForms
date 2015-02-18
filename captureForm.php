@@ -15,9 +15,36 @@
 			if( is_int( (int)$_POST['formID'] ) ){
 				$formID = $_POST['formID'];
 				
-				//load formID
-				//sunrise
-				//sunset
+				
+				$Theform = new Theform($conn);
+				$Theform = $Theform->load($formID);
+				
+				if( is_object($Theform) ){
+					$now = time();
+					if( $Theform->getSunrise() == "0000-00-00 00:00:00"){
+						//ignore it
+					}else{
+						$sunrise = strtotime( $Theform->getSunrise() );
+						if( $now < $sunrise ){
+							echo "Form not available yet to accept submissions";
+							exit;
+						}
+					}
+				
+					if( $Theform->getSunset() == "0000-00-00 00:00:00"){
+						//ignore it
+					}else{
+						$sunset = strtotime( $Theform->getSunset() );
+						if( $now > $sunset ){
+							echo "Form no longer available to recieve submissions";
+							exit;
+						}
+					}
+				}else{
+					echo "Could not load Form...";
+					exit;
+				}
+				
 				//encryption mode
 				//encryption key
 				
@@ -43,6 +70,8 @@
 	
 		$capturedData = array();
 		$counter = 1;
+		
+		$saveRow = array();
 	
 		if( $query->execute() ){
 			while( $result = $query->fetchObject("formobject") ){
@@ -54,6 +83,8 @@
 				$encryptData = $result->getEncrypted();
 				$required = $result->getRequired();
 				$isListType = (($result->getListType() == 1 || $result->getListType() == 2) ? 1 : 0);
+				
+				
 				//get type, use type to get value & error etc based on name??
 				
 				
@@ -82,12 +113,19 @@
 					$capturedData[ $counter."_$postBackID" ] = $postBackValue;
 				}
 				
+				$saveRow[] = array("item" => $counter, "encrypted" => ($encryptData == 1 ? 1 : 0), "name" => $inputName, "value" => $postBackValue);
+				
 				$counter++;
+				
+				
 			}
 			
 		}
 		echo "Stored Data";
 		pa( $capturedData );	
+		
+		
+		echo json_encode( $saveRow );
 		
 		//store in DB as flat JSON or as key-value 
 		//submission (id) - form (id) - date - ip

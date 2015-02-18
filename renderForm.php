@@ -10,8 +10,34 @@
 	}
 	
 	//try loading form
-	//sun rise
-	//sunset
+	$Theform = new Theform($conn);
+	$Theform = $Theform->load($formID);
+	
+	if( is_object($Theform) ){
+		$now = time();
+		if( $Theform->getSunrise() == "0000-00-00 00:00:00"){
+			//ignore it
+		}else{
+			$sunrise = strtotime( $Theform->getSunrise() );
+			if( $now < $sunrise ){
+				echo "Form not available yet";
+				exit;
+			}
+		}
+	
+		if( $Theform->getSunset() == "0000-00-00 00:00:00"){
+			//ignore it
+		}else{
+			$sunset = strtotime( $Theform->getSunset() );
+			if( $now > $sunset ){
+				echo "Form no longer available";
+				exit;
+			}
+		}
+	}else{
+		echo "Could not load Form...";
+		exit;
+	}
 	
 	
 	$types = "Select `id`, `name` FROM `objecttype`";
