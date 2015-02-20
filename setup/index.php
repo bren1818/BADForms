@@ -1,36 +1,39 @@
 <?php
-	//include "../includes/db.php";
 	include "../includes/include.php";
+	pageHeader();
 ?>
-<h1>Brens Awesome Dynamic Forms Setup Wizard</h1>
-
+<h1>Brens Awesome Dynamic Forms</h1>
+<h3>Setup Wizard <i class="fa fa-magic"></i></h3>
 <?php
+	set_time_limit(0);
+	
 	//Get Database Connection
 	$db = getDB();
 	$dbName = DATABASE_NAME;
 	
 	if( DATABASE_NAME == "" ){
-		echo "<p>Database name not defined</p>";
+		echo "<p><i class='fa fa-database'></i> Database name not defined</p>";
 		logMessage( "Database name not defined" , "setup.txt" );
 		exit;
 	}
 	
-	echo "<p>Beginning Setup...</p>";
+	echo "<p><i class='fa fa-cog fa-spin'></i> Beginning Setup...</p>";
+	flush();
 	
 	/*Check if Table Exists*/
 	logMessage( "Checking for Table '".$dbName."'" , "setup.txt" );
 	if( dbExists($db,$dbName) == 0  ){
 		
-		echo "<p>Database '".$dbName."' doesn't exist. Creating it...</p>";
+		echo "<p><i class='fa fa-database'></i> Database '".$dbName."' doesn't exist. Creating it...</p>";
 		logMessage( "Database '".$dbName."' doesn't exist. Creating it..." , "setup.txt" );
 		
 		/*Create Database*/
 		try{
 			$db->exec("create database ".$dbName);
-			echo "<p>Database Created!...</p>";
+			echo "<p><i class='fa fa-database'></i> Database Created!...</p>";
 			logMessage( "Database ".$dbName." created!" , "setup.txt" );
 		}catch (Exception $e) {
-			echo "<p>Database could not be created!</p>";
+			echo "<p><i class='fa fa-exclamation-triangle'></i> Database could not be created!</p>";
 			logMessage( "Database ".$dbName." could not be created!" , "setup.txt" );	
 			exit;
 		}
@@ -39,68 +42,79 @@
 		
 		/*Verify database*/
 		if( dbExists($db,$dbName) == 1 ){
-			echo "<p>Creation of '".$dbName."' verified!...</p>";
+			echo "<p><i class='fa fa-check'></i> Creation of '".$dbName."' verified!...</p>";
 			logMessage( "Database '".$dbName."' verified!" , "setup.txt" );
 		}else{
-			echo "<p>Creation of '".$dbName."' could not be verified...</p>";
+			echo "<p><i class='fa fa-exclamation-triangle'></i> Creation of '".$dbName."' could not be verified...</p>";
 			logMessage( "Database '".$dbName."' could not be verified..." , "setup.txt" );
 			exit;
 		}
 		
 	}else{
-		echo "<p>Database: '".$dbName."' exists, continuing...</p>";	
+		echo "<p><i class='fa fa-database'></i> Database: '".$dbName."' exists, continuing...</p>";	
 	}
 	
 	/*Create Tables*/
+	flush();
 	
-	echo '<p>Creating Tables...</p>';
-	
+	echo '<p><i class="fa fa-table"></i> Creating Tables...</p>';
+	flush();
 	$db = getConnection();
 	
 	$query = "CREATE TABLE  `theform` (
-		`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-		`title` VARCHAR( 100 ),
-		`description` VARCHAR( 100 ),
-		`encryptionMode` INTEGER,
-		`encryptionSalt` VARCHAR( 100 ),
-		`created` DATETIME,
-		`enabled` INTEGER,
-		`sunrise` DATETIME,
-		`sunset` DATETIME,
-		`jqVersion` VARCHAR( 10 ),
-		`jqTheme` VARCHAR( 50 ),
-		`owner` INTEGER
-		);";
+`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+`title` VARCHAR( 60 ),
+`description` VARCHAR( 60 ),
+`encryptionMode` INTEGER,
+`encryptionSalt` VARCHAR( 60 ),
+`created` DATETIME,
+`lastUpdated` DATETIME,
+`enabled` INTEGER,
+`sunrise` DATETIME,
+`sunset` DATETIME,
+`jqVersion` VARCHAR( 10 ),
+`jqTheme` VARCHAR( 60 ),
+`owner` INTEGER,
+`isGroup` BOOLEAN,
+`useCaching` BOOLEAN,
+`lastCacheTime` DATETIME
+);";
 	
 	createAndTestTable($db, "theform", $query);
 	
+	ob_flush();
+	flush();
 	//tool tip
-	$query = "CREATE TABLE  `formobject` (
-		`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-		`type` INTEGER,
-		`label` VARCHAR( 55 ),
-		`name` VARCHAR( 55 ),
-		`defaultVal` VARCHAR( 55 ),
-		`errorText` VARCHAR( 55 ),
-		`placeholder` VARCHAR( 55 ),
-		`regex` VARCHAR( 255 ),
-		`minVal` INTEGER,
-		`maxVal` INTEGER,
-		`minLength` INTEGER,
-		`maxLength` INTEGER,
-		`listType` INTEGER,
-		`listID` INTEGER,
-		`csList` VARCHAR( 255 ),
-		`classes` VARCHAR( 100 ),
-		`required` INTEGER,
-		`encrypted` INTEGER,
-		`formID` INTEGER,
-		`rowOrder` INTEGER
-		);";
+	$query = "CREATE TABLE  IF NOT EXISTS `formobject` (
+`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+`type` INTEGER,
+`label` VARCHAR( 60 ),
+`name` VARCHAR( 60 ),
+`defaultVal` VARCHAR( 60 ),
+`errorText` VARCHAR( 60 ),
+`placeholder` VARCHAR( 60 ),
+`regex` VARCHAR( 60 ),
+`minVal` INTEGER,
+`maxVal` INTEGER,
+`minLength` INTEGER,
+`maxLength` INTEGER,
+`listType` INTEGER,
+`listID` INTEGER,
+`csList` VARCHAR( 255 ),
+`classes` VARCHAR( 100 ),
+`required` INTEGER,
+`encrypted` INTEGER,
+`formID` INTEGER,
+`rowOrder` INTEGER,
+`lastUpdated` DATETIME,
+`publicFormObject` BOOLEAN
+);";
+	
+	ob_flush();flush();
 	
 	createAndTestTable($db, "formobject", $query);
 	
-	$query = "CREATE TABLE  `objecttype` (
+	$query = "CREATE TABLE  IF NOT EXISTS `objecttype` (
 		`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
 		`name` VARCHAR( 45 ),
 		`description` VARCHAR( 45 ),
@@ -110,7 +124,9 @@
 				
 	createAndTestTable($db, "objecttype", $query);
 	
-	echo "<p>Creating types...</p>";
+	ob_flush();flush();
+	
+	echo "<p><i class='fa fa-bars'></i> Creating types...</p>";
 	
 	$query = "INSERT INTO `objecttype` (`id`, `name`, `description`, `isListType`, `ordered`) VALUES 
 		(NULL, 'no-type-select', 	'-=Select=-', '0', '0'),
@@ -120,8 +136,7 @@
 		(NULL, 'checkboxmutiple', 	'Checkbox - list', '1', '4'),
 		(NULL, 'selectbox', 		'Select box', '1', '5'),
 		(NULL, 'radiobutton', 		'Radio Button', '1', '6'),
-		(NULL, 'datepicker', 		'Date Picker', '0', '7'),
-		
+		(NULL, 'datepicker', 		'Date Picker', '0', '7'),	
 		(NULL, 'rangeslider', 		'Range Slider', '0', '8'),
 		(NULL, 'hidden', 			'Hidden', '0', '9'),
 		(NULL, 'email', 			'Email', '0', '10'),
@@ -134,28 +149,40 @@
 	$query = $db->prepare($query);
 	if( $query->execute() ){
 		$count = $query->rowCount();
-		echo "<p>Created ".$count." object types</p>";
+		echo "<p><i class='fa fa-plus'></i> Created ".$count." object types</p>";
 	}
 	
+	ob_flush();flush();
 	
 	
-	
-	
-	$query = "CREATE TABLE IF NOT EXISTS `formcode` (  `id` int(11) NOT NULL AUTO_INCREMENT,  `formID` int(11) NOT NULL,  `codeType` int(11) NOT NULL,  `version` int(11) NOT NULL,  `code` longtext NOT NULL,  PRIMARY KEY (`id`) );";
+	$query = "CREATE TABLE  IF NOT EXISTS `formcode` (
+`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+`formID` INTEGER,
+`codeType` INTEGER,
+`version` INTEGER,
+`code` LONGTEXT,
+`lastUpdate` DATETIME
+);";
 	
 	createAndTestTable($db, "formcode", $query);
+	
+	ob_flush();flush();
 	
 	$query = "CREATE TABLE IF NOT EXISTS `jquerythemes` (  `themeName` varchar(55) NOT NULL,  `themeVersion` varchar(6) NOT NULL);";
 	
 	createAndTestTable($db, "jquerythemes", $query);
+	
+	ob_flush();flush();
 	
 	$query = "INSERT INTO `jquerythemes` (`themeName`, `themeVersion`) VALUES ('base', '1.11.2'), ('black-tie', '1.11.2'), ('blitzer', '1.11.2'), ('cupetino', '1.11.2'), ('dark-hive', '1.11.2'), ('dot-luv', '1.11.2'), ('eggplant', '1.11.2'), ('excite-bike', '1.11.2'), ('flick', '1.11.2'), ('hot-sneaks', '1.11.2'), ('humanity', '1.11.2'), ('le-frog', '1.11.2'), ('mint-choc', '1.11.2'), ('overcaset', '1.11.2'), ('pepper-grinder', '1.11.2'), ('redmond', '1.11.2'), ('smoothness', '1.11.2'), ('south-street', '1.11.2'), ('start', '1.11.2'), ('sunny', '1.11.2'), ('swanky-purse', '1.11.2'), ('ui-darkness', '1.11.2'), ('trontastic', '1.11.2'), ('ui-darkness', '1.11.2'), ('ui-lightness', '1.11.2'), ('vader', '1.11.2');";
 	
 	$query = $db->prepare($query);
 	if( $query->execute() ){
 		$count = $query->rowCount();
-		echo "<p>Added ".$count." jquery themes</p>";
+		echo "<p><i class='fa fa-plus'></i> Added ".$count." jquery themes</p>";
 	}
+	
+	ob_flush();flush();
 	
 	$query = "CREATE TABLE  IF NOT EXISTS `listset` (
 		`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -168,6 +195,7 @@
 	
 	createAndTestTable($db, "listset", $query);
 	
+	ob_flush();flush();
 	
 	$query = "CREATE TABLE IF NOT EXISTS `listitem` (
 		`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -178,7 +206,9 @@
 	
 	createAndTestTable($db, "listitem", $query);
 	
-	$query = "CREATE TABLE  `listitemkv` (
+	ob_flush();flush();
+	
+	$query = "CREATE TABLE   IF NOT EXISTS `listitemkv` (
 		`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
 		`listID` INTEGER,
 		`itemkey` VARCHAR( 60 ),
@@ -187,9 +217,9 @@
 		
 	createAndTestTable($db, "listitemkv", $query);
 
-
+	ob_flush();flush();
 	
-	echo "<p>Setup Complete... Login <a href='../index.php'>here</a></p>";
+	echo "<p>Setup Complete...<i class='fa fa-check'></i></p><p><a class='btn' href='../index.php'><i class='fa fa-sign-out'></i> Login</a></p>";
 	
-
+	pageFooter();
 ?>

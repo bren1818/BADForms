@@ -22,6 +22,8 @@
 	encrypted, i
 	formID, i
 	rowOrder, i
+	lastUpdated, dt
+	publicFormObject, bool
 
 */
 
@@ -49,6 +51,8 @@
 		private $encrypted;
 		private $formID;
 		private $rowOrder;
+		private $lastUpdated;
+		private $publicFormObject;
 
 
 		/*Constructor*/
@@ -241,6 +245,22 @@
 			$this->rowOrder = $rowOrder;
 		}
 
+		function getLastUpdated(){
+			return $this->lastUpdated;
+		}
+
+		function setLastUpdated($lastUpdated){
+			$this->lastUpdated = $lastUpdated;
+		}
+
+		function getPublicFormObject(){
+			return $this->publicFormObject;
+		}
+
+		function setPublicFormObject($publicFormObject){
+			$this->publicFormObject = $publicFormObject;
+		}
+
 		/*Special Functions*/
 		function load($id = null){
 			if( $this->connection ){
@@ -283,6 +303,8 @@
 			$this->setEncrypted( (isset($_POST["encrypted"])) ? $_POST["encrypted"] : $this->getEncrypted() );
 			$this->setFormID( (isset($_POST["formID"])) ? $_POST["formID"] : $this->getFormID() );
 			$this->setRowOrder( (isset($_POST["rowOrder"])) ? $_POST["rowOrder"] : $this->getRowOrder() );
+			$this->setLastUpdated( (isset($_POST["lastUpdated"])) ? $_POST["lastUpdated"] : $this->getLastUpdated() );
+			$this->setPublicFormObject( (isset($_POST["publicFormObject"])) ? $_POST["publicFormObject"] : $this->getPublicFormObject() );
 		}
 
 		function getFromRequest(){
@@ -305,6 +327,8 @@
 			$this->setEncrypted( (isset($_REQUEST["encrypted"])) ? $_REQUEST["encrypted"] : $this->getEncrypted() );
 			$this->setFormID( (isset($_REQUEST["formID"])) ? $_REQUEST["formID"] : $this->getFormID() );
 			$this->setRowOrder( (isset($_REQUEST["rowOrder"])) ? $_REQUEST["rowOrder"] : $this->getRowOrder() );
+			$this->setLastUpdated( (isset($_REQUEST["lastUpdated"])) ? $_REQUEST["lastUpdated"] : $this->getLastUpdated() );
+			$this->setPublicFormObject( (isset($_REQUEST["publicFormObject"])) ? $_REQUEST["publicFormObject"] : $this->getPublicFormObject() );
 		}
 
 		function getFromArray($arr){
@@ -327,6 +351,8 @@
 			$this->setEncrypted( (isset($arr["encrypted"])) ? $arr["encrypted"] : $this->getEncrypted() );
 			$this->setFormID( (isset($arr["formID"])) ? $arr["formID"] : $this->getFormID() );
 			$this->setRowOrder( (isset($arr["rowOrder"])) ? $arr["rowOrder"] : $this->getRowOrder() );
+			$this->setLastUpdated( (isset($arr["lastUpdated"])) ? $arr["lastUpdated"] : $this->getLastUpdated() );
+			$this->setPublicFormObject( (isset($arr["publicFormObject"])) ? $arr["publicFormObject"] : $this->getPublicFormObject() );
 		}
 
 		function compareTo($formobject){
@@ -446,6 +472,16 @@
 			}else{
 				$log["RowOrder"] = "un-modified";
 			}
+			if($this->getLastUpdated() != $formobject->getLastUpdated() ){
+				$log["LastUpdated"] = "modified";
+			}else{
+				$log["LastUpdated"] = "un-modified";
+			}
+			if($this->getPublicFormObject() != $formobject->getPublicFormObject() ){
+				$log["PublicFormObject"] = "modified";
+			}else{
+				$log["PublicFormObject"] = "un-modified";
+			}
 		return $log;
 		}
 
@@ -470,10 +506,12 @@
 			$encrypted = $this->getEncrypted();
 			$formID = $this->getFormID();
 			$rowOrder = $this->getRowOrder();
+			$lastUpdated = $this->getLastUpdated();
+			$publicFormObject = $this->getPublicFormObject();
 			if( $this->connection ){
 				if( $id != "" ){
 					/*Perform Update Operation*/
-					$query = $this->connection->prepare("UPDATE  `formobject` SET `type` = :type ,`label` = :label ,`name` = :name ,`defaultVal` = :defaultVal ,`errorText` = :errorText ,`placeholder` = :placeholder ,`regex` = :regex ,`minVal` = :minVal ,`maxVal` = :maxVal ,`minLength` = :minLength ,`maxLength` = :maxLength ,`listType` = :listType ,`listID` = :listID ,`csList` = :csList ,`classes` = :classes ,`required` = :required ,`encrypted` = :encrypted ,`formID` = :formID ,`rowOrder` = :rowOrder WHERE `id` = :id");
+					$query = $this->connection->prepare("UPDATE  `formobject` SET `type` = :type ,`label` = :label ,`name` = :name ,`defaultVal` = :defaultVal ,`errorText` = :errorText ,`placeholder` = :placeholder ,`regex` = :regex ,`minVal` = :minVal ,`maxVal` = :maxVal ,`minLength` = :minLength ,`maxLength` = :maxLength ,`listType` = :listType ,`listID` = :listID ,`csList` = :csList ,`classes` = :classes ,`required` = :required ,`encrypted` = :encrypted ,`formID` = :formID ,`rowOrder` = :rowOrder ,`lastUpdated` = :lastUpdated ,`publicFormObject` = :publicFormObject WHERE `id` = :id");
 					$query->bindParam('type', $type);
 					$query->bindParam('label', $label);
 					$query->bindParam('name', $name);
@@ -493,6 +531,8 @@
 					$query->bindParam('encrypted', $encrypted);
 					$query->bindParam('formID', $formID);
 					$query->bindParam('rowOrder', $rowOrder);
+					$query->bindParam('lastUpdated', $lastUpdated);
+					$query->bindParam('publicFormObject', $publicFormObject);
 					$query->bindParam('id', $id);
 					if( $query->execute() ){
 						return $id;
@@ -502,7 +542,7 @@
 
 				}else{
 					/*Perform Insert Operation*/
-					$query = $this->connection->prepare("INSERT INTO `formobject` (`id`,`type`,`label`,`name`,`defaultVal`,`errorText`,`placeholder`,`regex`,`minVal`,`maxVal`,`minLength`,`maxLength`,`listType`,`listID`,`csList`,`classes`,`required`,`encrypted`,`formID`,`rowOrder`) VALUES (NULL,:type,:label,:name,:defaultVal,:errorText,:placeholder,:regex,:minVal,:maxVal,:minLength,:maxLength,:listType,:listID,:csList,:classes,:required,:encrypted,:formID,:rowOrder);");
+					$query = $this->connection->prepare("INSERT INTO `formobject` (`id`,`type`,`label`,`name`,`defaultVal`,`errorText`,`placeholder`,`regex`,`minVal`,`maxVal`,`minLength`,`maxLength`,`listType`,`listID`,`csList`,`classes`,`required`,`encrypted`,`formID`,`rowOrder`,`lastUpdated`,`publicFormObject`) VALUES (NULL,:type,:label,:name,:defaultVal,:errorText,:placeholder,:regex,:minVal,:maxVal,:minLength,:maxLength,:listType,:listID,:csList,:classes,:required,:encrypted,:formID,:rowOrder,:lastUpdated,:publicFormObject);");
 					$query->bindParam(':type', $type);
 					$query->bindParam(':label', $label);
 					$query->bindParam(':name', $name);
@@ -522,6 +562,8 @@
 					$query->bindParam(':encrypted', $encrypted);
 					$query->bindParam(':formID', $formID);
 					$query->bindParam(':rowOrder', $rowOrder);
+					$query->bindParam(':lastUpdated', $lastUpdated);
+					$query->bindParam(':publicFormObject', $publicFormObject);
 
 					if( $query->execute() ){
 						$this->setId( $this->connection->lastInsertId() );
@@ -1013,6 +1055,52 @@
 			}
 		}
 
+		function getByLastUpdated($lastUpdated){
+			if( $this->connection ){
+				if( $lastUpdated == null && $this->getLastUpdated() != ""){
+					$lastUpdated = $this->getLastUpdated();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `lastUpdated` = :lastUpdated LIMIT 1");
+				$query->bindParam(':lastUpdated', $lastUpdated);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByPublicFormObject($publicFormObject){
+			if( $this->connection ){
+				if( $publicFormObject == null && $this->getPublicFormObject() != ""){
+					$publicFormObject = $this->getPublicFormObject();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `publicFormObject` = :publicFormObject LIMIT 1");
+				$query->bindParam(':publicFormObject', $publicFormObject);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
 
 		function getListById($id=null){
 			if( $this->connection ){
@@ -1479,6 +1567,54 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `rowOrder` = :rowOrder");
 				$query->bindParam(':rowOrder', $rowOrder);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$formobjects[] = $result;
+					}
+					if( is_array( $formobjects ) ){
+						return $formobjects;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByLastUpdated($lastUpdated=null){
+			if( $this->connection ){
+				if( $lastUpdated == null && $this->getLastUpdated() != ""){
+					$lastUpdated = $this->getLastUpdated();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `lastUpdated` = :lastUpdated");
+				$query->bindParam(':lastUpdated', $lastUpdated);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$formobjects[] = $result;
+					}
+					if( is_array( $formobjects ) ){
+						return $formobjects;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByPublicFormObject($publicFormObject=null){
+			if( $this->connection ){
+				if( $publicFormObject == null && $this->getPublicFormObject() != ""){
+					$publicFormObject = $this->getPublicFormObject();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `publicFormObject` = :publicFormObject");
+				$query->bindParam(':publicFormObject', $publicFormObject);
 
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("formobject") ){

@@ -8,12 +8,16 @@
 	encryptionMode, i
 	encryptionSalt, v
 	created, dt
+	lastUpdated, dt
 	enabled, i
 	sunrise, dt
 	sunset, dt
 	jqVersion, v
 	jqTheme, v
 	owner, i
+	isGroup, bool
+	useCaching, bool
+	lastCacheTime, dt
 
 */
 
@@ -27,12 +31,16 @@
 		private $encryptionMode;
 		private $encryptionSalt;
 		private $created;
+		private $lastUpdated;
 		private $enabled;
 		private $sunrise;
 		private $sunset;
 		private $jqVersion;
 		private $jqTheme;
 		private $owner;
+		private $isGroup;
+		private $useCaching;
+		private $lastCacheTime;
 
 
 		/*Constructor*/
@@ -113,6 +121,14 @@
 			$this->created = $created;
 		}
 
+		function getLastUpdated(){
+			return $this->lastUpdated;
+		}
+
+		function setLastUpdated($lastUpdated){
+			$this->lastUpdated = $lastUpdated;
+		}
+
 		function getEnabled(){
 			return $this->enabled;
 		}
@@ -161,6 +177,30 @@
 			$this->owner = $owner;
 		}
 
+		function getIsGroup(){
+			return $this->isGroup;
+		}
+
+		function setIsGroup($isGroup){
+			$this->isGroup = $isGroup;
+		}
+
+		function getUseCaching(){
+			return $this->useCaching;
+		}
+
+		function setUseCaching($useCaching){
+			$this->useCaching = $useCaching;
+		}
+
+		function getLastCacheTime(){
+			return $this->lastCacheTime;
+		}
+
+		function setLastCacheTime($lastCacheTime){
+			$this->lastCacheTime = $lastCacheTime;
+		}
+
 		/*Special Functions*/
 		function load($id = null){
 			if( $this->connection ){
@@ -189,12 +229,16 @@
 			$this->setEncryptionMode( (isset($_POST["encryptionMode"])) ? $_POST["encryptionMode"] : $this->getEncryptionMode() );
 			$this->setEncryptionSalt( (isset($_POST["encryptionSalt"])) ? $_POST["encryptionSalt"] : $this->getEncryptionSalt() );
 			$this->setCreated( (isset($_POST["created"])) ? $_POST["created"] : $this->getCreated() );
+			$this->setLastUpdated( (isset($_POST["lastUpdated"])) ? $_POST["lastUpdated"] : $this->getLastUpdated() );
 			$this->setEnabled( (isset($_POST["enabled"])) ? $_POST["enabled"] : $this->getEnabled() );
 			$this->setSunrise( (isset($_POST["sunrise"])) ? $_POST["sunrise"] : $this->getSunrise() );
 			$this->setSunset( (isset($_POST["sunset"])) ? $_POST["sunset"] : $this->getSunset() );
 			$this->setJqVersion( (isset($_POST["jqVersion"])) ? $_POST["jqVersion"] : $this->getJqVersion() );
 			$this->setJqTheme( (isset($_POST["jqTheme"])) ? $_POST["jqTheme"] : $this->getJqTheme() );
 			$this->setOwner( (isset($_POST["owner"])) ? $_POST["owner"] : $this->getOwner() );
+			$this->setIsGroup( (isset($_POST["isGroup"])) ? $_POST["isGroup"] : $this->getIsGroup() );
+			$this->setUseCaching( (isset($_POST["useCaching"])) ? $_POST["useCaching"] : $this->getUseCaching() );
+			$this->setLastCacheTime( (isset($_POST["lastCacheTime"])) ? $_POST["lastCacheTime"] : $this->getLastCacheTime() );
 		}
 
 		function getFromRequest(){
@@ -203,12 +247,16 @@
 			$this->setEncryptionMode( (isset($_REQUEST["encryptionMode"])) ? $_REQUEST["encryptionMode"] : $this->getEncryptionMode() );
 			$this->setEncryptionSalt( (isset($_REQUEST["encryptionSalt"])) ? $_REQUEST["encryptionSalt"] : $this->getEncryptionSalt() );
 			$this->setCreated( (isset($_REQUEST["created"])) ? $_REQUEST["created"] : $this->getCreated() );
+			$this->setLastUpdated( (isset($_REQUEST["lastUpdated"])) ? $_REQUEST["lastUpdated"] : $this->getLastUpdated() );
 			$this->setEnabled( (isset($_REQUEST["enabled"])) ? $_REQUEST["enabled"] : $this->getEnabled() );
 			$this->setSunrise( (isset($_REQUEST["sunrise"])) ? $_REQUEST["sunrise"] : $this->getSunrise() );
 			$this->setSunset( (isset($_REQUEST["sunset"])) ? $_REQUEST["sunset"] : $this->getSunset() );
 			$this->setJqVersion( (isset($_REQUEST["jqVersion"])) ? $_REQUEST["jqVersion"] : $this->getJqVersion() );
 			$this->setJqTheme( (isset($_REQUEST["jqTheme"])) ? $_REQUEST["jqTheme"] : $this->getJqTheme() );
 			$this->setOwner( (isset($_REQUEST["owner"])) ? $_REQUEST["owner"] : $this->getOwner() );
+			$this->setIsGroup( (isset($_REQUEST["isGroup"])) ? $_REQUEST["isGroup"] : $this->getIsGroup() );
+			$this->setUseCaching( (isset($_REQUEST["useCaching"])) ? $_REQUEST["useCaching"] : $this->getUseCaching() );
+			$this->setLastCacheTime( (isset($_REQUEST["lastCacheTime"])) ? $_REQUEST["lastCacheTime"] : $this->getLastCacheTime() );
 		}
 
 		function getFromArray($arr){
@@ -217,12 +265,16 @@
 			$this->setEncryptionMode( (isset($arr["encryptionMode"])) ? $arr["encryptionMode"] : $this->getEncryptionMode() );
 			$this->setEncryptionSalt( (isset($arr["encryptionSalt"])) ? $arr["encryptionSalt"] : $this->getEncryptionSalt() );
 			$this->setCreated( (isset($arr["created"])) ? $arr["created"] : $this->getCreated() );
+			$this->setLastUpdated( (isset($arr["lastUpdated"])) ? $arr["lastUpdated"] : $this->getLastUpdated() );
 			$this->setEnabled( (isset($arr["enabled"])) ? $arr["enabled"] : $this->getEnabled() );
 			$this->setSunrise( (isset($arr["sunrise"])) ? $arr["sunrise"] : $this->getSunrise() );
 			$this->setSunset( (isset($arr["sunset"])) ? $arr["sunset"] : $this->getSunset() );
 			$this->setJqVersion( (isset($arr["jqVersion"])) ? $arr["jqVersion"] : $this->getJqVersion() );
 			$this->setJqTheme( (isset($arr["jqTheme"])) ? $arr["jqTheme"] : $this->getJqTheme() );
 			$this->setOwner( (isset($arr["owner"])) ? $arr["owner"] : $this->getOwner() );
+			$this->setIsGroup( (isset($arr["isGroup"])) ? $arr["isGroup"] : $this->getIsGroup() );
+			$this->setUseCaching( (isset($arr["useCaching"])) ? $arr["useCaching"] : $this->getUseCaching() );
+			$this->setLastCacheTime( (isset($arr["lastCacheTime"])) ? $arr["lastCacheTime"] : $this->getLastCacheTime() );
 		}
 
 		function compareTo($theform){
@@ -272,6 +324,11 @@
 			}else{
 				$log["Created"] = "un-modified";
 			}
+			if($this->getLastUpdated() != $theform->getLastUpdated() ){
+				$log["LastUpdated"] = "modified";
+			}else{
+				$log["LastUpdated"] = "un-modified";
+			}
 			if($this->getEnabled() != $theform->getEnabled() ){
 				$log["Enabled"] = "modified";
 			}else{
@@ -302,6 +359,21 @@
 			}else{
 				$log["Owner"] = "un-modified";
 			}
+			if($this->getIsGroup() != $theform->getIsGroup() ){
+				$log["IsGroup"] = "modified";
+			}else{
+				$log["IsGroup"] = "un-modified";
+			}
+			if($this->getUseCaching() != $theform->getUseCaching() ){
+				$log["UseCaching"] = "modified";
+			}else{
+				$log["UseCaching"] = "un-modified";
+			}
+			if($this->getLastCacheTime() != $theform->getLastCacheTime() ){
+				$log["LastCacheTime"] = "modified";
+			}else{
+				$log["LastCacheTime"] = "un-modified";
+			}
 		return $log;
 		}
 
@@ -312,27 +384,35 @@
 			$encryptionMode = $this->getEncryptionMode();
 			$encryptionSalt = $this->getEncryptionSalt();
 			$created = $this->getCreated();
+			$lastUpdated = $this->getLastUpdated();
 			$enabled = $this->getEnabled();
 			$sunrise = $this->getSunrise();
 			$sunset = $this->getSunset();
 			$jqVersion = $this->getJqVersion();
 			$jqTheme = $this->getJqTheme();
 			$owner = $this->getOwner();
+			$isGroup = $this->getIsGroup();
+			$useCaching = $this->getUseCaching();
+			$lastCacheTime = $this->getLastCacheTime();
 			if( $this->connection ){
 				if( $id != "" ){
 					/*Perform Update Operation*/
-					$query = $this->connection->prepare("UPDATE  `theform` SET `title` = :title ,`description` = :description ,`encryptionMode` = :encryptionMode ,`encryptionSalt` = :encryptionSalt ,`created` = :created ,`enabled` = :enabled ,`sunrise` = :sunrise ,`sunset` = :sunset ,`jqVersion` = :jqVersion ,`jqTheme` = :jqTheme ,`owner` = :owner WHERE `id` = :id");
+					$query = $this->connection->prepare("UPDATE  `theform` SET `title` = :title ,`description` = :description ,`encryptionMode` = :encryptionMode ,`encryptionSalt` = :encryptionSalt ,`created` = :created ,`lastUpdated` = :lastUpdated ,`enabled` = :enabled ,`sunrise` = :sunrise ,`sunset` = :sunset ,`jqVersion` = :jqVersion ,`jqTheme` = :jqTheme ,`owner` = :owner ,`isGroup` = :isGroup ,`useCaching` = :useCaching ,`lastCacheTime` = :lastCacheTime WHERE `id` = :id");
 					$query->bindParam('title', $title);
 					$query->bindParam('description', $description);
 					$query->bindParam('encryptionMode', $encryptionMode);
 					$query->bindParam('encryptionSalt', $encryptionSalt);
 					$query->bindParam('created', $created);
+					$query->bindParam('lastUpdated', $lastUpdated);
 					$query->bindParam('enabled', $enabled);
 					$query->bindParam('sunrise', $sunrise);
 					$query->bindParam('sunset', $sunset);
 					$query->bindParam('jqVersion', $jqVersion);
 					$query->bindParam('jqTheme', $jqTheme);
 					$query->bindParam('owner', $owner);
+					$query->bindParam('isGroup', $isGroup);
+					$query->bindParam('useCaching', $useCaching);
+					$query->bindParam('lastCacheTime', $lastCacheTime);
 					$query->bindParam('id', $id);
 					if( $query->execute() ){
 						return $id;
@@ -342,18 +422,22 @@
 
 				}else{
 					/*Perform Insert Operation*/
-					$query = $this->connection->prepare("INSERT INTO `theform` (`id`,`title`,`description`,`encryptionMode`,`encryptionSalt`,`created`,`enabled`,`sunrise`,`sunset`,`jqVersion`,`jqTheme`,`owner`) VALUES (NULL,:title,:description,:encryptionMode,:encryptionSalt,:created,:enabled,:sunrise,:sunset,:jqVersion,:jqTheme,:owner);");
+					$query = $this->connection->prepare("INSERT INTO `theform` (`id`,`title`,`description`,`encryptionMode`,`encryptionSalt`,`created`,`lastUpdated`,`enabled`,`sunrise`,`sunset`,`jqVersion`,`jqTheme`,`owner`,`isGroup`,`useCaching`,`lastCacheTime`) VALUES (NULL,:title,:description,:encryptionMode,:encryptionSalt,:created,:lastUpdated,:enabled,:sunrise,:sunset,:jqVersion,:jqTheme,:owner,:isGroup,:useCaching,:lastCacheTime);");
 					$query->bindParam(':title', $title);
 					$query->bindParam(':description', $description);
 					$query->bindParam(':encryptionMode', $encryptionMode);
 					$query->bindParam(':encryptionSalt', $encryptionSalt);
 					$query->bindParam(':created', $created);
+					$query->bindParam(':lastUpdated', $lastUpdated);
 					$query->bindParam(':enabled', $enabled);
 					$query->bindParam(':sunrise', $sunrise);
 					$query->bindParam(':sunset', $sunset);
 					$query->bindParam(':jqVersion', $jqVersion);
 					$query->bindParam(':jqTheme', $jqTheme);
 					$query->bindParam(':owner', $owner);
+					$query->bindParam(':isGroup', $isGroup);
+					$query->bindParam(':useCaching', $useCaching);
+					$query->bindParam(':lastCacheTime', $lastCacheTime);
 
 					if( $query->execute() ){
 						$this->setId( $this->connection->lastInsertId() );
@@ -523,6 +607,29 @@
 			}
 		}
 
+		function getByLastUpdated($lastUpdated){
+			if( $this->connection ){
+				if( $lastUpdated == null && $this->getLastUpdated() != ""){
+					$lastUpdated = $this->getLastUpdated();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `lastUpdated` = :lastUpdated LIMIT 1");
+				$query->bindParam(':lastUpdated', $lastUpdated);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
 		function getByEnabled($enabled){
 			if( $this->connection ){
 				if( $enabled == null && $this->getEnabled() != ""){
@@ -647,6 +754,75 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `owner` = :owner LIMIT 1");
 				$query->bindParam(':owner', $owner);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByIsGroup($isGroup){
+			if( $this->connection ){
+				if( $isGroup == null && $this->getIsGroup() != ""){
+					$isGroup = $this->getIsGroup();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `isGroup` = :isGroup LIMIT 1");
+				$query->bindParam(':isGroup', $isGroup);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByUseCaching($useCaching){
+			if( $this->connection ){
+				if( $useCaching == null && $this->getUseCaching() != ""){
+					$useCaching = $this->getUseCaching();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `useCaching` = :useCaching LIMIT 1");
+				$query->bindParam(':useCaching', $useCaching);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByLastCacheTime($lastCacheTime){
+			if( $this->connection ){
+				if( $lastCacheTime == null && $this->getLastCacheTime() != ""){
+					$lastCacheTime = $this->getLastCacheTime();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `lastCacheTime` = :lastCacheTime LIMIT 1");
+				$query->bindParam(':lastCacheTime', $lastCacheTime);
 				$object = null;
 
 				if( $query->execute() ){
@@ -806,6 +982,30 @@
 			}
 		}
 
+		function getListByLastUpdated($lastUpdated=null){
+			if( $this->connection ){
+				if( $lastUpdated == null && $this->getLastUpdated() != ""){
+					$lastUpdated = $this->getLastUpdated();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `lastUpdated` = :lastUpdated");
+				$query->bindParam(':lastUpdated', $lastUpdated);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$theforms[] = $result;
+					}
+					if( is_array( $theforms ) ){
+						return $theforms;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
 		function getListByEnabled($enabled=null){
 			if( $this->connection ){
 				if( $enabled == null && $this->getEnabled() != ""){
@@ -935,6 +1135,78 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `owner` = :owner");
 				$query->bindParam(':owner', $owner);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$theforms[] = $result;
+					}
+					if( is_array( $theforms ) ){
+						return $theforms;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByIsGroup($isGroup=null){
+			if( $this->connection ){
+				if( $isGroup == null && $this->getIsGroup() != ""){
+					$isGroup = $this->getIsGroup();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `isGroup` = :isGroup");
+				$query->bindParam(':isGroup', $isGroup);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$theforms[] = $result;
+					}
+					if( is_array( $theforms ) ){
+						return $theforms;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByUseCaching($useCaching=null){
+			if( $this->connection ){
+				if( $useCaching == null && $this->getUseCaching() != ""){
+					$useCaching = $this->getUseCaching();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `useCaching` = :useCaching");
+				$query->bindParam(':useCaching', $useCaching);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$theforms[] = $result;
+					}
+					if( is_array( $theforms ) ){
+						return $theforms;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByLastCacheTime($lastCacheTime=null){
+			if( $this->connection ){
+				if( $lastCacheTime == null && $this->getLastCacheTime() != ""){
+					$lastCacheTime = $this->getLastCacheTime();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `lastCacheTime` = :lastCacheTime");
+				$query->bindParam(':lastCacheTime', $lastCacheTime);
 
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("theform") ){

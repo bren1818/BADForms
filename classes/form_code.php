@@ -7,6 +7,7 @@
 	codeType, i
 	version, i
 	code, lt
+	lastUpdate, dt
 
 */
 
@@ -19,6 +20,7 @@
 		private $codeType;
 		private $version;
 		private $code;
+		private $lastUpdate;
 
 
 		/*Constructor*/
@@ -91,6 +93,14 @@
 			$this->code = $code;
 		}
 
+		function getLastUpdate(){
+			return $this->lastUpdate;
+		}
+
+		function setLastUpdate($lastUpdate){
+			$this->lastUpdate = $lastUpdate;
+		}
+
 		/*Special Functions*/
 		function load($id = null){
 			if( $this->connection ){
@@ -118,6 +128,7 @@
 			$this->setCodeType( (isset($_POST["codeType"])) ? $_POST["codeType"] : $this->getCodeType() );
 			$this->setVersion( (isset($_POST["version"])) ? $_POST["version"] : $this->getVersion() );
 			$this->setCode( (isset($_POST["code"])) ? $_POST["code"] : $this->getCode() );
+			$this->setLastUpdate( (isset($_POST["lastUpdate"])) ? $_POST["lastUpdate"] : $this->getLastUpdate() );
 		}
 
 		function getFromRequest(){
@@ -125,6 +136,7 @@
 			$this->setCodeType( (isset($_REQUEST["codeType"])) ? $_REQUEST["codeType"] : $this->getCodeType() );
 			$this->setVersion( (isset($_REQUEST["version"])) ? $_REQUEST["version"] : $this->getVersion() );
 			$this->setCode( (isset($_REQUEST["code"])) ? $_REQUEST["code"] : $this->getCode() );
+			$this->setLastUpdate( (isset($_REQUEST["lastUpdate"])) ? $_REQUEST["lastUpdate"] : $this->getLastUpdate() );
 		}
 
 		function getFromArray($arr){
@@ -132,6 +144,7 @@
 			$this->setCodeType( (isset($arr["codeType"])) ? $arr["codeType"] : $this->getCodeType() );
 			$this->setVersion( (isset($arr["version"])) ? $arr["version"] : $this->getVersion() );
 			$this->setCode( (isset($arr["code"])) ? $arr["code"] : $this->getCode() );
+			$this->setLastUpdate( (isset($arr["lastUpdate"])) ? $arr["lastUpdate"] : $this->getLastUpdate() );
 		}
 
 		function compareTo($formcode){
@@ -176,6 +189,11 @@
 			}else{
 				$log["Code"] = "un-modified";
 			}
+			if($this->getLastUpdate() != $formcode->getLastUpdate() ){
+				$log["LastUpdate"] = "modified";
+			}else{
+				$log["LastUpdate"] = "un-modified";
+			}
 		return $log;
 		}
 
@@ -185,14 +203,16 @@
 			$codeType = $this->getCodeType();
 			$version = $this->getVersion();
 			$code = $this->getCode();
+			$lastUpdate = $this->getLastUpdate();
 			if( $this->connection ){
 				if( $id != "" ){
 					/*Perform Update Operation*/
-					$query = $this->connection->prepare("UPDATE  `formcode` SET `formID` = :formID ,`codeType` = :codeType ,`version` = :version ,`code` = :code WHERE `id` = :id");
+					$query = $this->connection->prepare("UPDATE  `formcode` SET `formID` = :formID ,`codeType` = :codeType ,`version` = :version ,`code` = :code ,`lastUpdate` = :lastUpdate WHERE `id` = :id");
 					$query->bindParam('formID', $formID);
 					$query->bindParam('codeType', $codeType);
 					$query->bindParam('version', $version);
 					$query->bindParam('code', $code);
+					$query->bindParam('lastUpdate', $lastUpdate);
 					$query->bindParam('id', $id);
 					if( $query->execute() ){
 						return $id;
@@ -202,11 +222,12 @@
 
 				}else{
 					/*Perform Insert Operation*/
-					$query = $this->connection->prepare("INSERT INTO `formcode` (`id`,`formID`,`codeType`,`version`,`code`) VALUES (NULL,:formID,:codeType,:version,:code);");
+					$query = $this->connection->prepare("INSERT INTO `formcode` (`id`,`formID`,`codeType`,`version`,`code`,`lastUpdate`) VALUES (NULL,:formID,:codeType,:version,:code,:lastUpdate);");
 					$query->bindParam(':formID', $formID);
 					$query->bindParam(':codeType', $codeType);
 					$query->bindParam(':version', $version);
 					$query->bindParam(':code', $code);
+					$query->bindParam(':lastUpdate', $lastUpdate);
 
 					if( $query->execute() ){
 						$this->setId( $this->connection->lastInsertId() );
@@ -353,6 +374,29 @@
 			}
 		}
 
+		function getByLastUpdate($lastUpdate){
+			if( $this->connection ){
+				if( $lastUpdate == null && $this->getLastUpdate() != ""){
+					$lastUpdate = $this->getLastUpdate();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formcode` WHERE `lastUpdate` = :lastUpdate LIMIT 1");
+				$query->bindParam(':lastUpdate', $lastUpdate);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formcode") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
 
 		function getListById($id=null){
 			if( $this->connection ){
@@ -459,6 +503,30 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `formcode` WHERE `code` = :code");
 				$query->bindParam(':code', $code);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formcode") ){
+						$formcodes[] = $result;
+					}
+					if( is_array( $formcodes ) ){
+						return $formcodes;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByLastUpdate($lastUpdate=null){
+			if( $this->connection ){
+				if( $lastUpdate == null && $this->getLastUpdate() != ""){
+					$lastUpdate = $this->getLastUpdate();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formcode` WHERE `lastUpdate` = :lastUpdate");
+				$query->bindParam(':lastUpdate', $lastUpdate);
 
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("formcode") ){

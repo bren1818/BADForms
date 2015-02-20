@@ -112,16 +112,16 @@
 	
 	function createAndTestTable($db, $tableName, $query){
 		if( tableExists($db, $tableName) ){
-			echo "<p>Table: '$tableName' already exists.</p>";
+			echo "<p><i class='fa fa-exclamation-triangle'></i> Table: '$tableName' already exists.</p>";
 		}else{
-			echo '<p>Creating `'.$tableName.'` table...</p>';
+			echo '<p><i class="fa fa-table"></i> Creating `'.$tableName.'` table...</p>';
 	
 			$db->exec( $query );
 		
 			if( tableExists($db, $tableName) ){
-				echo "<p>Created `".$tableName."` table</p>";
+				echo "<p><i class='fa fa-check'></i> Created `".$tableName."` table</p>";
 			}else{
-				echo "<p>Could not create `".$tableName."` table</p>";	
+				echo "<p><i class='fa fa-times'></i> Could not create `".$tableName."` table</p>";	
 			}
 		}
 	}
