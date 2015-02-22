@@ -107,6 +107,17 @@ function generateHtml($formObject){
         </label>
 	</div>
 	
+	<div class="row reUseableItem">
+		<div class="row reUseableGroup">
+			
+			
+		</div>
+		<div class="row reUseableFormItem">
+			
+			
+		</div>
+	</div>
+	
 	<div class="advancedSettings row">
     	<div class="showSettings btn">
         	<i class="fa fa-cogs"></i> Show Advanced

@@ -107,6 +107,19 @@
 		$('.showSettings').unbind();
 	}
 	
+	function capitaliseFirstLetter(string){
+		return string.charAt(0).toUpperCase() + string.slice(1);
+		}
+	
+	function toPlaceholder(label){
+		return "Enter " + (label);
+	}
+	
+	function toFormName(label){
+		//replace
+		return "form-" + (label).replace(/ /g, "-");;
+	}
+	
 	function bindToolbar(){
 		
 		$('select.select.type').change(function(event){
@@ -134,6 +147,43 @@
 				 
 		});
 		
+		$('input[name="label"]').unbind();
+		$('input[name="label"]').on("keyup change", function(e) {
+				var name = $(this).closest('.form_row_object').find('input[name="name"]');
+				var placeholder = $(this).closest('.form_row_object').find('input[name="placeholder"]');
+				
+				var tVal = $(this).attr('value');
+				var nVal = $(name).attr('value');
+				var pVal = $(placeholder).attr('value');
+				
+				if (e.keyCode == 8 ) {
+						//backspace
+						if ( nVal.substr(0, (nVal.length -1)) == toFormName(tVal) ) {
+								$(name).attr('value', toFormName(tVal) );
+						}
+						
+						if ( pVal.substr(0, (pVal.length -1)) == toPlaceholder(tVal) ) {
+								$(placeholder).attr('value', toPlaceholder(tVal) );
+						}
+						
+						if ( tVal == "") {
+								$(placeholder).attr('value', '');
+								$(name).attr('value', '');
+						}
+						
+				}else{
+						//console.log( "This: " + tVal + " Name: " + nVal + " Placeholder: " + pVal );
+						if ( nVal == "" || nVal  == toFormName(tVal.substr(0, (tVal.length -1) )) ){
+								$(name).attr('value', toFormName(tVal) );
+						}
+						
+						if ( pVal == "" || pVal  == toPlaceholder(tVal.substr(0, (tVal.length -1)) ) ){
+								$(placeholder).attr('value', toPlaceholder(tVal) );
+						}
+						
+						
+				}
+		});
 		
 		$('.but').click(function(){
 			var t = $(this).parent().parent();
@@ -263,7 +313,7 @@
 		$( "#formHolder ul li" ).prepend( rowFunctions() );
 		bindToolbar();
 		//$("#formHolder ul li select.select.type").selectmenu();
-		
+		/*
 	$( document ).tooltip({show: null,
       position: {
         my: "left top",
@@ -272,5 +322,5 @@
       open: function( event, ui ) {
         ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
       }
-	  });
+	  });*/
 	});

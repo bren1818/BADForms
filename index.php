@@ -41,6 +41,7 @@ a.pickList{
     <li><a href="/views/form/listForms.php"><i class="fa fa-list-alt"></i> Available Forms</a></li>
     <li><a href="/views/list/listLists.php"><i class="fa fa-list"></i> Available Lists</a></li>
     <li><a href="/views/group/listGroups.php"><i class="fa fa-indent"></i> Available Groups</a></li>
+    <!-- Re-useable Form Items -->
   </ul>
   <!--<div id="tabs-1">
     --Tabs--
