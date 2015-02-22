@@ -1,7 +1,9 @@
 <?php
 	require_once( "includes/include.php" );
 	//check owner id
-	$formID = $_POST['formID'];
+	if( isset($_POST) && isset( $_POST['formID'] ) && $_POST['formID'] != ""){
+		$formID = $_POST['formID'];
+	}
 	$formDATA = json_decode($_POST['form']);
 	$con = getConnection();
 	
@@ -11,6 +13,19 @@
 	$new = 0;
 	$failed = 0;
 	$deletes = 0;
+	
+	if( is_numeric($formID) ){
+		$theForm = new Theform($con);
+		$theForm = $theForm->load( $formID );
+		if( $theForm->getId() > 0){
+			$theForm->setLastUpdated( date('Y-m-d H:i:s') );
+			$theForm->save();
+		}
+	}else{
+		echo "Invalid ID";
+		exit;
+	}
+	
 	
 	$types = "Select `id`, `isListType` FROM `objecttype`";
 	$types = $con->query( $types );
@@ -56,7 +71,7 @@
 			
 			if( isset($fo['isDeleted']) && $fo['isDeleted'] == 1 ){
 				if( $fo['id'] != "" ){
-				$deleted = $rowObj->delete( $fo['id'] );
+					$deleted = $rowObj->delete( $fo['id'] );
 				}
 			}
 			

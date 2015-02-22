@@ -78,7 +78,7 @@
 	
 	function addBefore(item){
 		unbindToolbar();
-		$.get( "/getFormEntryRow.php?form=1", function( data ) {
+		$.get( "/getFormEntryRow.php?form=" + formID, function( data ) {
 			$( "#formHolder ul" ).append( data );
 			$( "#formHolder ul li" ).last().prepend( rowFunctions() );
 			$( "#formHolder ul li" ).last().detach().insertBefore( $(item) );
@@ -90,7 +90,7 @@
 	
 	function addAfter(item){
 		unbindToolbar();
-		$.get( "/getFormEntryRow.php?form=1", function( data ) {
+		$.get( "/getFormEntryRow.php?form=" + formID, function( data ) {
 			$( "#formHolder ul" ).append( data );
 			$( "#formHolder ul li" ).last().prepend( rowFunctions() );
 			$( "#formHolder ul li" ).last().detach().insertAfter( $(item) );
@@ -201,7 +201,7 @@
 	$(function(){
 		$('#addRow').click(function(){
 			unbindToolbar();
-			$.get( "/getFormEntryRow.php?form=1", function( data ) {
+			$.get( "/getFormEntryRow.php?form=" + formID, function( data ) {
 				$( "#formHolder ul" ).append( data );
 				$( "#formHolder ul li" ).last().prepend( rowFunctions() );
 				//$( "#formHolder ul li select").last().selectmenu();

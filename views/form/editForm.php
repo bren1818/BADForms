@@ -17,6 +17,7 @@
 			
 			$theform->getFromPost();
 			$theform->setEnabled(1);
+			$theform->setLastUpdated( date('Y-m-d H:i:s',time()) );
 			
 			if( $theform->getSunrise() != ""){
 				$theform->setSunrise( getdatetime( $theform->getSunrise() ) );
@@ -100,7 +101,7 @@
     	*Note Encryption cannot be modified after creation
     </div>
     
-   <!--
+	<!--
 	<div class="formRow encryptionSalt encryption-mode-<?php echo $theform->getEncryptionMode();  ?>">
 		<div class="rowLabel">
 			<label for="encryptionSalt"><i class="fa fa-key"></i> Encryption Salt:</label>
@@ -111,7 +112,7 @@
 	</div>
 	-->
     <div class="formRow">
-		<!--
+	<!--
         <div class="rowLabel">
 			<label for="owner">Owner:</label>
 		</div>
@@ -157,12 +158,25 @@
 			<label for="jqTheme"><i class="fa fa-css3"></i> jQuery Theme:</label>
 		</div>
 		<div class="rowField">
-        	<select  name="jqTheme" id="jqTheme" data-selected="<?php echo (isset($theform) ?  $theform->getJqTheme() : ""); ?>" data-version="<?php echo (isset($theform) ?  ($theform->getJqversion() == "" ? $default : $theform->getJqversion() ) : "" ); ?>" title="">
-            </select>
-            
-            <p>For theme previews go to: <a target="_blank" href="http://jqueryui.com/themeroller/">http://jqueryui.com/themeroller/</a> and select "Gallery"</p>
-        </div>
+			<select  name="jqTheme" id="jqTheme" data-selected="<?php echo (isset($theform) ?  $theform->getJqTheme() : ""); ?>" data-version="<?php echo (isset($theform) ?  ($theform->getJqversion() == "" ? $default : $theform->getJqversion() ) : "" ); ?>" title="">
+			</select>
+			<p>For theme previews go to: <a target="_blank" href="http://jqueryui.com/themeroller/">http://jqueryui.com/themeroller/</a> and select "Gallery"</p>
+		</div>
 	</div>
+	
+	<div class="formRow caching">
+		<div class="rowLabel">
+			<label for="useCaching"><i class="fa fa-file-archive-o"></i> Use Caching:</label>
+		</div>
+		<div class="rowField">
+			<select name="useCaching">
+				<option value="0" <?php if( $theform->getUseCaching() == 0 ){ echo " selected"; } ?>>No</option>
+				<option value="1" <?php if( $theform->getUseCaching() == 1 ){ echo " selected"; } ?>>Yes</option>
+			</select>
+		</div>
+	</div>	
+	
+	
 	<div class="formRow">
 		<div class="rowLabel">
 			<label for="sunrise"><i class="fa fa-calendar"></i> Sun rise:</label>

@@ -73,7 +73,7 @@
 			if( !file_exists( LOG_DIR) ){
 				mkdir( LOG_DIR );
 			}
-
+			logMessage($e->getMessage(), "error.txt");
 			file_put_contents(LOG_DIR.DIRECTORY_SEPARATOR.'PDOErrorsLog.txt', $e->getMessage(), FILE_APPEND);
 			die();
 		}
@@ -113,15 +113,18 @@
 	function createAndTestTable($db, $tableName, $query){
 		if( tableExists($db, $tableName) ){
 			echo "<p><i class='fa fa-exclamation-triangle'></i> Table: '$tableName' already exists.</p>";
+			logMessage('Table: '.$tableName.' already exists', "setup.txt", "" ,"");
 		}else{
 			echo '<p><i class="fa fa-table"></i> Creating `'.$tableName.'` table...</p>';
-	
+			logMessage('Creating: '.$tableName.' table', "setup.txt", "" ,"");
 			$db->exec( $query );
 		
 			if( tableExists($db, $tableName) ){
 				echo "<p><i class='fa fa-check'></i> Created `".$tableName."` table</p>";
+				logMessage('Created: '.$tableName.' table', "setup.txt", "" ,"");
 			}else{
-				echo "<p><i class='fa fa-times'></i> Could not create `".$tableName."` table</p>";	
+				echo "<p><i class='fa fa-times'></i> Could not create `".$tableName."` table</p>";
+				logMessage('Error could not create: '.$tableName.' table', "setup.txt", "" ,"");
 			}
 		}
 	}

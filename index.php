@@ -10,6 +10,7 @@
 		pageHeader();
 			echo '<h1><i class="fa fa-exclamation-triangle"></i> Attention required!</h1>';
 			echo '<p><i class="fa fa-database"></i> Database Error - Database does not appear to exist, please run the <a class="btn" href="/setup/index.php"><i class="fa fa-magic"></i> setup wizard</a></p>';
+			logMessage("Database not setup", "setup.txt");
 		pageFooter();
 		exit;
 	}
@@ -39,7 +40,7 @@ a.pickList{
   <ul>
     <li><a href="/views/form/listForms.php"><i class="fa fa-list-alt"></i> Available Forms</a></li>
     <li><a href="/views/list/listLists.php"><i class="fa fa-list"></i> Available Lists</a></li>
-    <!--<li><a href="#tabs-1"><i class="fa fa-th-list"></i> Available Groups - TBD</a></li>-->
+    <li><a href="/views/group/listGroups.php"><i class="fa fa-indent"></i> Available Groups</a></li>
   </ul>
   <!--<div id="tabs-1">
     --Tabs--
@@ -49,12 +50,12 @@ a.pickList{
 <script type="text/javascript">
 	$(function(){
 	 	$( "#tabs" ).tabs({
-      		beforeLoad: function( event, ui ) {
-        		ui.jqXHR.error(function() {
-          			ui.panel.html("Couldn't load this item..." );
-        		});
-      		}
-    	});
+			beforeLoad: function( event, ui ) {
+				ui.jqXHR.error(function() {
+					ui.panel.html("Couldn't load this item..." );
+				});
+			}
+		});
 	});
 </script>
 

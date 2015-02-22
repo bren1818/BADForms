@@ -7,13 +7,15 @@
 <?php
 	set_time_limit(0);
 	
+	logMessage("Beginning Database setup!", "setup.txt", "", "");
+	
 	//Get Database Connection
 	$db = getDB();
 	$dbName = DATABASE_NAME;
 	
 	if( DATABASE_NAME == "" ){
-		echo "<p><i class='fa fa-database'></i> Database name not defined</p>";
-		logMessage( "Database name not defined" , "setup.txt" );
+		echo "<p><i class='fa fa-database'></i> Database name not defined - update the private settings file.</p>";
+		logMessage( "Database name not defined" , "setup.txt", "","" );
 		exit;
 	}
 	
@@ -21,20 +23,20 @@
 	flush();
 	
 	/*Check if Table Exists*/
-	logMessage( "Checking for Table '".$dbName."'" , "setup.txt" );
+	logMessage( "Checking for Table '".$dbName."'" , "setup.txt" , "", "");
 	if( dbExists($db,$dbName) == 0  ){
 		
 		echo "<p><i class='fa fa-database'></i> Database '".$dbName."' doesn't exist. Creating it...</p>";
-		logMessage( "Database '".$dbName."' doesn't exist. Creating it..." , "setup.txt" );
+		logMessage( "Database '".$dbName."' doesn't exist. Creating it..." , "setup.txt" , "" ,"");
 		
 		/*Create Database*/
 		try{
 			$db->exec("create database ".$dbName);
 			echo "<p><i class='fa fa-database'></i> Database Created!...</p>";
-			logMessage( "Database ".$dbName." created!" , "setup.txt" );
+			logMessage( "Database ".$dbName." created!" , "setup.txt" , "" ,"");
 		}catch (Exception $e) {
 			echo "<p><i class='fa fa-exclamation-triangle'></i> Database could not be created!</p>";
-			logMessage( "Database ".$dbName." could not be created!" , "setup.txt" );	
+			logMessage( "Database ".$dbName." could not be created!" , "setup.txt" , "" ,"");	
 			exit;
 		}
 		
@@ -43,10 +45,10 @@
 		/*Verify database*/
 		if( dbExists($db,$dbName) == 1 ){
 			echo "<p><i class='fa fa-check'></i> Creation of '".$dbName."' verified!...</p>";
-			logMessage( "Database '".$dbName."' verified!" , "setup.txt" );
+			logMessage( "Database '".$dbName."' verified!" , "setup.txt", "" ,"" );
 		}else{
 			echo "<p><i class='fa fa-exclamation-triangle'></i> Creation of '".$dbName."' could not be verified...</p>";
-			logMessage( "Database '".$dbName."' could not be verified..." , "setup.txt" );
+			logMessage( "Database '".$dbName."' could not be verified..." , "setup.txt", "" ,"" );
 			exit;
 		}
 		
@@ -141,7 +143,9 @@
 		(NULL, 'hidden', 			'Hidden', '0', '9'),
 		(NULL, 'email', 			'Email', '0', '10'),
 		(NULL, 'phone', 			'Phone Number', '0', '11'),
-		(NULL, 'selectboxJQ', 			'Select Box - JQuery UI', '0', '12');";
+		(NULL, 'selectboxJQ', 			'Select Box - JQuery UI', '0', '12'),
+		(NULL, 'group', 			'Form Group', '0', '13'),
+		(NULL, 'formItem', 			'Re-useable Form Item', '0', '14');";
 	
 
 	//list items
@@ -220,6 +224,6 @@
 	ob_flush();flush();
 	
 	echo "<p>Setup Complete...<i class='fa fa-check'></i></p><p><a class='btn' href='../index.php'><i class='fa fa-sign-out'></i> Login</a></p>";
-	
+	logMessage("Database Setup Complete!", "setup.txt", "" ,"");
 	pageFooter();
 ?>

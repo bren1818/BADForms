@@ -93,9 +93,20 @@
 			
 		}
 	}
-	echo '<div class="formRow">';
-	echo '<input class="btn" type="submit" value="SUBMIT" />';
-	echo '</div>';
+	if( $Theform->getIsGroup() == 1){
+		echo '<div class="formRow">';
+		echo '<p>This Group\'s elements will be rendered along with the other elements of the form.</p>';
+		//echo '<p><a href="/views/group/buildGroup.php?formID='.$Theform->getId().'">Back to Group Editor</a></p>';
+		echo '</div>';
+	}else{
+		//echo '<div class="formRow">';
+		//echo '<p><a href="/views/form/buildForm.php?formID='.$Theform->getId().'">Back to Form Editor</a></p>';
+		//echo '</div>';
+		
+		echo '<div class="formRow">';
+		echo '<input class="btn" type="submit" value="TEST - SUBMIT" />';
+		echo '</div>';
+	}
 	echo '<input type="hidden" name="formID" value="'.$formID.'"/>';
 	echo "</form>";
 ?>

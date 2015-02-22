@@ -2,7 +2,7 @@
 	include "../../includes/include.php";
 	$conn = getConnection();
 	
-	$query = "SELECT * FROM `theform` order by `title` ASC";
+	$query = "SELECT * FROM `theform` where `isGroup` <> 1 order by `title` ASC";
 	
 	$query = $conn->query( $query );
 	

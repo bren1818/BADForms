@@ -8,52 +8,65 @@
 <?php
 	$conn = getConnection(); //set to DB Conn
 	$theform = new Theform($conn); 
-	if(strtoupper($_SERVER["REQUEST_METHOD"]) === "POST") {
-		$theform->getFromPost();
-		$theform->setEnabled(1);
-		$theform->setIsGroup(0);
-		
-		if( $theform->getSunrise() != "" ){
-			$theform->setSunrise( getdatetime( $theform->getSunrise() ) );
-		}
-		
-		if( $theform->getSunset() != "" ){
-			
-			
-			
-			$theform->setSunset( getdatetime( $theform->getSunset() ) );
-		}
-		
-		if( $theform->getEncryptionmode() != 2 ){
-			if( trim($theform->getEncryptionsalt()) == ""){
-				$theform->setErrorCount( $theform->getErrorCount() + 1 );
-				$theform->setErrors( $theform->getErrors().'<p>A Salt is required if this form allows for encryption</p>');
+
+	if( isPostback() ){
+
+			if( isset($_POST['formID']) ){
+				$theform = $theform->load(  $_POST['formID'] );	
 			}
-		}
-		
+			
+			$theform->getFromPost();
+			$theform->setEnabled(1);
+                        $theform->setLastUpdated( date('Y-m-d H:i:s',time()) );
+			/*
+			if( $theform->getSunrise() != ""){
+				$theform->setSunrise( getdatetime( $theform->getSunrise() ) );
+			}
+			
+			if( $theform->getSunset() != "" ){
+				$theform->setSunset( getdatetime( $theform->getSunset() ) );
+			}
+			
+			if( $theform->getEncryptionmode() != 2 ){
+				if( trim($theform->getEncryptionsalt()) == ""){
+					$theform->setErrorCount( $theform->getErrorCount() + 1 );
+					$theform->setErrors( $theform->getErrors().'<p>A Salt is required if this form allows for encryption</p>');
+				}
+			}
+                        */
 		/*Perform Save*/
 	
 		if( $theform->getErrorCount() > 0 ){
 			echo $theform->getErrors();
 		}else{
-			if( $theform->getCreated() == "" ){
-                            $theform->setCreated( date('Y-m-d H:i:s',time()) );
-                        }
-			
 			if( $theform->save() > 0 ){
-				header("Location: /views/form/buildForm.php?formID=".$theform->getId());
-			}else{
-				echo "<p>There was an error in your submission, please try again.</p>";
-				echo $theform->getErrors();
+				echo '<div class="formRow"><p>Update Saved!</p></div>';
 			}
 		}
-		
+	}else{
+		if( isset($_REQUEST) ){
+			if( isset($_REQUEST['formID']) ) {
+				
+				$theform = $theform->load( $_REQUEST['formID'] );
+			}else{
+				echo '<h2>Error No group ID!</h2>';
+				exit;
+			}
+		}else{
+			echo '<h2>Error No Group ID!</h2>';
+			exit;	
+		}
 	}
+	
+
 ?>
+
+
+
 <form name="theform" id="theform" method="POST" action="" enctype="multipart/form-data">
 	<div class="formRow">
 		<div class="rowLabel">
-			<label for="title"><i class="fa fa-pencil"></i> Title:*</label>
+			<label for="title"><i class="fa fa-pencil"></i> Group Title:*</label>
 		</div>
 		<div class="rowField">
 			<input type="text" name="title" id="title" value="<?php echo (isset($theform) ?  $theform->getTitle() : ''); ?>"  title="Title required" required="required"/>
@@ -61,12 +74,15 @@
 	</div>
 	<div class="formRow">
 		<div class="rowLabel">
-			<label for="description"><i class="fa fa-info"></i> Description of Form:</label>
+			<label for="description"><i class="fa fa-info"></i> Description of Group:</label>
 		</div>
 		<div class="rowField">
 			<textarea name="description" id="Description"  title="" ><?php echo (isset($theform) ?  $theform->getDescription() : ''); ?></textarea>
 		</div>
 	</div>
+        <input type="hidden" name="owner" value="1" /> <!-- to hook up later -->
+    
+    <!--
 	<div class="formRow">
 		<div class="rowLabel">
 			<label for="encryptionMode"><i class="fa fa-unlock-alt"></i> Encryption Mode:*</label>
@@ -74,14 +90,20 @@
 		<div class="rowField">
 			<?php $encryptionMode_values = array("All", " Some", " None"); ?>
             <?php if( $theform->getEncryptionMode() == ""){ $theform->setEncryptionMode(2); } /*Default to no Encryption*/ ?>
-			<?php for($sm = 0; $sm < sizeof( $encryptionMode_values); $sm++){ ?>
-				<label><?php echo $encryptionMode_values[$sm]; ?>: <input type="radio" name="encryptionMode" id="encryptionMode" value="<?php echo $sm; ?>" <?php if( ( is_object($theform) &&  $theform->getEncryptionMode() ?  $theform->getEncryptionMode()  : '') == $sm){ echo " checked"; } ?>  required="required" /></label><br />
-			<?php } ?>
+			<?php for($sm = 0; $sm < sizeof( $encryptionMode_values); $sm++){ 
+				if( $sm == $theform->getEncryptionMode() ){
+				?>
+				<label><?php echo $encryptionMode_values[$sm]; ?>: <input disabled="disabled" type="radio" name="encryptionMode" id="encryptionMode" value="<?php echo $sm; ?>" <?php if( ( is_object($theform) &&  $theform->getEncryptionMode() ?  $theform->getEncryptionMode()  : '') == $sm){ echo " checked"; } ?> /></label><br />
+			<?php
+				}
+			 } ?>
 		</div>
 	</div>
     <div class="formRow">
     	*Note Encryption cannot be modified after creation
     </div>
+    
+	
 	<div class="formRow encryptionSalt encryption-mode-<?php echo $theform->getEncryptionMode();  ?>">
 		<div class="rowLabel">
 			<label for="encryptionSalt"><i class="fa fa-key"></i> Encryption Salt:</label>
@@ -90,17 +112,16 @@
 			<input type="text" pattern=".{0,60}" name="encryptionSalt" id="encryptionSalt" value="<?php echo (isset($theform) ?  $theform->getEncryptionSalt() : ''); ?>"  title="" />
 		</div>
 	</div>
-	
+    
     <div class="formRow">
-		<!--
+	
         <div class="rowLabel">
 			<label for="owner">Owner:</label>
 		</div>
 		<div class="rowField">
 			<input type="number" name="owner" id="owner" value="<?php echo (isset($theform) ?  $theform->getOwner() : ''); ?>" title="" />
 		</div>
-        -->
-         <input type="hidden" name="owner" value="1" /> <!-- to hook up later -->
+        
 	</div>
   
    
@@ -138,12 +159,25 @@
 			<label for="jqTheme"><i class="fa fa-css3"></i> jQuery Theme:</label>
 		</div>
 		<div class="rowField">
-        	<select  name="jqTheme" id="jqTheme" data-selected="<?php echo (isset($theform) ?  $theform->getJqTheme() : ""); ?>" data-version="<?php echo (isset($theform) ?  ($theform->getJqversion() == "" ? $default : $theform->getJqversion() ) : "" ); ?>" title="">
-            </select>
-            
-            <p>For theme previews go to: <a target="_blank" href="http://jqueryui.com/themeroller/">http://jqueryui.com/themeroller/</a> and select "Gallery"</p>
-        </div>
+			<select  name="jqTheme" id="jqTheme" data-selected="<?php echo (isset($theform) ?  $theform->getJqTheme() : ""); ?>" data-version="<?php echo (isset($theform) ?  ($theform->getJqversion() == "" ? $default : $theform->getJqversion() ) : "" ); ?>" title="">
+			</select>
+			<p>For theme previews go to: <a target="_blank" href="http://jqueryui.com/themeroller/">http://jqueryui.com/themeroller/</a> and select "Gallery"</p>
+		</div>
 	</div>
+	
+	<div class="formRow jqueryTheme">
+		<div class="rowLabel">
+			<label for="useCaching"><i class="fa fa-file-archive-o"></i> Use Caching:</label>
+		</div>
+		<div class="rowField">
+			<select name="useCaching">
+				<option value="0" <?php if( $theform->getUseCaching() == 0 ){ echo " selected"; } ?>>No</option>
+				<option value="1" <?php if( $theform->getUseCaching() == 1 ){ echo " selected"; } ?>>Yes</option>
+			</select>
+		</div>
+	</div>	
+	
+	
 	<div class="formRow">
 		<div class="rowLabel">
 			<label for="sunrise"><i class="fa fa-calendar"></i> Sun rise:</label>
@@ -160,8 +194,13 @@
 			<label><i class="fa fa-calendar"></i> (mm/dd/yyyy) <input class="dateInput" type="text" name="sunset" id="sunset" value="<?php echo (isset($theform) ?  getinputdate($theform->getSunset()) : ''); ?>" title=" Date should be in format mm/dd/yyyy" /></label>
 		</div>
 	</div>
+        -->
+        
 	<div class="formRow rowCenter">
-		<input class="button" type="submit" value="SUBMIT" />
+    	<input type="hidden" name="formID" value="<?php echo $theform->getId(); ?>" /><br />
+		<button class="btn"><i class="fa fa-floppy-o"></i> Update</button>
+        <a class="btn" href="/views/group/buildGroup.php?formID=<?php echo $theform->getId(); ?>"><i class="fa fa-code"></i> Build Group</a>
+        <a class="btn" href="/"><i class="fa fa-home"></i> Home</a>
 	</div>
 </form>
 <script type="text/javascript" src="<?php echo JS_DIR.'/formBuilder.js'; ?>"></script>
