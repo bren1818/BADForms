@@ -5,8 +5,20 @@ function generateHtml($formObject){
 	$db = getConnection();
 	$tempID = filter_var(microtime(true), FILTER_SANITIZE_NUMBER_INT);
 	
+	$isGroupType = 0;
 	if( ! isset($formObject) || $formObject == "" || ! is_object($formObject) ){
 		$formObject = new formobject();
+	}else{
+		if( $formObject->getFormId() != "" ){
+			$form = new Theform($db);
+			$formID = $formObject->getFormId();
+			$form = $form->load( $formID );
+			if( $form->getId() > 0 ){
+				if( $form->getIsGroup() > 0){
+					$isGroupType = 1;
+				}
+			}
+		}
 	}
 	
 	//optimize
@@ -27,9 +39,16 @@ function generateHtml($formObject){
 		<label for="type">
 			Choose input type:
 		</label>
+		
 		<select class="select type" name="type" title="Select the type of entry object you wish to add to the form">
 			<?php
-				$query = $db->prepare("SELECT * FROM `objecttype` order by `ordered` ASC");		
+				//could use $RowTypes
+			
+				if( $isGroupType == 0 ){
+					$query = $db->prepare("SELECT * FROM `objecttype` order by `ordered` ASC");
+				}else{
+					$query = $db->prepare("SELECT * FROM `objecttype` WHERE `name` != 'group' order by `ordered` ASC");
+				}
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("objecttype") ){
 						echo '<option data-type="'.$result->getName().'" value="'.$result->getId().'" '.($result->getId() == $formObject->getType() ? "selected" : "").'>'.$result->getDescription().'</option>';
@@ -108,12 +127,25 @@ function generateHtml($formObject){
 	</div>
 	
 	<div class="row reUseableItem">
+		
+		<input type="hidden" name="reuseableType" value="" />
+		<input type="hidden" name="reuseableID" value="" />
+		
 		<div class="row reUseableGroup">
+			<label for="reUseableGroup">
+				Choose a Re-useable Group
+				<a class="btn" onClick="pickGroup(this , 1)" title="clicking this will allow you to choose from your pre-created group"><i class="fa fa-indent"></i> Pick Group</a>
+			</label>
+			
+			
 			
 			
 		</div>
 		<div class="row reUseableFormItem">
-			
+			<label for="reUseableGroup">
+				Choose a Re-useable Item
+				<a class="btn" onClick="pickGroup(this , 2)" title="clicking this will allow you to choose from your pre-created Iten"><i class="fa fa-sliders"></i> Pick Item</a>
+			</label>
 			
 		</div>
 	</div>

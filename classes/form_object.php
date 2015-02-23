@@ -3,6 +3,7 @@
 
 	Class: Formobject
 
+	formID, i
 	type, i
 	label, v
 	name, v
@@ -17,10 +18,11 @@
 	listType, i
 	listID, i
 	csList, v
+	reuseableType, i
+	reuseableID, i
 	classes, v
 	required, i
 	encrypted, i
-	formID, i
 	rowOrder, i
 	lastUpdated, dt
 	publicFormObject, bool
@@ -32,6 +34,7 @@
 		private $connection;
 		private $errors;
 		private $errorCount;
+		private $formID;
 		private $type;
 		private $label;
 		private $name;
@@ -46,10 +49,11 @@
 		private $listType;
 		private $listID;
 		private $csList;
+		private $reuseableType;
+		private $reuseableID;
 		private $classes;
 		private $required;
 		private $encrypted;
-		private $formID;
 		private $rowOrder;
 		private $lastUpdated;
 		private $publicFormObject;
@@ -91,6 +95,14 @@
 
 		function setErrorCount($errorCount){
 			$this->errorCount = $errorCount;
+		}
+
+		function getFormID(){
+			return $this->formID;
+		}
+
+		function setFormID($formID){
+			$this->formID = $formID;
 		}
 
 		function getType(){
@@ -205,6 +217,22 @@
 			$this->csList = $csList;
 		}
 
+		function getReuseableType(){
+			return $this->reuseableType;
+		}
+
+		function setReuseableType($reuseableType){
+			$this->reuseableType = $reuseableType;
+		}
+
+		function getReuseableID(){
+			return $this->reuseableID;
+		}
+
+		function setReuseableID($reuseableID){
+			$this->reuseableID = $reuseableID;
+		}
+
 		function getClasses(){
 			return $this->classes;
 		}
@@ -227,14 +255,6 @@
 
 		function setEncrypted($encrypted){
 			$this->encrypted = $encrypted;
-		}
-
-		function getFormID(){
-			return $this->formID;
-		}
-
-		function setFormID($formID){
-			$this->formID = $formID;
 		}
 
 		function getRowOrder(){
@@ -284,6 +304,7 @@
 		}
 
 		function getFromPost(){
+			$this->setFormID( (isset($_POST["formID"])) ? $_POST["formID"] : $this->getFormID() );
 			$this->setType( (isset($_POST["type"])) ? $_POST["type"] : $this->getType() );
 			$this->setLabel( (isset($_POST["label"])) ? $_POST["label"] : $this->getLabel() );
 			$this->setName( (isset($_POST["name"])) ? $_POST["name"] : $this->getName() );
@@ -298,16 +319,18 @@
 			$this->setListType( (isset($_POST["listType"])) ? $_POST["listType"] : $this->getListType() );
 			$this->setListID( (isset($_POST["listID"])) ? $_POST["listID"] : $this->getListID() );
 			$this->setCsList( (isset($_POST["csList"])) ? $_POST["csList"] : $this->getCsList() );
+			$this->setReuseableType( (isset($_POST["reuseableType"])) ? $_POST["reuseableType"] : $this->getReuseableType() );
+			$this->setReuseableID( (isset($_POST["reuseableID"])) ? $_POST["reuseableID"] : $this->getReuseableID() );
 			$this->setClasses( (isset($_POST["classes"])) ? $_POST["classes"] : $this->getClasses() );
 			$this->setRequired( (isset($_POST["required"])) ? $_POST["required"] : $this->getRequired() );
 			$this->setEncrypted( (isset($_POST["encrypted"])) ? $_POST["encrypted"] : $this->getEncrypted() );
-			$this->setFormID( (isset($_POST["formID"])) ? $_POST["formID"] : $this->getFormID() );
 			$this->setRowOrder( (isset($_POST["rowOrder"])) ? $_POST["rowOrder"] : $this->getRowOrder() );
 			$this->setLastUpdated( (isset($_POST["lastUpdated"])) ? $_POST["lastUpdated"] : $this->getLastUpdated() );
 			$this->setPublicFormObject( (isset($_POST["publicFormObject"])) ? $_POST["publicFormObject"] : $this->getPublicFormObject() );
 		}
 
 		function getFromRequest(){
+			$this->setFormID( (isset($_REQUEST["formID"])) ? $_REQUEST["formID"] : $this->getFormID() );
 			$this->setType( (isset($_REQUEST["type"])) ? $_REQUEST["type"] : $this->getType() );
 			$this->setLabel( (isset($_REQUEST["label"])) ? $_REQUEST["label"] : $this->getLabel() );
 			$this->setName( (isset($_REQUEST["name"])) ? $_REQUEST["name"] : $this->getName() );
@@ -322,16 +345,18 @@
 			$this->setListType( (isset($_REQUEST["listType"])) ? $_REQUEST["listType"] : $this->getListType() );
 			$this->setListID( (isset($_REQUEST["listID"])) ? $_REQUEST["listID"] : $this->getListID() );
 			$this->setCsList( (isset($_REQUEST["csList"])) ? $_REQUEST["csList"] : $this->getCsList() );
+			$this->setReuseableType( (isset($_REQUEST["reuseableType"])) ? $_REQUEST["reuseableType"] : $this->getReuseableType() );
+			$this->setReuseableID( (isset($_REQUEST["reuseableID"])) ? $_REQUEST["reuseableID"] : $this->getReuseableID() );
 			$this->setClasses( (isset($_REQUEST["classes"])) ? $_REQUEST["classes"] : $this->getClasses() );
 			$this->setRequired( (isset($_REQUEST["required"])) ? $_REQUEST["required"] : $this->getRequired() );
 			$this->setEncrypted( (isset($_REQUEST["encrypted"])) ? $_REQUEST["encrypted"] : $this->getEncrypted() );
-			$this->setFormID( (isset($_REQUEST["formID"])) ? $_REQUEST["formID"] : $this->getFormID() );
 			$this->setRowOrder( (isset($_REQUEST["rowOrder"])) ? $_REQUEST["rowOrder"] : $this->getRowOrder() );
 			$this->setLastUpdated( (isset($_REQUEST["lastUpdated"])) ? $_REQUEST["lastUpdated"] : $this->getLastUpdated() );
 			$this->setPublicFormObject( (isset($_REQUEST["publicFormObject"])) ? $_REQUEST["publicFormObject"] : $this->getPublicFormObject() );
 		}
 
 		function getFromArray($arr){
+			$this->setFormID( (isset($arr["formID"])) ? $arr["formID"] : $this->getFormID() );
 			$this->setType( (isset($arr["type"])) ? $arr["type"] : $this->getType() );
 			$this->setLabel( (isset($arr["label"])) ? $arr["label"] : $this->getLabel() );
 			$this->setName( (isset($arr["name"])) ? $arr["name"] : $this->getName() );
@@ -346,10 +371,11 @@
 			$this->setListType( (isset($arr["listType"])) ? $arr["listType"] : $this->getListType() );
 			$this->setListID( (isset($arr["listID"])) ? $arr["listID"] : $this->getListID() );
 			$this->setCsList( (isset($arr["csList"])) ? $arr["csList"] : $this->getCsList() );
+			$this->setReuseableType( (isset($arr["reuseableType"])) ? $arr["reuseableType"] : $this->getReuseableType() );
+			$this->setReuseableID( (isset($arr["reuseableID"])) ? $arr["reuseableID"] : $this->getReuseableID() );
 			$this->setClasses( (isset($arr["classes"])) ? $arr["classes"] : $this->getClasses() );
 			$this->setRequired( (isset($arr["required"])) ? $arr["required"] : $this->getRequired() );
 			$this->setEncrypted( (isset($arr["encrypted"])) ? $arr["encrypted"] : $this->getEncrypted() );
-			$this->setFormID( (isset($arr["formID"])) ? $arr["formID"] : $this->getFormID() );
 			$this->setRowOrder( (isset($arr["rowOrder"])) ? $arr["rowOrder"] : $this->getRowOrder() );
 			$this->setLastUpdated( (isset($arr["lastUpdated"])) ? $arr["lastUpdated"] : $this->getLastUpdated() );
 			$this->setPublicFormObject( (isset($arr["publicFormObject"])) ? $arr["publicFormObject"] : $this->getPublicFormObject() );
@@ -376,6 +402,11 @@
 				$log["ErrorCount"] = "modified";
 			}else{
 				$log["ErrorCount"] = "un-modified";
+			}
+			if($this->getFormID() != $formobject->getFormID() ){
+				$log["FormID"] = "modified";
+			}else{
+				$log["FormID"] = "un-modified";
 			}
 			if($this->getType() != $formobject->getType() ){
 				$log["Type"] = "modified";
@@ -447,6 +478,16 @@
 			}else{
 				$log["CsList"] = "un-modified";
 			}
+			if($this->getReuseableType() != $formobject->getReuseableType() ){
+				$log["ReuseableType"] = "modified";
+			}else{
+				$log["ReuseableType"] = "un-modified";
+			}
+			if($this->getReuseableID() != $formobject->getReuseableID() ){
+				$log["ReuseableID"] = "modified";
+			}else{
+				$log["ReuseableID"] = "un-modified";
+			}
 			if($this->getClasses() != $formobject->getClasses() ){
 				$log["Classes"] = "modified";
 			}else{
@@ -461,11 +502,6 @@
 				$log["Encrypted"] = "modified";
 			}else{
 				$log["Encrypted"] = "un-modified";
-			}
-			if($this->getFormID() != $formobject->getFormID() ){
-				$log["FormID"] = "modified";
-			}else{
-				$log["FormID"] = "un-modified";
 			}
 			if($this->getRowOrder() != $formobject->getRowOrder() ){
 				$log["RowOrder"] = "modified";
@@ -487,6 +523,7 @@
 
 		function save(){
 			$id = $this->getId();
+			$formID = $this->getFormID();
 			$type = $this->getType();
 			$label = $this->getLabel();
 			$name = $this->getName();
@@ -501,17 +538,19 @@
 			$listType = $this->getListType();
 			$listID = $this->getListID();
 			$csList = $this->getCsList();
+			$reuseableType = $this->getReuseableType();
+			$reuseableID = $this->getReuseableID();
 			$classes = $this->getClasses();
 			$required = $this->getRequired();
 			$encrypted = $this->getEncrypted();
-			$formID = $this->getFormID();
 			$rowOrder = $this->getRowOrder();
 			$lastUpdated = $this->getLastUpdated();
 			$publicFormObject = $this->getPublicFormObject();
 			if( $this->connection ){
 				if( $id != "" ){
 					/*Perform Update Operation*/
-					$query = $this->connection->prepare("UPDATE  `formobject` SET `type` = :type ,`label` = :label ,`name` = :name ,`defaultVal` = :defaultVal ,`errorText` = :errorText ,`placeholder` = :placeholder ,`regex` = :regex ,`minVal` = :minVal ,`maxVal` = :maxVal ,`minLength` = :minLength ,`maxLength` = :maxLength ,`listType` = :listType ,`listID` = :listID ,`csList` = :csList ,`classes` = :classes ,`required` = :required ,`encrypted` = :encrypted ,`formID` = :formID ,`rowOrder` = :rowOrder ,`lastUpdated` = :lastUpdated ,`publicFormObject` = :publicFormObject WHERE `id` = :id");
+					$query = $this->connection->prepare("UPDATE  `formobject` SET `formID` = :formID ,`type` = :type ,`label` = :label ,`name` = :name ,`defaultVal` = :defaultVal ,`errorText` = :errorText ,`placeholder` = :placeholder ,`regex` = :regex ,`minVal` = :minVal ,`maxVal` = :maxVal ,`minLength` = :minLength ,`maxLength` = :maxLength ,`listType` = :listType ,`listID` = :listID ,`csList` = :csList ,`reuseableType` = :reuseableType ,`reuseableID` = :reuseableID ,`classes` = :classes ,`required` = :required ,`encrypted` = :encrypted ,`rowOrder` = :rowOrder ,`lastUpdated` = :lastUpdated ,`publicFormObject` = :publicFormObject WHERE `id` = :id");
+					$query->bindParam('formID', $formID);
 					$query->bindParam('type', $type);
 					$query->bindParam('label', $label);
 					$query->bindParam('name', $name);
@@ -526,10 +565,11 @@
 					$query->bindParam('listType', $listType);
 					$query->bindParam('listID', $listID);
 					$query->bindParam('csList', $csList);
+					$query->bindParam('reuseableType', $reuseableType);
+					$query->bindParam('reuseableID', $reuseableID);
 					$query->bindParam('classes', $classes);
 					$query->bindParam('required', $required);
 					$query->bindParam('encrypted', $encrypted);
-					$query->bindParam('formID', $formID);
 					$query->bindParam('rowOrder', $rowOrder);
 					$query->bindParam('lastUpdated', $lastUpdated);
 					$query->bindParam('publicFormObject', $publicFormObject);
@@ -542,7 +582,8 @@
 
 				}else{
 					/*Perform Insert Operation*/
-					$query = $this->connection->prepare("INSERT INTO `formobject` (`id`,`type`,`label`,`name`,`defaultVal`,`errorText`,`placeholder`,`regex`,`minVal`,`maxVal`,`minLength`,`maxLength`,`listType`,`listID`,`csList`,`classes`,`required`,`encrypted`,`formID`,`rowOrder`,`lastUpdated`,`publicFormObject`) VALUES (NULL,:type,:label,:name,:defaultVal,:errorText,:placeholder,:regex,:minVal,:maxVal,:minLength,:maxLength,:listType,:listID,:csList,:classes,:required,:encrypted,:formID,:rowOrder,:lastUpdated,:publicFormObject);");
+					$query = $this->connection->prepare("INSERT INTO `formobject` (`id`,`formID`,`type`,`label`,`name`,`defaultVal`,`errorText`,`placeholder`,`regex`,`minVal`,`maxVal`,`minLength`,`maxLength`,`listType`,`listID`,`csList`,`reuseableType`,`reuseableID`,`classes`,`required`,`encrypted`,`rowOrder`,`lastUpdated`,`publicFormObject`) VALUES (NULL,:formID,:type,:label,:name,:defaultVal,:errorText,:placeholder,:regex,:minVal,:maxVal,:minLength,:maxLength,:listType,:listID,:csList,:reuseableType,:reuseableID,:classes,:required,:encrypted,:rowOrder,:lastUpdated,:publicFormObject);");
+					$query->bindParam(':formID', $formID);
 					$query->bindParam(':type', $type);
 					$query->bindParam(':label', $label);
 					$query->bindParam(':name', $name);
@@ -557,10 +598,11 @@
 					$query->bindParam(':listType', $listType);
 					$query->bindParam(':listID', $listID);
 					$query->bindParam(':csList', $csList);
+					$query->bindParam(':reuseableType', $reuseableType);
+					$query->bindParam(':reuseableID', $reuseableID);
 					$query->bindParam(':classes', $classes);
 					$query->bindParam(':required', $required);
 					$query->bindParam(':encrypted', $encrypted);
-					$query->bindParam(':formID', $formID);
 					$query->bindParam(':rowOrder', $rowOrder);
 					$query->bindParam(':lastUpdated', $lastUpdated);
 					$query->bindParam(':publicFormObject', $publicFormObject);
@@ -604,6 +646,29 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `id` = :id LIMIT 1");
 				$query->bindParam(':id', $id);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByFormID($formID){
+			if( $this->connection ){
+				if( $formID == null && $this->getFormID() != ""){
+					$formID = $this->getFormID();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `formID` = :formID LIMIT 1");
+				$query->bindParam(':formID', $formID);
 				$object = null;
 
 				if( $query->execute() ){
@@ -940,6 +1005,52 @@
 			}
 		}
 
+		function getByReuseableType($reuseableType){
+			if( $this->connection ){
+				if( $reuseableType == null && $this->getReuseableType() != ""){
+					$reuseableType = $this->getReuseableType();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `reuseableType` = :reuseableType LIMIT 1");
+				$query->bindParam(':reuseableType', $reuseableType);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByReuseableID($reuseableID){
+			if( $this->connection ){
+				if( $reuseableID == null && $this->getReuseableID() != ""){
+					$reuseableID = $this->getReuseableID();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `reuseableID` = :reuseableID LIMIT 1");
+				$query->bindParam(':reuseableID', $reuseableID);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
 		function getByClasses($classes){
 			if( $this->connection ){
 				if( $classes == null && $this->getClasses() != ""){
@@ -995,29 +1106,6 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `encrypted` = :encrypted LIMIT 1");
 				$query->bindParam(':encrypted', $encrypted);
-				$object = null;
-
-				if( $query->execute() ){
-					while( $result = $query->fetchObject("formobject") ){
-						$object = $result;
-					}
-
-				}
-				if( is_object( $object ) ){
-					return $object;
-				}
-			}
-		}
-
-		function getByFormID($formID){
-			if( $this->connection ){
-				if( $formID == null && $this->getFormID() != ""){
-					$formID = $this->getFormID();
-				}
-
-				/*Perform Query*/
-				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `formID` = :formID LIMIT 1");
-				$query->bindParam(':formID', $formID);
 				$object = null;
 
 				if( $query->execute() ){
@@ -1111,6 +1199,30 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `id` = :id");
 				$query->bindParam(':id', $id);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$formobjects[] = $result;
+					}
+					if( is_array( $formobjects ) ){
+						return $formobjects;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByFormID($formID=null){
+			if( $this->connection ){
+				if( $formID == null && $this->getFormID() != ""){
+					$formID = $this->getFormID();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `formID` = :formID");
+				$query->bindParam(':formID', $formID);
 
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("formobject") ){
@@ -1462,6 +1574,54 @@
 			}
 		}
 
+		function getListByReuseableType($reuseableType=null){
+			if( $this->connection ){
+				if( $reuseableType == null && $this->getReuseableType() != ""){
+					$reuseableType = $this->getReuseableType();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `reuseableType` = :reuseableType");
+				$query->bindParam(':reuseableType', $reuseableType);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$formobjects[] = $result;
+					}
+					if( is_array( $formobjects ) ){
+						return $formobjects;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByReuseableID($reuseableID=null){
+			if( $this->connection ){
+				if( $reuseableID == null && $this->getReuseableID() != ""){
+					$reuseableID = $this->getReuseableID();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `reuseableID` = :reuseableID");
+				$query->bindParam(':reuseableID', $reuseableID);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$formobjects[] = $result;
+					}
+					if( is_array( $formobjects ) ){
+						return $formobjects;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
 		function getListByClasses($classes=null){
 			if( $this->connection ){
 				if( $classes == null && $this->getClasses() != ""){
@@ -1519,30 +1679,6 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `encrypted` = :encrypted");
 				$query->bindParam(':encrypted', $encrypted);
-
-				if( $query->execute() ){
-					while( $result = $query->fetchObject("formobject") ){
-						$formobjects[] = $result;
-					}
-					if( is_array( $formobjects ) ){
-						return $formobjects;
-					}else{
-						return array();
-					}
-
-				}
-			}
-		}
-
-		function getListByFormID($formID=null){
-			if( $this->connection ){
-				if( $formID == null && $this->getFormID() != ""){
-					$formID = $this->getFormID();
-				}
-
-				/*Perform Query*/
-				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `formID` = :formID");
-				$query->bindParam(':formID', $formID);
 
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("formobject") ){

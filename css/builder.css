@@ -55,6 +55,9 @@ li.no-type-select.deleted .form_row_object .row.type,
 li.no-type-select .form_row_object .row{ display: none; }
 li.no-type-select .form_row_object .row.type{ display: block; }
 
+li .form_row_object .reUseableItem{
+	display:  none;
+}
 
 /*input*/
 li.input .form_row_object .row.minVal,
@@ -260,9 +263,51 @@ li.phone .form_row_object .advancedSettings{
 }
 
 
+li.group .form_row_object .row.listType,
+li.group .form_row_object .advancedSettings .showSettings.btn,
+li.group .form_row_object .row.rowLabel,
+li.group .form_row_object .row.rowName,
+li.group .form_row_object .row.defaultVal,
+li.group .form_row_object .row.errorText,
+li.group .form_row_object .row.placeholder,
+li.group .form_row_object .row.classes,
+li.group .form_row_object .row.required,
+li.group .form_row_object .row.listID,
+li.group .form_row_object .row.csList,
+li.group .form_row_object .row.minVal,
+li.group .form_row_object .row.maxVal,
+li.group .form_row_object .row.minLength,
+li.group .form_row_object .row.maxLength,
+li.group .form_row_object .row.regex,
+li.group .form_row_object .row .reUseableFormItem{
+	display: none;
+}
+
+li.formItem .form_row_object .row.reUseableItem,
+li.group .form_row_object .row.reUseableItem{
+	display: block;
+}
 
 
-
+li.formItem .form_row_object .row.listType,
+li.formItem .form_row_object .advancedSettings .showSettings.btn,
+li.formItem .form_row_object .row.rowLabel,
+li.formItem .form_row_object .row.rowName,
+li.formItem .form_row_object .row.defaultVal,
+li.formItem .form_row_object .row.errorText,
+li.formItem .form_row_object .row.placeholder,
+li.formItem .form_row_object .row.classes,
+li.formItem .form_row_object .row.required,
+li.formItem .form_row_object .row.listID,
+li.formItem .form_row_object .row.csList,
+li.formItem .form_row_object .row.minVal,
+li.formItem .form_row_object .row.maxVal,
+li.formItem .form_row_object .row.minLength,
+li.formItem .form_row_object .row.maxLength,
+li.formItem .form_row_object .row.regex,
+li.formItem .form_row_object .row .reUseableGroup{
+	display: none;
+}
 
 
 

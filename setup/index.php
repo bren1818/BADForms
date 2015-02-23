@@ -87,30 +87,32 @@
 	ob_flush();
 	flush();
 	//tool tip
-	$query = "CREATE TABLE  IF NOT EXISTS `formobject` (
-`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-`type` INTEGER,
-`label` VARCHAR( 60 ),
-`name` VARCHAR( 60 ),
-`defaultVal` VARCHAR( 60 ),
-`errorText` VARCHAR( 60 ),
-`placeholder` VARCHAR( 60 ),
-`regex` VARCHAR( 60 ),
-`minVal` INTEGER,
-`maxVal` INTEGER,
-`minLength` INTEGER,
-`maxLength` INTEGER,
-`listType` INTEGER,
-`listID` INTEGER,
-`csList` VARCHAR( 255 ),
-`classes` VARCHAR( 100 ),
-`required` INTEGER,
-`encrypted` INTEGER,
-`formID` INTEGER,
-`rowOrder` INTEGER,
-`lastUpdated` DATETIME,
-`publicFormObject` BOOLEAN
-);";
+	$query = "CREATE TABLE IF NOT EXISTS `formobject` (
+				`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+				`formID` INTEGER,
+				`type` INTEGER,
+				`label` VARCHAR( 60 ),
+				`name` VARCHAR( 60 ),
+				`defaultVal` VARCHAR( 60 ),
+				`errorText` VARCHAR( 60 ),
+				`placeholder` VARCHAR( 60 ),
+				`regex` VARCHAR( 60 ),
+				`minVal` INTEGER,
+				`maxVal` INTEGER,
+				`minLength` INTEGER,
+				`maxLength` INTEGER,
+				`listType` INTEGER,
+				`listID` INTEGER,
+				`csList` VARCHAR( 60 ),
+				`reuseableType` INTEGER,
+				`reuseableID` INTEGER,
+				`classes` VARCHAR( 60 ),
+				`required` INTEGER,
+				`encrypted` INTEGER,
+				`rowOrder` INTEGER,
+				`lastUpdated` DATETIME,
+				`publicFormObject` BOOLEAN
+				);";
 	
 	ob_flush();flush();
 	
@@ -160,13 +162,13 @@
 	
 	
 	$query = "CREATE TABLE  IF NOT EXISTS `formcode` (
-`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-`formID` INTEGER,
-`codeType` INTEGER,
-`version` INTEGER,
-`code` LONGTEXT,
-`lastUpdate` DATETIME
-);";
+		`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+		`formID` INTEGER,
+		`codeType` INTEGER,
+		`version` INTEGER,
+		`code` LONGTEXT,
+		`lastUpdate` DATETIME
+		);";
 	
 	createAndTestTable($db, "formcode", $query);
 	

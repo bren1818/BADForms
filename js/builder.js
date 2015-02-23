@@ -43,6 +43,51 @@
 		dialog.dialog("close");	
 	}
 	
+	function pickGroup(obj, groupType ) {
+		//groupType - 1 - groupItem
+		//groupType - 2 - listItem
+		chosenlist = obj;
+		var url = "";
+		var popTitle = "";
+		if ( groupType == 1) {
+		  url = "/views/group/listGroups.php";
+		  popTitle = "Pick Re-useable Group";
+		}else if (groupType == 2) {
+		  //fix for reuseable item
+		  url = "/views/group/listGroups.php";
+		  popTitle = "Pick Re-useable Item";
+		}
+		
+		
+		dialog = $( "#listPicker" ).dialog({
+		  autoOpen: true,
+		  height: 600,
+		  width: 600,
+		  modal: true,
+		  title: popTitle,
+		  buttons: {
+			Cancel: function() {
+			  dialog.dialog( "close" );
+			}
+		  },
+		  close: function() {
+			//form[ 0 ].reset();
+			//allFields.removeClass( "ui-state-error" );
+			chosenlist = "";
+		  },
+		  open: function(){
+			  $('#listPicker').html('<div id="availableLists" class="loading" style="height: 400px;"></div>');
+			  
+			  $('#availableLists').load( url , function() {
+					  $('#availableLists').removeClass('loading');
+			  });
+		  }
+    	});
+		
+		
+	}
+
+	
 	function clearPick(obj){
 		//to do clear the pick
 		var row = $(obj).closest('div.listID');
