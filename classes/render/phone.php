@@ -57,7 +57,7 @@
                     <?php if( $this->formObject->getDefaultVal() != "" ){ ?>
                     value="<?php echo $this->formObject->getDefaultVal(); ?>"
                     <?php } ?>
-                    pattern="([0-9]+[\s-]?)([(][0-9]{3}[)]|[0-9]{3})[\s-]?[0-9]{3}[\s-]?[0-9]{4}"
+                    pattern="[+]?(([0-9])?){0,3}[\s-]?([(][0-9]{3}[)]|[0-9]{3})[\s-]?[0-9]{3}[\s-]?[0-9]{4}"
                     data-min-length="" 
                     data-max-length="21"
                     maxlength="21"

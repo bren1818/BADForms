@@ -131,6 +131,41 @@ function generateHtml($formObject){
 		<input type="hidden" name="reuseableType" value="" />
 		<input type="hidden" name="reuseableID" value="" />
 		
+		<label class="groupName" for="groupName">
+        	<?php 
+				
+				if( ($formObject->getReuseableType() == 1 || $formObject->getReuseableType() == 2 ) && $formObject->getType() == 14 ){	
+					$ReUseID = $formObject->getReuseableID();
+					
+					//echo "Here: ".$formObject->getReuseableID();
+					//echo "Here: ".$formObject->getReuseableType();
+					
+					if( $formObject->getReuseableType() == 1 ){
+						//Group
+						$ReUseformObject = new Theform( $db );
+						$ReUseformObject = $ReUseformObject->load( $ReUseID );
+						
+						if( $ReUseformObject->getId() > 0 ){
+							echo '<b>Chosen Group</b>: &ldquo;' . $ReUseformObject->getTitle() . '&rdquo;  <a class="clearPick" onClick="clearGroup(this);"><i class="fa fa-times"></i></a>';
+						}
+						
+					}else{
+						//item
+						$ReUseformObject = new formobject( $db );
+						$ReUseformObject = $ReUseformObject->load( $ReUseID );
+						
+						if( $ReUseformObject->getId() > 0 ){
+							echo '<b>Chosen Group</b>: &ldquo;' . $ReUseformObject->getLabel() . '&rdquo;  <a class="clearPick" onClick="clearGroup(this);"><i class="fa fa-times"></i></a>';
+						}
+						
+					}
+
+				}
+				
+			?>
+        </label>
+		
+		
 		<div class="row reUseableGroup">
 			<label for="reUseableGroup">
 				Choose a Re-useable Group

@@ -13,6 +13,8 @@
 	include "hidden.php";
 	include "phone.php";
 	
+	include "group.php";
+	
 	//include "timepicker.php";
 	//include "datetimepicker.php";	
 ?>

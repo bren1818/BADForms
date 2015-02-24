@@ -9,6 +9,7 @@
 		exit;
 	}
 	
+	
 	//try loading form
 	$Theform = new Theform($conn);
 	$Theform = $Theform->load($formID);
@@ -76,6 +77,8 @@
 					$class = new $type($result);
 				
 					echo '<div id="form-item-id-'.$result->getId().'" class="formRow type-'.$type.' row-'.$rows.'">';
+						//pa( $result );
+						
 						$class->render();
 					echo '</div>';
 					

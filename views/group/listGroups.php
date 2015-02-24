@@ -13,7 +13,7 @@
 				//last modified
 				//created
 			
-				echo '<p><a  href="/views/group/buildGroup.php?formID='.$result->getId().'"><i class="fa fa-pencil"></i> &ldquo;'.$result->getTitle().'&rdquo; </a> - <a target="_blank" href="/renderForm.php?formID='.$result->getId().'"><i class="fa fa-desktop"></i> Preview Form</a></p>';
+				echo '<p><a class="btn pickList" onClick="pickGroupItem(\''.$result->getId().'\', \'1\', \''.$result->getTitle().'\');"><i class="fa fa-check"></i></a> <a href="/views/group/buildGroup.php?formID='.$result->getId().'"><i class="fa fa-pencil"></i> &ldquo;'.$result->getTitle().'&rdquo; </a> - <a target="_blank" href="/renderForm.php?formID='.$result->getId().'"><i class="fa fa-desktop"></i> Preview Form</a></p>';
 			echo '</div>';
 		}
 	}

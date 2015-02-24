@@ -79,20 +79,34 @@
 			  $('#listPicker').html('<div id="availableLists" class="loading" style="height: 400px;"></div>');
 			  
 			  $('#availableLists').load( url , function() {
-					  $('#availableLists').removeClass('loading');
+					$('#availableLists').removeClass('loading');
 			  });
 		  }
     	});
-		
-		
 	}
 
+	function pickGroupItem(groupID, groupType, groupName){
+		var row = $(chosenlist).closest('div.reUseableItem');
+		$(row).find('input[name="reuseableID"]').attr('value', groupID);
+		$(row).find('input[name="reuseableType"]').attr('value', groupType);
+		$(row).find('label.groupName').html( '<b>Chosen Group</b>: &ldquo;' + groupName + '&rdquo;  <a class="clearPick" onClick="clearGroup(this);"><i class="fa fa-times"></i></a>');
+		
+		dialog.dialog("close");	
+	}
+	
 	
 	function clearPick(obj){
 		//to do clear the pick
 		var row = $(obj).closest('div.listID');
 		$(row).find('input[name="listID"]').attr('value', '');
 		$(row).find('label.listName').html('');
+	}
+	
+	function clearGroup(obj){
+		var row = $(obj).closest('div.reUseableItem');
+		$(row).find('input[name="reuseableID"]').attr('value', '');
+		$(row).find('input[name="reuseableType"]').attr('value', '');
+		$(row).find('label.groupName').html('');
 	}
 	
 	
