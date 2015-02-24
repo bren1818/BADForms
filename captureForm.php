@@ -75,6 +75,89 @@
 	
 		if( $query->execute() ){
 			while( $result = $query->fetchObject("formobject") ){
+				
+				//if re-useable
+				
+				if( $result->getReuseableType() == 1 || $result->getReuseableType() == 2){
+					if( $result->getReuseableType() == 1 ){ //type 14
+						//group
+						$reUseID = $result->getReuseableID(); //id for the group
+						
+						
+						/*
+							Re-Factor!
+						*/
+							$gquery = "SELECT * FROM `formobject` WHERE `formID` = :formID order by `rowOrder` ASC"; //type no nt chosen
+							$gquery = $conn->prepare( $gquery );
+							$gquery->bindParam(':formID', $reUseID);
+							if( $gquery->execute() ){
+								while( $gresult = $gquery->fetchObject("formobject") ){
+									
+									
+									
+									
+									//echo generateHtml( $result );
+									$inputName = $gresult->getName();
+									$inputID = $gresult->getId();
+									$postBackID = 'input_'.$reUseID.'_'.$inputID;
+									$postBackValue = "";
+									$encryptData = $gresult->getEncrypted();
+									$required = $gresult->getRequired();
+									$isListType = (($gresult->getListType() == 1 || $gresult->getListType() == 2) ? 1 : 0);
+									
+									
+									//get type, use type to get value & error etc based on name??
+									
+									
+									if( isset($_POST[$postBackID] ) ){
+										if( $isListType ){
+											if( is_array($_POST[$postBackID]) ){
+												$arr = $_POST[$postBackID];
+												$postBackValue = implode(",",$arr);
+											}else{
+												$postBackValue = (isset($_POST[$postBackID]) ? $_POST[$postBackID] : "");
+											}
+										}else{
+											$postBackValue = (isset($_POST[$postBackID]) ? $_POST[$postBackID] : "");
+										}
+									}
+									
+									if( $postBackValue != "" && $encryptData ){
+										$encryptedD = $encryptor->encrypt( $postBackValue );
+										$postBackValue = $encryptedD;
+									}
+									
+									//check the data for errors...
+									if( isset( $inputName ) && $inputName != "" ){
+										$capturedData[ $counter."_$inputName" ] = $postBackValue;		
+									}else{
+										$capturedData[ $counter."_$postBackID" ] = $postBackValue;
+									}
+									
+									$saveRow[] = array("item" => $counter, "encrypted" => ($encryptData == 1 ? 1 : 0), "name" => $inputName, "value" => $postBackValue);
+									
+									$counter++;
+									
+									
+									
+									
+									
+									
+									
+									
+									
+								}
+							}
+					}else{ //type
+					
+					}
+					
+					
+					continue;
+				}
+				
+				//-------------------------------------------------------------
+				
 				//echo generateHtml( $result );
 				$inputName = $result->getName();
 				$inputID = $result->getId();
