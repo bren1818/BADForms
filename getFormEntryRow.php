@@ -247,6 +247,24 @@ function generateHtml($formObject){
 			?>
 		</div>
 		
+		
+		<div class="row genericUseID">
+			<label for="genericUseID">
+				
+			</label>
+			<input type="text" name="genericUseID" value="<?php echo $formObject->getGenericUseID(); ?>" />
+		</div>
+		
+		<div class="row genericUseText">
+			<label for="genericUseText">
+				
+			</label>
+			<textarea name="genericUseText"><?php echo $formObject->getGenericUseText(); ?></textarea>
+		</div>
+		
+		
+		
+		
 		<div class="row required">
 			<label for="required">
 				Is this field required?

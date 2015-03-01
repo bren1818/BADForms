@@ -20,6 +20,10 @@
 		echo '<pre>'.print_r($arr,true).'</pre>';
 	}
 	
+	function getCurrentDateTime(){
+		return (string)date('Y-m-d H:i:s', time());
+	}
+	
 	function getdatetime($dateString){
 			return date('Y-m-d H:i:s', strtotime($dateString) );
 	}

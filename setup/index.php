@@ -54,7 +54,8 @@
 		
 	}else{
 		echo "<p><i class='fa fa-database'></i> Database: '".$dbName."' exists, exitting...</p>";
-		logMessage( "Someone trying to re-run setup. Database '".$dbName."' already exists. Exitting..." , "error.txt", "" ,"" );
+		logMessage( "Someone trying to re-run setup. Database '".$dbName."' already exists. Exitting Setup..." , "error.txt", "" ,"" );
+		echo "<p><a class='btn' href='/'><i class='fa fa-sign-out'></i> Home</a></p>";
 		pageFooter();
 		exit;	
 	}
@@ -74,7 +75,7 @@
 			`salt` VARCHAR( 60 ),
 			`email` VARCHAR( 60 ),
 			`userLevel` INTEGER,
-			`creationDate` TIMESTAMP,
+			`creationDate` DATETIME,
 			`lastLogin` DATETIME,
 			`enabled` INTEGER
 			);";
@@ -109,35 +110,36 @@
 	ob_flush();
 	flush();
 	//tool tip
-	$query = "CREATE TABLE IF NOT EXISTS `formobject` (
-				`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-				`formID` INTEGER,
-				`type` INTEGER,
-				`label` VARCHAR( 60 ),
-				`name` VARCHAR( 60 ),
-				`defaultVal` VARCHAR( 60 ),
-				`errorText` VARCHAR( 60 ),
-				`placeholder` VARCHAR( 60 ),
-				`regex` VARCHAR( 60 ),
-				`minVal` INTEGER,
-				`maxVal` INTEGER,
-				`minLength` INTEGER,
-				`maxLength` INTEGER,
-				`listType` INTEGER,
-				`listID` INTEGER,
-				`csList` VARCHAR( 60 ),
-				`reuseableType` INTEGER,
-				`reuseableID` INTEGER,
-				`classes` VARCHAR( 60 ),
-				`required` INTEGER,
-				`encrypted` INTEGER,
-				`rowOrder` INTEGER,
-				`lastUpdated` DATETIME,
-				`publicFormObject` BOOLEAN
-				);";
+	$query = "CREATE TABLE  `formobject` (
+			`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+			`formID` INTEGER,
+			`type` INTEGER,
+			`label` VARCHAR( 60 ),
+			`name` VARCHAR( 60 ),
+			`defaultVal` VARCHAR( 60 ),
+			`errorText` VARCHAR( 60 ),
+			`placeholder` VARCHAR( 60 ),
+			`regex` VARCHAR( 255 ),
+			`minVal` INTEGER,
+			`maxVal` INTEGER,
+			`minLength` INTEGER,
+			`maxLength` INTEGER,
+			`listType` INTEGER,
+			`listID` INTEGER,
+			`csList` VARCHAR( 255 ),
+			`reuseableType` INTEGER,
+			`reuseableID` INTEGER,
+			`classes` VARCHAR( 60 ),
+			`required` INTEGER,
+			`encrypted` INTEGER,
+			`rowOrder` INTEGER,
+			`lastUpdated` DATETIME,
+			`publicFormObject` BOOLEAN,
+			`genericUseID` INTEGER,
+			`genericUseText` VARCHAR( 255 )
+			);";
 	
-	//generic-useID 
-	//generic-useText 
+	
 	
 	
 	ob_flush();flush();
@@ -264,7 +266,7 @@
 	if( $admin->save() > 0 ){
 	
 		echo "<p>Setup Complete...<i class='fa fa-check'></i></p>
-			<p><a class='btn' href='firstUser.php?first=".$pass."'><i class='fa fa-sign-out'></i> Finish Setup</a></p>";		
+			<p><a class='btn' href='firstUser.php?first=".$pass."'><i class='fa fa-sign-out'></i> Finish Setup and create Admin</a></p>";		
 	}else{
 		echo "<p>Admin user could not be created! please see setup log</p>";
 		//uh oh

@@ -15,6 +15,9 @@
 	
 	include "group.php";
 	
+	include "labelField.php";
+	include "htmlChunk.php";
+	
 	//include "timepicker.php";
 	//include "datetimepicker.php";	
 ?>

@@ -16,16 +16,19 @@ form.previewForm{
 textarea,
 input[type="tel"],
 input[type="email"],
+input[type="password"],
 input[type="text"]{ padding: 5px; width: 300px; }
 
 textarea{ min-height: 80px; }
 
 input[type="tel"],
 input[type="email"],
+input[type="password"],
 input[type="text"]{ height: 40px; line-height: 40px; border: 1px solid #000; }
 
 input[type="tel"]:invalid,
 input[type="email"]:invalid,
+input[type="password"]:invalid,
 input[type="text"]:invalid {
 	background-color: rgba(255,0,0,.3);
 	border: 1px solid rgb(255,0,0);
@@ -33,6 +36,7 @@ input[type="text"]:invalid {
 
 input[type="tel"]:valid ,
 input[type="email"]:valid ,
+input[type="password"]:valid,
 input[type="text"]:valid {
 	background-color: rgba(0,144,0,.3);
 	border: 1px solid rgb(0,144,0);

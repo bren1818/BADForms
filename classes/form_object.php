@@ -26,6 +26,8 @@
 	rowOrder, i
 	lastUpdated, dt
 	publicFormObject, bool
+	genericUseID, i
+	genericUseText, v
 
 */
 
@@ -57,6 +59,8 @@
 		private $rowOrder;
 		private $lastUpdated;
 		private $publicFormObject;
+		private $genericUseID;
+		private $genericUseText;
 
 
 		/*Constructor*/
@@ -281,6 +285,22 @@
 			$this->publicFormObject = $publicFormObject;
 		}
 
+		function getGenericUseID(){
+			return $this->genericUseID;
+		}
+
+		function setGenericUseID($genericUseID){
+			$this->genericUseID = $genericUseID;
+		}
+
+		function getGenericUseText(){
+			return $this->genericUseText;
+		}
+
+		function setGenericUseText($genericUseText){
+			$this->genericUseText = $genericUseText;
+		}
+
 		/*Special Functions*/
 		function load($id = null){
 			if( $this->connection ){
@@ -327,6 +347,8 @@
 			$this->setRowOrder( (isset($_POST["rowOrder"])) ? $_POST["rowOrder"] : $this->getRowOrder() );
 			$this->setLastUpdated( (isset($_POST["lastUpdated"])) ? $_POST["lastUpdated"] : $this->getLastUpdated() );
 			$this->setPublicFormObject( (isset($_POST["publicFormObject"])) ? $_POST["publicFormObject"] : $this->getPublicFormObject() );
+			$this->setGenericUseID( (isset($_POST["genericUseID"])) ? $_POST["genericUseID"] : $this->getGenericUseID() );
+			$this->setGenericUseText( (isset($_POST["genericUseText"])) ? $_POST["genericUseText"] : $this->getGenericUseText() );
 		}
 
 		function getFromRequest(){
@@ -353,6 +375,8 @@
 			$this->setRowOrder( (isset($_REQUEST["rowOrder"])) ? $_REQUEST["rowOrder"] : $this->getRowOrder() );
 			$this->setLastUpdated( (isset($_REQUEST["lastUpdated"])) ? $_REQUEST["lastUpdated"] : $this->getLastUpdated() );
 			$this->setPublicFormObject( (isset($_REQUEST["publicFormObject"])) ? $_REQUEST["publicFormObject"] : $this->getPublicFormObject() );
+			$this->setGenericUseID( (isset($_REQUEST["genericUseID"])) ? $_REQUEST["genericUseID"] : $this->getGenericUseID() );
+			$this->setGenericUseText( (isset($_REQUEST["genericUseText"])) ? $_REQUEST["genericUseText"] : $this->getGenericUseText() );
 		}
 
 		function getFromArray($arr){
@@ -379,6 +403,8 @@
 			$this->setRowOrder( (isset($arr["rowOrder"])) ? $arr["rowOrder"] : $this->getRowOrder() );
 			$this->setLastUpdated( (isset($arr["lastUpdated"])) ? $arr["lastUpdated"] : $this->getLastUpdated() );
 			$this->setPublicFormObject( (isset($arr["publicFormObject"])) ? $arr["publicFormObject"] : $this->getPublicFormObject() );
+			$this->setGenericUseID( (isset($arr["genericUseID"])) ? $arr["genericUseID"] : $this->getGenericUseID() );
+			$this->setGenericUseText( (isset($arr["genericUseText"])) ? $arr["genericUseText"] : $this->getGenericUseText() );
 		}
 
 		function compareTo($formobject){
@@ -518,6 +544,16 @@
 			}else{
 				$log["PublicFormObject"] = "un-modified";
 			}
+			if($this->getGenericUseID() != $formobject->getGenericUseID() ){
+				$log["GenericUseID"] = "modified";
+			}else{
+				$log["GenericUseID"] = "un-modified";
+			}
+			if($this->getGenericUseText() != $formobject->getGenericUseText() ){
+				$log["GenericUseText"] = "modified";
+			}else{
+				$log["GenericUseText"] = "un-modified";
+			}
 		return $log;
 		}
 
@@ -546,10 +582,12 @@
 			$rowOrder = $this->getRowOrder();
 			$lastUpdated = $this->getLastUpdated();
 			$publicFormObject = $this->getPublicFormObject();
+			$genericUseID = $this->getGenericUseID();
+			$genericUseText = $this->getGenericUseText();
 			if( $this->connection ){
 				if( $id != "" ){
 					/*Perform Update Operation*/
-					$query = $this->connection->prepare("UPDATE  `formobject` SET `formID` = :formID ,`type` = :type ,`label` = :label ,`name` = :name ,`defaultVal` = :defaultVal ,`errorText` = :errorText ,`placeholder` = :placeholder ,`regex` = :regex ,`minVal` = :minVal ,`maxVal` = :maxVal ,`minLength` = :minLength ,`maxLength` = :maxLength ,`listType` = :listType ,`listID` = :listID ,`csList` = :csList ,`reuseableType` = :reuseableType ,`reuseableID` = :reuseableID ,`classes` = :classes ,`required` = :required ,`encrypted` = :encrypted ,`rowOrder` = :rowOrder ,`lastUpdated` = :lastUpdated ,`publicFormObject` = :publicFormObject WHERE `id` = :id");
+					$query = $this->connection->prepare("UPDATE  `formobject` SET `formID` = :formID ,`type` = :type ,`label` = :label ,`name` = :name ,`defaultVal` = :defaultVal ,`errorText` = :errorText ,`placeholder` = :placeholder ,`regex` = :regex ,`minVal` = :minVal ,`maxVal` = :maxVal ,`minLength` = :minLength ,`maxLength` = :maxLength ,`listType` = :listType ,`listID` = :listID ,`csList` = :csList ,`reuseableType` = :reuseableType ,`reuseableID` = :reuseableID ,`classes` = :classes ,`required` = :required ,`encrypted` = :encrypted ,`rowOrder` = :rowOrder ,`lastUpdated` = :lastUpdated ,`publicFormObject` = :publicFormObject ,`genericUseID` = :genericUseID ,`genericUseText` = :genericUseText WHERE `id` = :id");
 					$query->bindParam('formID', $formID);
 					$query->bindParam('type', $type);
 					$query->bindParam('label', $label);
@@ -573,6 +611,8 @@
 					$query->bindParam('rowOrder', $rowOrder);
 					$query->bindParam('lastUpdated', $lastUpdated);
 					$query->bindParam('publicFormObject', $publicFormObject);
+					$query->bindParam('genericUseID', $genericUseID);
+					$query->bindParam('genericUseText', $genericUseText);
 					$query->bindParam('id', $id);
 					if( $query->execute() ){
 						return $id;
@@ -582,7 +622,7 @@
 
 				}else{
 					/*Perform Insert Operation*/
-					$query = $this->connection->prepare("INSERT INTO `formobject` (`id`,`formID`,`type`,`label`,`name`,`defaultVal`,`errorText`,`placeholder`,`regex`,`minVal`,`maxVal`,`minLength`,`maxLength`,`listType`,`listID`,`csList`,`reuseableType`,`reuseableID`,`classes`,`required`,`encrypted`,`rowOrder`,`lastUpdated`,`publicFormObject`) VALUES (NULL,:formID,:type,:label,:name,:defaultVal,:errorText,:placeholder,:regex,:minVal,:maxVal,:minLength,:maxLength,:listType,:listID,:csList,:reuseableType,:reuseableID,:classes,:required,:encrypted,:rowOrder,:lastUpdated,:publicFormObject);");
+					$query = $this->connection->prepare("INSERT INTO `formobject` (`id`,`formID`,`type`,`label`,`name`,`defaultVal`,`errorText`,`placeholder`,`regex`,`minVal`,`maxVal`,`minLength`,`maxLength`,`listType`,`listID`,`csList`,`reuseableType`,`reuseableID`,`classes`,`required`,`encrypted`,`rowOrder`,`lastUpdated`,`publicFormObject`,`genericUseID`,`genericUseText`) VALUES (NULL,:formID,:type,:label,:name,:defaultVal,:errorText,:placeholder,:regex,:minVal,:maxVal,:minLength,:maxLength,:listType,:listID,:csList,:reuseableType,:reuseableID,:classes,:required,:encrypted,:rowOrder,:lastUpdated,:publicFormObject,:genericUseID,:genericUseText);");
 					$query->bindParam(':formID', $formID);
 					$query->bindParam(':type', $type);
 					$query->bindParam(':label', $label);
@@ -606,6 +646,8 @@
 					$query->bindParam(':rowOrder', $rowOrder);
 					$query->bindParam(':lastUpdated', $lastUpdated);
 					$query->bindParam(':publicFormObject', $publicFormObject);
+					$query->bindParam(':genericUseID', $genericUseID);
+					$query->bindParam(':genericUseText', $genericUseText);
 
 					if( $query->execute() ){
 						$this->setId( $this->connection->lastInsertId() );
@@ -1189,6 +1231,52 @@
 			}
 		}
 
+		function getByGenericUseID($genericUseID){
+			if( $this->connection ){
+				if( $genericUseID == null && $this->getGenericUseID() != ""){
+					$genericUseID = $this->getGenericUseID();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `genericUseID` = :genericUseID LIMIT 1");
+				$query->bindParam(':genericUseID', $genericUseID);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByGenericUseText($genericUseText){
+			if( $this->connection ){
+				if( $genericUseText == null && $this->getGenericUseText() != ""){
+					$genericUseText = $this->getGenericUseText();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `genericUseText` = :genericUseText LIMIT 1");
+				$query->bindParam(':genericUseText', $genericUseText);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
 
 		function getListById($id=null){
 			if( $this->connection ){
@@ -1751,6 +1839,54 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `publicFormObject` = :publicFormObject");
 				$query->bindParam(':publicFormObject', $publicFormObject);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$formobjects[] = $result;
+					}
+					if( is_array( $formobjects ) ){
+						return $formobjects;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByGenericUseID($genericUseID=null){
+			if( $this->connection ){
+				if( $genericUseID == null && $this->getGenericUseID() != ""){
+					$genericUseID = $this->getGenericUseID();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `genericUseID` = :genericUseID");
+				$query->bindParam(':genericUseID', $genericUseID);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("formobject") ){
+						$formobjects[] = $result;
+					}
+					if( is_array( $formobjects ) ){
+						return $formobjects;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByGenericUseText($genericUseText=null){
+			if( $this->connection ){
+				if( $genericUseText == null && $this->getGenericUseText() != ""){
+					$genericUseText = $this->getGenericUseText();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `formobject` WHERE `genericUseText` = :genericUseText");
+				$query->bindParam(':genericUseText', $genericUseText);
 
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("formobject") ){

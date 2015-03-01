@@ -55,6 +55,8 @@ li.no-type-select.deleted .form_row_object .row.type,
 li.no-type-select .form_row_object .row{ display: none; }
 li.no-type-select .form_row_object .row.type{ display: block; }
 
+li .form_row_object .genericUseID,
+li .form_row_object .genericUseTEXT,
 li .form_row_object .reUseableItem{
 	display:  none;
 }
@@ -288,7 +290,6 @@ li.group .form_row_object .row.reUseableItem{
 	display: block;
 }
 
-
 li.formItem .form_row_object .row.listType,
 li.formItem .form_row_object .advancedSettings .showSettings.btn,
 li.formItem .form_row_object .row.rowLabel,
@@ -309,8 +310,93 @@ li.formItem .form_row_object .row .reUseableGroup{
 	display: none;
 }
 
+/*Label*/
+li.labelField   .form_row_object .row.listType,
+li.labelField   .form_row_object .advancedSettings .showSettings.btn,
+li.labelField   .form_row_object .row.rowLabel,
+li.labelField   .form_row_object .row.rowName,
+li.labelField   .form_row_object .row.defaultVal,
+li.labelField   .form_row_object .row.errorText,
+li.labelField   .form_row_object .row.placeholder,
+li.labelField   .form_row_object .row.classes,
+li.labelField   .form_row_object .row.required,
+li.labelField   .form_row_object .row.listID,
+li.labelField   .form_row_object .row.csList,
+li.labelField   .form_row_object .row.minVal,
+li.labelField   .form_row_object .row.maxVal,
+li.labelField   .form_row_object .row.minLength,
+li.labelField   .form_row_object .row.maxLength,
+li.labelField   .form_row_object .row.regex,
+li.labelField   .form_row_object .row .reUseableFormItem{
+	display: none;
+}
+
+li.labelField .form_row_object .row.advancedSettings,
+li.labelField .form_row_object .row  .genericUseText{
+	display: block;
+	height: auto;
+}
+
+li.labelField .form_row_object .row  .genericUseText textarea{
+	min-width: 100%;
+	min-height: 100px;
+	overflow-y: auto;
+}
+
+li.labelField .form_row_object .row  .genericUseText label{
+	margin-bottom: 10px;
+	font-weight: bold;
+	width: auto;
+}
+
+li.labelField .form_row_object .row  .genericUseText label:before{
+	content: "Text typed here will be displayed to the end user:";
+}
 
 
+
+/*HtmlChunk*/
+li.htmlChunk  .form_row_object .row.listType,
+li.htmlChunk  .form_row_object .advancedSettings .showSettings.btn,
+li.htmlChunk  .form_row_object .row.rowLabel,
+li.htmlChunk  .form_row_object .row.rowName,
+li.htmlChunk  .form_row_object .row.defaultVal,
+li.htmlChunk  .form_row_object .row.errorText,
+li.htmlChunk  .form_row_object .row.placeholder,
+li.htmlChunk  .form_row_object .row.classes,
+li.htmlChunk  .form_row_object .row.required,
+li.htmlChunk  .form_row_object .row.listID,
+li.htmlChunk  .form_row_object .row.csList,
+li.htmlChunk  .form_row_object .row.minVal,
+li.htmlChunk  .form_row_object .row.maxVal,
+li.htmlChunk  .form_row_object .row.minLength,
+li.htmlChunk  .form_row_object .row.maxLength,
+li.htmlChunk  .form_row_object .row.regex,
+li.htmlChunk  .form_row_object .row .reUseableFormItem{
+	display: none;
+}
+
+li.htmlChunk .form_row_object .row.advancedSettings,
+li.htmlChunk .form_row_object .row  .genericUseText{
+	display: block;
+	height: auto;
+}
+
+li.htmlChunk .form_row_object .row  .genericUseText textarea{
+	min-width: 100%;
+	min-height: 100px;
+	overflow-y: auto;
+}
+
+li.htmlChunk .form_row_object .row  .genericUseText label{
+	margin-bottom: 10px;
+	font-weight: bold;
+	width: auto;
+}
+
+li.htmlChunk .form_row_object .row  .genericUseText label:before{
+	content: "HTML typed here will be rendered as-is in place in the form.";
+}
 
 
 
