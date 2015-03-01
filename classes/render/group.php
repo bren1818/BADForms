@@ -31,7 +31,11 @@
 		function getJS(){
 			return "";
 		}
-		
+						
+		function hasReturnValue(){
+			return 1;
+		}
+
 		function render(){
 			
 			//if( ($this->formObject->getReuseableType() == 1 || $this->formObject->getReuseableType() == 2 ) && $this->formObject->getType() == 14 ){	

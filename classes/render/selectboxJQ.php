@@ -11,7 +11,11 @@
 		function getJS(){
 			return "$('#selectBox_".$this->formObject->getFormID().'_'.$this->formObject->getId()."').selectmenu();";
 		}
-		
+						
+		function hasReturnValue(){
+			return 1;
+		}
+
 		function render(){
 			?>
 				<div class="formRowLabel">

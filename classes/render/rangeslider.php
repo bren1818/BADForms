@@ -63,7 +63,11 @@
 					});
 					$( "#rangeSlider_'. $this->formObject->getFormID().'_'.$this->formObject->getId().'" ).val( $( "#slider-range-'.$this->formObject->getFormID().'_'.$this->formObject->getId().'" ).slider( "value" ) );';
 		}
-		
+						
+		function hasReturnValue(){
+			return 1;
+		}
+
 		function render(){
 			?>
             	<div class="formRowLabel">

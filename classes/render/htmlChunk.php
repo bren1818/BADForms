@@ -11,6 +11,10 @@ class htmlChunk{
 		return "";
 	}
 	
+	function hasReturnValue(){
+		return 0;
+	}
+	
 	function render(){
 		echo $this->formObject->getGenericUseText(); 
 	}

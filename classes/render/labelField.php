@@ -7,6 +7,10 @@ class labelField{
 		$this->formObject = $formObject;
 	}
 	
+	function hasReturnValue(){
+		return 0;
+	}
+	
 	function getJS(){
 		return "";
 	}
@@ -14,9 +18,9 @@ class labelField{
 	function render(){
 		?>
 		<div class="formRowLabel">
-			<label for="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>">
-				<span class="labelText"><?php echo $this->formObject->getGenericUseText(); ?></span>
-			</label>
+			<p class="labelField" id="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>">
+				<?php echo $this->formObject->getGenericUseText(); ?>
+			</p>
 		</div>
 		<?php
 	}

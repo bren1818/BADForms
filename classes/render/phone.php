@@ -31,7 +31,11 @@
 		function getJS(){
 			return "";
 		}
-		
+						
+		function hasReturnValue(){
+			return 1;
+		}
+
 		function render(){
 			?>
             	<div class="formRowLabel">

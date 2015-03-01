@@ -13,7 +13,11 @@
 		function getJS(){
 			return "$('#datePicker_". $this->formObject->getFormID().'_'.$this->formObject->getId()."').datepicker();";
 		}
-		
+				
+		function hasReturnValue(){
+			return 1;
+		}
+
 		function render(){
 			?>
 				<div class="formRowLabel">
