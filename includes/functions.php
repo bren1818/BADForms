@@ -31,4 +31,8 @@
 			return date('m/d/Y',strtotime($datetime) );
 		}
 	}
+	
+	function getUniqueID(){
+		return filter_var(microtime(true), FILTER_SANITIZE_NUMBER_INT);
+	}
 ?>

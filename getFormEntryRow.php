@@ -3,7 +3,7 @@ require_once( "includes/include.php" );
 
 function generateHtml($formObject){
 	$db = getConnection();
-	$tempID = filter_var(microtime(true), FILTER_SANITIZE_NUMBER_INT);
+	$tempID = getUniqueID();
 	
 	$isGroupType = 0;
 	if( ! isset($formObject) || $formObject == "" || ! is_object($formObject) ){

@@ -253,7 +253,22 @@
 
 	ob_flush();flush();
 	
-	echo "<p>Setup Complete...<i class='fa fa-check'></i></p><p><a class='btn' href='../index.php'><i class='fa fa-sign-out'></i> Login</a></p>";
+	//Create user...
+	$pass = getUniqueID();
+	
+	$admin = new Admin($db);
+	
+	$admin->setUsername("admin");
+	$admin->setPassword( md5($pass."badForms") );
+	
+	if( $admin->save() > 0 ){
+	
+		echo "<p>Setup Complete...<i class='fa fa-check'></i></p>
+			<p><a class='btn' href='firstUser.php?first=".$pass."'><i class='fa fa-sign-out'></i> Finish Setup</a></p>";		
+	}else{
+		echo "<p>Admin user could not be created! please see setup log</p>";
+		//uh oh
+	}
 	
 	//setup first user
 	//create salt

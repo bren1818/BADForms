@@ -10,5 +10,7 @@
 	include "listItem.php";
 	include "listItemKV.php";
 	
+	include "admin.php";
+	
 	include "render".DIRECTORY_SEPARATOR."includes.php";
 ?>
