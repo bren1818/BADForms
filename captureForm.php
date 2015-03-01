@@ -205,7 +205,10 @@
 			
 		}
 		echo "Stored Data";
-		pa( $capturedData );	
+		
+		
+		
+		pa( array_filter($capturedData) ); //array_filter removes empty values	
 		
 		
 		echo json_encode( $saveRow );

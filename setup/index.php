@@ -53,7 +53,10 @@
 		}
 		
 	}else{
-		echo "<p><i class='fa fa-database'></i> Database: '".$dbName."' exists, continuing...</p>";	
+		echo "<p><i class='fa fa-database'></i> Database: '".$dbName."' exists, exitting...</p>";
+		logMessage( "Someone trying to re-run setup. Database '".$dbName."' already exists. Exitting..." , "error.txt", "" ,"" );
+		pageFooter();
+		exit;	
 	}
 	
 	/*Create Tables*/
@@ -63,24 +66,43 @@
 	flush();
 	$db = getConnection();
 	
-	$query = "CREATE TABLE  `theform` (
-`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-`title` VARCHAR( 60 ),
-`description` VARCHAR( 60 ),
-`encryptionMode` INTEGER,
-`encryptionSalt` VARCHAR( 60 ),
-`created` DATETIME,
-`lastUpdated` DATETIME,
-`enabled` INTEGER,
-`sunrise` DATETIME,
-`sunset` DATETIME,
-`jqVersion` VARCHAR( 10 ),
-`jqTheme` VARCHAR( 60 ),
-`owner` INTEGER,
-`isGroup` BOOLEAN,
-`useCaching` BOOLEAN,
-`lastCacheTime` DATETIME
-);";
+	//user table
+	$query = "CREATE TABLE IF NOT EXISTS `admin` (
+			`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+			`username` VARCHAR( 60 ),
+			`password` VARCHAR( 60 ),
+			`salt` VARCHAR( 60 ),
+			`email` VARCHAR( 60 ),
+			`userLevel` INTEGER,
+			`creationDate` TIMESTAMP,
+			`lastLogin` DATETIME,
+			`enabled` INTEGER
+			);";
+				
+	createAndTestTable($db, "admin", $query);
+	
+	ob_flush();
+	flush();
+	
+	
+		$query = "CREATE TABLE  `theform` (
+	`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+	`title` VARCHAR( 60 ),
+	`description` VARCHAR( 60 ),
+	`encryptionMode` INTEGER,
+	`encryptionSalt` VARCHAR( 60 ),
+	`created` DATETIME,
+	`lastUpdated` DATETIME,
+	`enabled` INTEGER,
+	`sunrise` DATETIME,
+	`sunset` DATETIME,
+	`jqVersion` VARCHAR( 10 ),
+	`jqTheme` VARCHAR( 60 ),
+	`owner` INTEGER,
+	`isGroup` BOOLEAN,
+	`useCaching` BOOLEAN,
+	`lastCacheTime` DATETIME
+	);";
 	
 	createAndTestTable($db, "theform", $query);
 	
@@ -114,6 +136,10 @@
 				`publicFormObject` BOOLEAN
 				);";
 	
+	//generic-useID 
+	//generic-useText 
+	
+	
 	ob_flush();flush();
 	
 	createAndTestTable($db, "formobject", $query);
@@ -134,6 +160,7 @@
 	
 	$query = "INSERT INTO `objecttype` (`id`, `name`, `description`, `isListType`, `ordered`) VALUES 
 		(NULL, 'no-type-select', 	'-=Select=-', '0', '0'),
+		(NULL, 'labelField', 		'Label Field', '0', '1'),
 		(NULL, 'input', 			'Input box - max chars 60', '0', '1'),
 		(NULL, 'textarea', 			'Textarea  - max chars 255', '0', '2'),
 		(NULL, 'checkboxsingle', 	'Checkbox - single choice', '0', '3'),
@@ -145,9 +172,10 @@
 		(NULL, 'hidden', 			'Hidden', '0', '9'),
 		(NULL, 'email', 			'Email', '0', '10'),
 		(NULL, 'phone', 			'Phone Number', '0', '11'),
-		(NULL, 'selectboxJQ', 			'Select Box - JQuery UI', '0', '12'),
-		(NULL, 'group', 			'Form Group', '0', '13'),
-		(NULL, 'formItem', 			'Re-useable Form Item', '0', '14');";
+		(NULL, 'selectboxJQ', 		'Select Box - JQuery UI', '0', '12'),
+		(NULL, 'htmlChunk', 		'HTML Code', '0', '13'),
+		(NULL, 'group', 			'Form Group', '0', '14'),
+		(NULL, 'formItem', 			'Re-useable Form Item', '0', '15');";
 	
 
 	//list items
@@ -226,6 +254,10 @@
 	ob_flush();flush();
 	
 	echo "<p>Setup Complete...<i class='fa fa-check'></i></p><p><a class='btn' href='../index.php'><i class='fa fa-sign-out'></i> Login</a></p>";
+	
+	//setup first user
+	//create salt
+	
 	logMessage("Database Setup Complete!", "setup.txt", "" ,"");
 	pageFooter();
 ?>
