@@ -255,6 +255,26 @@
 		//submission (id) - form (id) - date - ip
 		//submissionID-key-value
 	
+		$entry = new Formentry($conn);
+		$entry->setFormID( $formID );
+		$entry->setSaveTime( getCurrentDateTime() );
+		$entry->setRemoteIP( $_SERVER['REMOTE_ADDR'] );
+		$entry->setRemoteSession( session_id()  );
+		if( $entry->save() > 0 ){
+			//entry saved.
+			echo "<br /><br />Entry Created";
+			$Formsavejson = new Formsavejson($conn);
+			$Formsavejson->setEntryID( $entry->getId() );
+			$Formsavejson->setData( json_encode($saveRow) );
+			
+			if( $Formsavejson->save() > 0 ){
+				echo "<br /><br />Entry Saved as JSON";
+			}
+		}
+	
+	
+		echo "<br /><br /><a href='/views/form/reviewSubmissions.php?formID=".$formID."'>View Submissions</a>";
+	
 	
 		exit;
 	}else{

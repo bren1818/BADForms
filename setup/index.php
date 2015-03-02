@@ -255,6 +255,33 @@
 
 	ob_flush();flush();
 	
+	
+	$query = "CREATE TABLE IF NOT EXISTS `formentry` (
+			`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+			`formID` INTEGER,
+			`saveTime` TIMESTAMP,
+			`remoteIP` VARCHAR( 20 ),
+			`remoteSession` VARCHAR( 45 )
+			);";
+		
+	createAndTestTable($db, "formentry", $query);
+
+	ob_flush();flush();
+	
+	
+	$query = "CREATE TABLE IF NOT EXISTS `formsavejson` (
+			`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+			`entryID` INTEGER,
+			`data` LONGTEXT
+			);";
+					
+	createAndTestTable($db, "formsavejson", $query);
+
+	ob_flush();flush();
+	
+	
+	
+	
 	//Create user...
 	$pass = getUniqueID();
 	

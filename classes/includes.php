@@ -14,4 +14,7 @@
 	include "adminSession.php";	
 
 	include "render".DIRECTORY_SEPARATOR."includes.php";
+	
+	include "formEntry.php";
+	include "Formsavejson.php";	
 ?>

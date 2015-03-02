@@ -13,7 +13,7 @@
 				//last modified
 				//created
 			
-				echo '<p><a  href="/views/form/buildForm.php?formID='.$result->getId().'"><i class="fa fa-pencil"></i> &ldquo;'.$result->getTitle().'&rdquo; </a> - <a target="_blank" href="/renderForm.php?formID='.$result->getId().'"><i class="fa fa-desktop"></i> Preview Form</a></p>';
+				echo '<p><a  href="/views/form/buildForm.php?formID='.$result->getId().'"><i class="fa fa-pencil"></i> &ldquo;'.$result->getTitle().'&rdquo; </a> - <a target="_blank" href="/renderForm.php?formID='.$result->getId().'"><i class="fa fa-desktop"></i> Preview Form</a> - <a href="/views/form/reviewSubmissions.php?formID='.$result->getId().'">Submissions</a></p>';
 			echo '</div>';
 		}
 	}
