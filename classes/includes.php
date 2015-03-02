@@ -11,6 +11,7 @@
 	include "listItemKV.php";
 	
 	include "admin.php";
-	
+	include "adminSession.php";	
+
 	include "render".DIRECTORY_SEPARATOR."includes.php";
 ?>
