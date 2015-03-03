@@ -15,6 +15,8 @@
 	
 	define("SESSION_LENGTH", 300); //seconds
 	
+	define("PUBLIC_SERVER_ADDRESS", "//127.0.0.1:88"); //Should be in a // address :PORT (if not 80)
+	
 	/*Local Database : Mode 1*/
 	define("LOCAL_DATABASE_USER", 	"root");
 	define("LOCAL_DATABASE_PASS", 	"");

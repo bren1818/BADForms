@@ -78,6 +78,11 @@
 
 <h2><?php if( is_object($theForm)){ echo $theForm->getTitle(); } ?></h2>
 <p><?php if( is_object($theForm)){ echo $theForm->getDescription(); } ?></p>
+<p><b>Form Embed Code:</b><br />
+	<textarea class="embedCode"><iframe href="<?php 
+			echo PUBLIC_SERVER_ADDRESS."/GetForm.php?ID=".$formID."&key=".md5($formID.BASE_ENCRYPTION_SALT); 
+		?>"></iframe></textarea>
+</p>
 
 <br />
 <hr />

@@ -59,7 +59,13 @@
 	}
 ?>
 </table>
-
+<p>
+<a target="_blank" class="btn" href="/views/form/downloadSubmissions.php?formID=<?php echo $formID; ?>&fileType=TXT">Download as Text</a>
+<a target="_blank" class="btn" href="/views/form/downloadSubmissions.php?formID=<?php echo $formID; ?>&fileType=XML">Download as XML</a>
+<a target="_blank" class="btn" href="/views/form/downloadSubmissions.php?formID=<?php echo $formID; ?>&fileType=CSV">Download as CSV</a>
+<a  target="_blank" class="btn" href="/views/form/downloadSubmissions.php?formID=<?php echo $formID; ?>&fileType=JSON">Download as JSON</a>
+</p>
+<br />
 <p><a class="btn" href="/">Home</a></p>
     
     

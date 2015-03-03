@@ -47,7 +47,9 @@ li.deleted .form_row_object .row.hidden{ display: block; }
 .formOptions{ padding: 10px 0px; clear: both; width: 100%; text-align:center; }
 .formOptions .btn{ margin: 0px 10px; }
 
-
+textarea.embedCode{
+	width: 100%;
+}
 
 /*************************************************************/
 

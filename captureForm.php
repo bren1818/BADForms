@@ -254,6 +254,9 @@
 		//store in DB as flat JSON or as key-value 
 		//submission (id) - form (id) - date - ip
 		//submissionID-key-value
+		
+		$saved1 = 0;
+		$saved2 = 0;
 	
 		$entry = new Formentry($conn);
 		$entry->setFormID( $formID );
@@ -267,13 +270,24 @@
 			$Formsavejson->setEntryID( $entry->getId() );
 			$Formsavejson->setData( json_encode($saveRow) );
 			
+			$saved1 = 1;
+			
 			if( $Formsavejson->save() > 0 ){
 				echo "<br /><br />Entry Saved as JSON";
+				$saved2 = 1;
 			}
 		}
 	
 	
 		echo "<br /><br /><a href='/views/form/reviewSubmissions.php?formID=".$formID."'>View Submissions</a>";
+	
+	
+		if( isset($_REQUEST['realPost']) && $_REQUEST['realPost'] == "1"){
+			ob_clean();
+			if( $saved1 == 1 && $saved2 == 1){
+				echo "<h1>Thank you for your submission</h1>";
+			}
+		}
 	
 	
 		exit;
