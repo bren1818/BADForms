@@ -1,9 +1,9 @@
 <?php
-	function pageHeader(){
+	function pageHeader($title="B.A.D. Forms"){
 		?>
 		<html>
 			<head>
-				<title>B.A.D Forms</title>
+				<title><?php echo $title; ?></title>
 				<?php
 					getCSSIncludes();
 					getScriptIncludes();
@@ -11,7 +11,28 @@
 			</head>
 			<body>
 		<?php
+			adminToolbar();
+		?>
+        <div id="CMSPage">
+        <?php
 	}
+	
+	function adminToolbar(){
+		global $sessionManager;
+		if( isset($sessionManager) ){
+			?>
+            <div id="adminToolbar">
+            	<div id="welcome">
+                	Welcome: <?php echo $sessionManager->getCurrentUser();	?>
+                </div>
+                <div id="tools">
+                	
+                </div>
+            </div>
+            <?php
+		}
+	}
+	
 	
 	function getScriptIncludes(){
 		$CMPATH = JS_DIR.'/codemirror-4.0';
@@ -65,9 +86,6 @@
 		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/display/fullscreen.css" />
 		<link rel="stylesheet" href="<?php echo CSS_DIR.'/style.css'; ?>">
 		<!--<link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>">-->
-		<style>
-			
-		</style>
 	<?php	
 	}
 	
@@ -77,6 +95,7 @@
 	
 	function pageFooter(){
 	?>
+    	</div>
 		</body>
 		</html>
 	<?php

@@ -3,7 +3,7 @@
 	
 	require_once( "includes/include.php" );
 	
-pageHeader();	
+pageHeader("Bad Forms Dashboard");	
 ?>
 <link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>"/>
 <h1>Brens Awesome Dynamic Forms</h1>

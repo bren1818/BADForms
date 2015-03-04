@@ -48,8 +48,9 @@
 				//encryption mode
 				//encryption key
 				
-				$encryptionKey = BASE_ENCRYPTION_SALT."";
 				
+				$salty = $Theform->getEncryptionSalt();
+				$encryptionKey = BASE_ENCRYPTION_SALT.$salty;
 				//if requires Encryption
 				$encryptor = new BrenCrypt();
 				$encryptor->setKey( $encryptionKey );

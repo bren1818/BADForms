@@ -34,10 +34,29 @@
     <table>
 <?php
 	//need Form Rows to match title tags for entries grab from form and iterate through each corresponding result set	
+	//pa( $theForm );
+	$encryptionMode = $theForm->getEncryptionMode();
 	
-	$query = "SELECT `fs`.`data`  FROM `formentry` as `fe` 
+	$dencryptionKey = "";
+	$encryptor = "";
+	
+	if( $encryptionMode < 2 ){
+		//have to check for decryption	
+		$salty = $theForm->getEncryptionSalt();
+		$encryptionKey = BASE_ENCRYPTION_SALT;
+		
+		$encryptor = new BrenCrypt();
+		$encryptor->setKey( $encryptionKey.$salty );
+		
+		//echo $salty;
+	}
+	
+	echo '<p>Last 3 submissions</p>';
+	
+	
+	$query = "SELECT `fs`.`data`, fe.`saveTime`  FROM `formentry` as `fe` 
 			INNER JOIN `formsavejson` as `fs` on `fs`.`entryID` = `fe`.`id`
-			where `fe`.`formID` = :formID;";
+			where `fe`.`formID` = :formID order by `fe`.`saveTime` DESC LIMIT 3";
 			
 	$query = $conn->prepare( $query );
 	$query->bindParam(':formID', $formID);
@@ -46,11 +65,16 @@
 		while( $row = $query->fetch() ){
 			echo "<tr>";
 				echo "<td>";
-					echo "<br /><p><b>Form Entry</b>: ".$counter."</p>";
+					echo "<br /><p><b>Form Entry</b> on ".$row["saveTime"]."</p>";
 					//echo pa(json_decode($row["data"]),1);
 					foreach( json_decode($row["data"]) as $key=>$value){
 						$value = (array)$value;
-						echo $value["name"]." : ".$value["value"]." <br />";
+						if( $value["encrypted"] == 1 ){
+							$val = $encryptor->decrypt( $value["value"] );
+							echo $value["name"]." : ".$val." (decrypted From: ".$value["value"].") <br />";
+						}else{
+							echo $value["name"]." : ".$value["value"]." <br />";
+						}
 					}
 				echo "</td>";
 			echo "</tr>";
