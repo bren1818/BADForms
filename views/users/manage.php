@@ -21,7 +21,7 @@
 	<table>
 		<thead>
 			<tr>
-				<th>Username</th><th>Email</th><th>Enabled</th><th>Last Login</th>
+				<th>Username</th><th>Email</th><th>Enabled</th><th>Last Login</th><th>Edit</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -33,6 +33,7 @@
 					<td><?php echo $result["email"]; ?></td>
 					<td align="center"><?php echo ($result["enabled"] == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>'); ?></td>
 					<td><?php echo $result["lastLogin"]; ?></td>
+					<td>Edit | Delete</td>
 				</tr>
 				<?php
 			}
@@ -44,7 +45,7 @@
 		echo '<p><b>('.$count.')</b> users</p>';
 	} ?>
 	
-	<p><a class='btn' href=""><i class="fa fa-user-plus"></i> Add User</a></p>
+	<p><a class='btn' href="/views/users/create.php"><i class="fa fa-user-plus"></i> Add User</a></p>
 
 <?php
 	//echo $currentUser->getUserLevel();
