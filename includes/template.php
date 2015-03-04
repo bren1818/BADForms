@@ -19,14 +19,24 @@
 	
 	function adminToolbar(){
 		global $sessionManager;
-		if( isset($sessionManager) ){
+		global $currentUser;
+		
+		if( isset($sessionManager) && $sessionManager->getCurrentUser() != "" && !$sessionManager->getExpired() ){
+		
 			?>
             <div id="adminToolbar">
             	<div id="welcome">
-                	Welcome: <?php echo $sessionManager->getCurrentUser();	?>
+                	Welcome: <b><?php echo $sessionManager->getCurrentUser(); ?></b>
                 </div>
                 <div id="tools">
-                	
+                	<?php
+						if( $currentUser->getUserLevel() == 1 ){
+					?>
+						<a class='btn' href="/views/users/manage.php"><i class="fa fa-users"></i> Manage Users</a>
+						<a class='btn' href=""><i class="fa fa-list-alt"></i> Manage Forms</a>
+					<?php					
+						}
+					?>
                 </div>
             </div>
             <?php

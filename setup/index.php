@@ -1,4 +1,8 @@
 <?php
+	//echo $_SERVER["REQUEST_URI"];
+	
+	//exit;
+
 	include "../includes/include.php";
 	pageHeader();
 ?>
@@ -87,23 +91,26 @@
 	
 	
 		$query = "CREATE TABLE  `theform` (
-	`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
-	`title` VARCHAR( 60 ),
-	`description` VARCHAR( 60 ),
-	`encryptionMode` INTEGER,
-	`encryptionSalt` VARCHAR( 60 ),
-	`created` DATETIME,
-	`lastUpdated` DATETIME,
-	`enabled` INTEGER,
-	`sunrise` DATETIME,
-	`sunset` DATETIME,
-	`jqVersion` VARCHAR( 10 ),
-	`jqTheme` VARCHAR( 60 ),
-	`owner` INTEGER,
-	`isGroup` BOOLEAN,
-	`useCaching` BOOLEAN,
-	`lastCacheTime` DATETIME
-	);";
+			`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+			`title` VARCHAR( 60 ),
+			`description` VARCHAR( 60 ),
+			`encryptionMode` INTEGER,
+			`encryptionSalt` VARCHAR( 60 ),
+			`created` DATETIME,
+			`lastUpdated` DATETIME,
+			`enabled` INTEGER,
+			`sunrise` DATETIME,
+			`sunset` DATETIME,
+			`jqVersion` VARCHAR( 10 ),
+			`jqTheme` VARCHAR( 60 ),
+			`owner` INTEGER,
+			`isGroup` BOOLEAN,
+			`useCaching` BOOLEAN,
+			`lastCacheTime` DATETIME
+			);";
+	
+	//numSubmissions
+	
 	
 	createAndTestTable($db, "theform", $query);
 	

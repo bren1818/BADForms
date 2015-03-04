@@ -1,8 +1,8 @@
 <?php
 	include "../../includes/include.php";
 
-	$securityKey = 1;
-	$ownerID = 1;
+	//$securityKey = 1;
+	//$ownerID = 1;
 	
 	if( isset($_REQUEST) && isset($_REQUEST['formID']) ){
 		$formID = $_REQUEST['formID'];
@@ -109,5 +109,4 @@
 <a class="btn" target="_blank" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
 <?php
 	pageFooter();
-
 ?>

@@ -127,8 +127,8 @@
 					if( $admin->save() > 0 ){
 						//echo "Saved!";
 						echo "<h1>Setup Complete!</h1>";
-						echo "<p>Setup is complete, please go to the home screen to continue.</p>";
-						echo "<p><a class='btn' href='/'><i class='fa fa-home'></i> Home</a></p>";	
+						echo "<p>Setup is complete, please go to the <i class='fa fa-home'></i> Home</a> home screen to continue.</p>";
+						echo "<br /><p><a class='btn' href='/'><i class='fa fa-home'></i> Home</a></p>";	
 						logMessage("Setup Complete! - User: $email setup successfully.", "setup.txt", "" ,"");
 					}else{
 						echo "<h2>Error Saving Your information. Please try again.</h2>";

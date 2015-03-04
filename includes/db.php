@@ -28,9 +28,9 @@
 			$dbc->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 		}
 		catch(PDOException $e) {
-			echo "<h2>An error has occurred connecting to the database (".$dbName.")</h2>";
-			echo "<p>".$e->getMessage()."</p>";
-			
+			echo "<h2>Could not conntect to database...</h2>";
+			echo "<p>Please have a look at the &ldquo;privateKeys.php&rdquo; file and ensure database credentials are up to date.</p>";
+			echo "<p>Specified error: ".$e->getMessage()."</p>";
 			if( !file_exists( LOG_DIR) ){
 				mkdir( LOG_DIR );
 			}
@@ -67,14 +67,22 @@
 			$dbc->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 		}
 		catch(PDOException $e) {
-			echo "<h2>An error has occurred connecting to the host (".$dbHost.")</h2>";
-			echo "<p>".$e->getMessage()."</p>";
+			
+			pageHeader("Database Error");
+			
+			echo "<h2><i class='fa fa-exclamation-triangle'></i> Could not conntect to database...</h2>";
+			echo "<p>Please have a look at the &ldquo;<b>privateKeys.php</b>&rdquo; file and ensure database credentials are up to date.</p>";
+			echo "<p><b>Specified error</b>: <i class='fa fa-terminal'></i>  <i>".$e->getMessage()."</i></p>";
+			echo "<br /><p><a class='btn' href=''><i class='fa fa-spin fa-refresh'></i> Retry</a></p>";
+			pageFooter();
 			
 			if( !file_exists( LOG_DIR) ){
 				mkdir( LOG_DIR );
 			}
 			logMessage($e->getMessage(), "error.txt");
 			file_put_contents(LOG_DIR.DIRECTORY_SEPARATOR.'PDOErrorsLog.txt', $e->getMessage(), FILE_APPEND);
+			
+			
 			die();
 		}
 		return $dbc;
