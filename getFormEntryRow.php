@@ -4,6 +4,7 @@ require_once( "includes/include.php" );
 function generateHtml($formObject){
 	$db = getConnection();
 	$tempID = getUniqueID();
+	$form = "";
 	
 	$isGroupType = 0;
 	if( ! isset($formObject) || $formObject == "" || ! is_object($formObject) ){
@@ -232,6 +233,10 @@ function generateHtml($formObject){
 			<input type="text" name="classes" value="<?php echo $formObject->getClasses(); ?>" title="Used in conjunction with CSS to help style the form elements if required."/>
 		</div>
 		
+        <?php
+			//pa( $form );
+			if( isset($form) && $form->getEncryptionMode() != 2 ){
+		?>
 		
 		<div class="row encrypted">
 			<label for="encrypted">
@@ -247,6 +252,9 @@ function generateHtml($formObject){
 			?>
 		</div>
 		
+        <?php
+			}
+		?>
 		
 		<div class="row genericUseID">
 			<label for="genericUseID">

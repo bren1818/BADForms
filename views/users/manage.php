@@ -18,7 +18,7 @@
 			$count = $query->rowCount();			
 	?>
 	
-	<table>
+	<table cellpadding="4px" cellspacing="2px" border="1px solid #000;">
 		<thead>
 			<tr>
 				<th>Username</th><th>Email</th><th>Enabled</th><th>Last Login</th><th>Edit</th>
@@ -33,7 +33,7 @@
 					<td><?php echo $result["email"]; ?></td>
 					<td align="center"><?php echo ($result["enabled"] == 1 ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>'); ?></td>
 					<td><?php echo $result["lastLogin"]; ?></td>
-					<td>Edit | Delete</td>
+					<td><?php echo ($result["username"] == $currentUser->getUserName()) ? '<i class="fa fa-minus"></i>' : 'Edit | Delete'; ?></td>
 				</tr>
 				<?php
 			}
@@ -42,7 +42,7 @@
 	</table>	
 
 	<?php 
-		echo '<p><b>('.$count.')</b> users</p>';
+		echo '<p><b>'.$count.'</b> user(s)<br /><br /></p>';
 	} ?>
 	
 	<p><a class='btn' href="/views/users/create.php"><i class="fa fa-user-plus"></i> Add User</a></p>

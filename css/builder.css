@@ -374,6 +374,7 @@ li.htmlChunk  .form_row_object .row.maxVal,
 li.htmlChunk  .form_row_object .row.minLength,
 li.htmlChunk  .form_row_object .row.maxLength,
 li.htmlChunk  .form_row_object .row.regex,
+li.htmlChunk  .form_row_object .row.encrypted,
 li.htmlChunk  .form_row_object .row .reUseableFormItem{
 	display: none;
 }

@@ -3,14 +3,16 @@
 	
 	require_once( "includes/include.php" );
 	
-pageHeader("Bad Forms Dashboard");	
+pageHeader("Building Block Forms");	
 ?>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
 <link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>"/>
-<h1>Brens Awesome Dynamic Forms</h1>
+<h1><i class="fa fa-puzzle-piece"></i> Building Block Forms</h1>
 
+<!--
 <a class="btn" href="/views/form/createForm.php"><i class="fa fa-list-alt"></i> Create New Form</a>
 <a class="btn" href="/views/list/buildList.php"><i class="fa fa-sort-amount-desc"></i> Build Data List</a>
-<a class="btn" href="/views/admin/logout.php"><i class="fa fa-power-off"></i> Log Out</a>
+<a class="btn" href="/views/admin/logout.php"><i class="fa fa-power-off"></i> Log Out</a>-->
 
 <br />
 

@@ -53,7 +53,7 @@
 	
 ?>
 <div class="formOptions">
-<a class="btn" href="/"><i class="fa fa-home"></i> Home</a>
+<!--<a class="btn" href="/"><i class="fa fa-home"></i> Home</a>-->
 <a class="btn" href="/views/form/formCssJs.php?codeType=1&formID=<?php echo $formID; echo $css;?>"><i class="fa fa-pencil-square-o"></i> Edit Form CSS</a>
 <a class="btn" href="/views/form/formCssJs.php?codeType=2&formID=<?php echo $formID; echo $js; ?>"><i class="fa fa-code"></i> Edit Form Javascript</a>
 <a class="btn" href="/views/form/editForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-pencil-square-o"></i> Edit Form Information</a>
@@ -78,7 +78,7 @@
 
 <h2><?php if( is_object($theForm)){ echo $theForm->getTitle(); } ?></h2>
 <p><?php if( is_object($theForm)){ echo $theForm->getDescription(); } ?></p>
-<p><b>Form Embed Code:</b><br />
+<p><b>Form Embed Code:</b><br /><br />
 	<textarea class="embedCode"><iframe href="<?php 
 			echo PUBLIC_SERVER_ADDRESS."/GetForm.php?ID=".$formID."&key=".md5($formID.BASE_ENCRYPTION_SALT); 
 		?>"></iframe></textarea>

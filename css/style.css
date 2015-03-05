@@ -31,8 +31,9 @@
   text-decoration: none;
 }
 
+#footerBar,
 #adminToolbar{
-	height: 50px;
+	min-height: 50px;
 	width: 100%;
 	clear:both;
 	background: #b7deed; /* Old browsers */
@@ -48,21 +49,36 @@
 
 }
 
+#footerBar{
+	position: fixed;
+	bottom: 0px;
+	text-align: right;
+	line-height: 50px;
+	font-weight: bold;
+	width: 96%;
+	padding: 0px 2%;
+}
+
+
+
 #adminToolbar #welcome,
 #adminToolbar #tools{
 	height: 50px;
-	width: 40%;
-	margin: 0px 5%;
+	
+	margin: 0px 2%;
 	line-height: 50px;
 	margin-bottom: 10px;
 }
 
 #adminToolbar #welcome{
 	float: left; clear: left;
+	width: 20%;
 }
 
 #adminToolbar #tools{
 	float: right; clear: right;
+	width: 72%;
+	text-align:right;
 }
 
 #CMSPage{
@@ -70,6 +86,7 @@
 	margin: 0 auto;
 	max-width: 1000px;	
 	padding-top: 20px;
+	padding-bottom: 50px;
 }
 
 body{

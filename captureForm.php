@@ -281,6 +281,9 @@
 	
 	
 		echo "<br /><br /><a href='/views/form/reviewSubmissions.php?formID=".$formID."'>View Submissions</a>";
+		
+		//back?? 
+		//dont save the test?!
 	
 	
 		if( isset($_REQUEST['realPost']) && $_REQUEST['realPost'] == "1"){

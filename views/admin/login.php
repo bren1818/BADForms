@@ -77,7 +77,7 @@
         </div>
         
         <div class="formRow">
-            <p align="center"><button class="btn">Submit</button></p>
+            <p align="center"><button class="btn"><i class="fa fa-sign-out"></i> Submit</button></p>
         </div>
     </form>
 					

@@ -1,5 +1,36 @@
 <?php
-	function pageHeader($title="B.A.D. Forms"){
+	function pageHeader($title="B.A.D. Forms", $useSession = true){
+	
+	global $sessionManager;
+	global $currentUser;
+	if( $useSession ){
+			
+		$sessionManager->setMaxLength( SESSION_LENGTH );
+		$sessionManager->load();
+		
+		if( $sessionManager->getExpired() ){
+			//echo "Expired Session";
+			$curLocation = $_SERVER["REQUEST_URI"];
+			
+			if( strpos($curLocation, "setup/") > 0 ||
+				strpos($curLocation, "views/admin/login.php") > 0 || 
+				strpos($curLocation, "views/admin/logout.php") > 0  ){
+				//don't require the session
+			}else{
+				header("Location: /views/admin/login.php");
+			}
+		}else{
+			$sessionManager->renew();
+			if( $sessionManager->getCurrentUserID() != "" ){
+				$conn = getConnection();
+				$currentUser->setConnection($conn);
+				$currentUser = $currentUser->load( $sessionManager->getCurrentUserID() );
+			}
+			
+		}
+	
+	}
+		
 		?>
 		<html>
 			<head>
@@ -26,9 +57,10 @@
 			?>
             <div id="adminToolbar">
             	<div id="welcome">
-                	Welcome: <b><?php echo $sessionManager->getCurrentUser(); ?></b>
+                	Welcome: <i class="fa fa-user"></i> <b><?php echo $sessionManager->getCurrentUser(); ?></b>
                 </div>
                 <div id="tools">
+                	<a class='btn' href='/'><i class="fa fa-home"></i> Home</a>
                 	<?php
 						if( $currentUser->getUserLevel() == 1 ){
 					?>
@@ -37,7 +69,7 @@
 					<?php					
 						}
 					?>
-					<a class='btn' href="/logout.php">Log Out</a>
+					<a class='btn' href="/views/admin/logout.php"><i class="fa fa-power-off"></i> Log Out</a>
                 </div>
             </div>
             <?php
@@ -87,8 +119,9 @@
 	
 	function getCSSIncludes(){
 		$CMPATH = JS_DIR.'/codemirror-4.0';
+		
 	?>
-		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+		<!--<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" /> -->
 		<!--code.jquery.com/ui/[version]/themes/[theme name]/jquery-ui.css-->
         <link rel="stylesheet" href="<?php echo CSS_DIR.'/font-awesome/font-awesome.min.css'; ?>" />
         
@@ -107,6 +140,9 @@
 	function pageFooter(){
 	?>
     	</div>
+        <div id="footerBar">
+        	<i class="fa fa-puzzle-piece"></i> Building Block Forms &copy; Brendon Irwin | 2014-2015
+        </div>
 		</body>
 		</html>
 	<?php

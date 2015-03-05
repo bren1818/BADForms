@@ -75,11 +75,11 @@
 	
 	if( $currentUser->getUserLevel() == 1 ){
 ?>
-	<h1>Create User</h1>
+	
 	<link rel="stylesheet" href="/css/formPreview.css" />
 	<form class="form previewForm" method="POST" action="/views/users/create.php">
 		<div class="formRow">
-			<h2>Setup Admin Account</h2>
+			<h2><i class="fa fa-user-plus"></i> Setup Admin Account</h2>
 			<p>Please create a password with atleast 1 small-case letter, 1 Capital letter, 1 digit, 1 special character and the length should be atleast 6 characters. The sequence of the characters is not important. 
 		</div>
 		
@@ -145,7 +145,7 @@
 		
 		
 		<div class="formRow">
-			<p align="center"><button class="btn">Submit</button></p>
+			<p align="center"><button class="btn"><i class="fa fa-check"></i> Submit</button></p>
 		</div>
 	</form>
 

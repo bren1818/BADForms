@@ -55,6 +55,16 @@
 	$query->bindParam(':formID', $formID);
 	
 	pageHeader();
+	
+	if(  null !== ($Theform->getJqTheme()) && $Theform->getJqTheme() != "" && null !== ($Theform->getJqVersion()) && $Theform->getJqVersion() != "" ){
+	
+	echo ' <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/'.$Theform->getJqVersion().'/themes/'.$Theform->getJqTheme().'/jquery-ui.css" />';
+	
+		}else{
+	?>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    <?php
+		}
 	?>
 	<link rel="stylesheet" href="/css/formPreview.css" />
     <link rel="stylesheet" href="/getCss.php?formID=<?php echo $formID; ?>" />
@@ -107,12 +117,20 @@
 		//echo '</div>';
 		
 		echo '<div class="formRow">';
-		echo '<input class="btn" type="submit" value="TEST - SUBMIT" />';
+		
+		echo '<br /><input class="btn" type="submit" value="TEST - SUBMIT" />';
 		echo '</div>';
+		
 	}
 	echo '<input type="hidden" name="formID" value="'.$formID.'"/>';
+	echo '<div class="clear"></div>';
 	echo "</form>";
+
+echo '<div class="clear"></div>';
 ?>
+
+<p><a href="/views/form/buildForm.php?formID=<?php echo $formID; ?>" class='btn'><i class="fa fa-list-alt"></i> Back to Form</a></p>
+
 <script type="text/javascript">
 	<?php echo $formJS; ?>
 $(function(){

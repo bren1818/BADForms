@@ -22,30 +22,9 @@
 	}
 	
 	$sessionManager = new adminSession();
-	$sessionManager->setMaxLength( SESSION_LENGTH );
-	$sessionManager->load();
-	
 	$currentUser = new Admin();
 	
-	if( $sessionManager->getExpired() ){
-		//echo "Expired Session";
-		$curLocation = $_SERVER["REQUEST_URI"];
-		
-		if( strpos($curLocation, "setup/") > 0 ||
-			strpos($curLocation, "views/admin/login.php") > 0 || 
-			strpos($curLocation, "views/admin/logout.php") > 0  ){
-			//don't require the session
-		}else{
-			header("Location: /views/admin/login.php");
-		}
-	}else{
-		$sessionManager->renew();
-		if( $sessionManager->getCurrentUserID() != "" ){
-			$conn = getConnection();
-			$currentUser->setConnection($conn);
-			$currentUser = $currentUser->load( $sessionManager->getCurrentUserID() );
-		}
-		
-	}
+	
+	
 	
 ?>
