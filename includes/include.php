@@ -14,7 +14,7 @@
 		}else{
 			pageHeader();
 				echo '<h1><i class="fa fa-exclamation-triangle"></i> Attention required!</h1>';
-				echo '<p><i class="fa fa-database"></i> Database Error - Database does not appear to exist, please run the <a class="btn" href="/setup/index.php"><i class="fa fa-magic"></i> setup wizard</a></p>';
+				echo '<p><i class="fa fa-database"></i> Database Error - Database does not appear to exist... please run the setup wizard.</p><p><br /><a class="btn" href="/setup/index.php"><i class="fa fa-magic"></i> Run Setup Wizard</a></p>';
 				logMessage("Database not setup", "setup.txt");
 			pageFooter();
 			exit;

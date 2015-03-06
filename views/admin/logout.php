@@ -1,17 +1,13 @@
 <?php
 include "../../includes/include.php";
-pageHeader();
-?>
-
-<h1>Logged out</h1>
-
-<?php
 $sessionManager->destroy();	
+pageHeader("User Logout", false);
 ?>
 
-<p>Logout Complete.</p>
+<h1>You have successfully logged out.</h1>
 
-<p><a class="btn" href="/">Home</a></p>
+<p><br /></p>
+<p><a class="btn" href="/"><i class="fa fa-home"></i> Home</a></p>
 
 <?php
 pageFooter();

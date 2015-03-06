@@ -30,10 +30,10 @@
 				header("Location: /");
 				
 			}else{
-				$errorMessage = "Unknown User or incorrect Password";	
+				$errorMessage = '<i class="fa fa-exclamation-triangle"></i> Unknown User or incorrect Password.';	
 			}
 		}else{
-			$errorMessage = "Unknown User or incorrect Password";	
+			$errorMessage = '<i class="fa fa-exclamation-triangle"></i> Unknown User or incorrect Password.';	;	
 		}
 	}
 	
@@ -48,9 +48,14 @@
 	?>
     		
     <form class="form previewForm" method="POST" action="login.php">
+		<h1><i class="fa fa-puzzle-piece"></i> Welcome to Building Block Forms</h1>
+		
+	
     	<?php
         	if( isset($errorMessage) && $errorMessage != ""){
-				echo "<p>$errorMessage</p>";
+				echo  '<div class="formRow"><fieldset><legend>Errors:</legend><p>'.$errorMessage.'</p></fieldset></div><br /><br />';
+			}else{
+				echo '<p>Please login...</p>';
 			}
 		?>
         <div class="formRow">

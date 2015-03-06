@@ -58,8 +58,18 @@
 		}
 	}
 	
+	if(  null !== ($theform->getJqTheme()) && $theform->getJqTheme() != "" && null !== ($theform->getJqVersion()) && $theform->getJqVersion() != "" ){
+	
+	echo ' <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/'.$theform->getJqVersion().'/themes/'.$theform->getJqTheme().'/jquery-ui.css" />';
+	
+		}else{
+	?>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    <?php
+		}
+	?>
 
-?>
+
 
 
 
@@ -100,30 +110,6 @@
     <div class="formRow">
     	*Note Encryption cannot be modified after creation
     </div>
-    
-	<!--
-	<div class="formRow encryptionSalt encryption-mode-<?php echo $theform->getEncryptionMode();  ?>">
-		<div class="rowLabel">
-			<label for="encryptionSalt"><i class="fa fa-key"></i> Encryption Salt:</label>
-		</div>
-		<div class="rowField">
-			<input type="text" pattern=".{0,60}" name="encryptionSalt" id="encryptionSalt" value="<?php echo (isset($theform) ?  $theform->getEncryptionSalt() : ''); ?>"  title="" />
-		</div>
-	</div>
-	-->
-    <div class="formRow">
-	<!--
-        <div class="rowLabel">
-			<label for="owner">Owner:</label>
-		</div>
-		<div class="rowField">
-			<input type="number" name="owner" id="owner" value="<?php echo (isset($theform) ?  $theform->getOwner() : ''); ?>" title="" />
-		</div>
-        -->
-         <input type="hidden" name="owner" value="1" /> <!-- to hook up later -->
-	</div>
-  
-   
     
 	<div class="formRow">
 		<div class="rowLabel">
@@ -176,13 +162,12 @@
 		</div>
 	</div>	
 	
-	
 	<div class="formRow">
 		<div class="rowLabel">
 			<label for="sunrise"><i class="fa fa-calendar"></i> Sun rise:</label>
 		</div>
 		<div class="rowField">
-			<label><i class="fa fa-calendar"></i> (mm/dd/yyyy) <input class="dateInput" type="text" name="sunrise" id="sunrise" value="<?php echo (isset($theform) ?  getinputdate($theform->getSunrise()) : ''); ?>" title=" Date should be in format mm/dd/yyyy"/></label>
+			<label><i class="fa fa-calendar"></i> (mm/dd/yyyy) <input class="dateInput" type="text" name="sunrise" id="sunrise" value="<?php echo (isset($theform) ?  getinputdate($theform->getSunrise()) : ''); ?>" title=" Date should be in format mm/dd/yyyy HH:mm"/></label>
 		</div>
 	</div>
 	<div class="formRow">
@@ -190,15 +175,70 @@
 			<label for="sunset"><i class="fa fa-calendar"></i> Sun set:</label>
 		</div>
 		<div class="rowField">
-			<label><i class="fa fa-calendar"></i> (mm/dd/yyyy) <input class="dateInput" type="text" name="sunset" id="sunset" value="<?php echo (isset($theform) ?  getinputdate($theform->getSunset()) : ''); ?>" title=" Date should be in format mm/dd/yyyy" /></label>
+			<label><i class="fa fa-calendar"></i> (mm/dd/yyyy) <input class="dateInput" type="text" name="sunset" id="sunset" value="<?php echo (isset($theform) ?  getinputdate($theform->getSunset()) : ''); ?>" title=" Date should be in format mm/dd/yyyy HH:mm" /></label>
 		</div>
 	</div>
+	
+	<br />
+	<div class="clear"></div>
+	<h4>Advanced options</h4>
+	<p><hr /></p>
+	<div class="clear"></div>
+	
+	<div class="formRow caching">
+		<div class="rowLabel">
+			<label for="useCaching">Use Caching:</label>
+		</div>
+		<div class="rowField">
+			<select name="useCaching">
+				<option value="0" <?php if( $theform->getUseCaching() == 0 ){ echo " selected"; } ?>>No</option>
+				<option value="1" <?php if( $theform->getUseCaching() == 1 ){ echo " selected"; } ?>>Yes</option>
+			</select>
+		</div>
+	</div>	
+	
+	<div class="formRow caching">
+		<div class="rowLabel">
+			<label for="showPublicly">Show Public:</label>
+		</div>
+		<div class="rowField">
+			<select name="showPublicly">
+				<option value="0" <?php if( $theform->getUseCaching() == 0 ){ echo " selected"; } ?>>No</option>
+				<option value="1" <?php if( $theform->getUseCaching() == 1 ){ echo " selected"; } ?>>Yes</option>
+			</select>
+		</div>
+	</div>	
+	
+	<div class="formRow active">
+		<div class="rowLabel">
+			<label for="formActive">Form Active:</label>
+		</div>
+		<div class="rowField">
+			<select name="formActive">
+				<option value="0" <?php if( $theform->getUseCaching() == 0 ){ echo " selected"; } ?>>No</option>
+				<option value="1" <?php if( $theform->getUseCaching() == 1 ){ echo " selected"; } ?>>Yes</option>
+			</select>
+		</div>
+	</div>	
+	
+	<div class="formRow">
+         <input type="hidden" name="owner" value="1" /> <!-- to hook up later -->
+	</div>
+	
+	<div class="clear"></div>
+	<p><hr /></p>
+	<div class="clear"></div>
+	
+	
 	<div class="formRow rowCenter">
     	<input type="hidden" name="formID" value="<?php echo $theform->getId(); ?>" /><br />
 		<button class="btn"><i class="fa fa-floppy-o"></i> Update</button>
         <a class="btn" href="/views/form/buildForm.php?formID=<?php echo $theform->getId(); ?>"><i class="fa fa-code"></i> Build Form</a>
         <a class="btn" href="/"><i class="fa fa-home"></i> Home</a>
 	</div>
+	
+	
+	
 </form>
 <script type="text/javascript" src="<?php echo JS_DIR.'/formBuilder.js'; ?>"></script>
 <?php

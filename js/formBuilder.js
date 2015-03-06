@@ -31,5 +31,6 @@ $(function(){
 		setThemes(version);
 	}
 	
-	$('#sunrise,#sunset').datepicker( {"dateFormat" : "mm/dd/yy"});
+	//$('#sunrise,#sunset').datepicker( {"dateFormat" : "mm/dd/yy", });
+	$('#sunrise,#sunset').datetimepicker({"dateFormat" : "mm/dd/yy", "timeFormat": "hh:mm tt"});
 });

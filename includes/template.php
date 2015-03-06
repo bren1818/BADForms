@@ -1,36 +1,35 @@
 <?php
-	function pageHeader($title="B.A.D. Forms", $useSession = true){
-	
-	global $sessionManager;
-	global $currentUser;
-	if( $useSession ){
+	function pageHeader($title="Building Block Forms", $useSession = true){
+		global $sessionManager;
+		global $currentUser;
+		if( $useSession ){
+			if( is_object($sessionManager) ){	
+				$sessionManager->setMaxLength( SESSION_LENGTH );
+				$sessionManager->load();
 			
-		$sessionManager->setMaxLength( SESSION_LENGTH );
-		$sessionManager->load();
-		
-		if( $sessionManager->getExpired() ){
-			//echo "Expired Session";
-			$curLocation = $_SERVER["REQUEST_URI"];
-			
-			if( strpos($curLocation, "setup/") > 0 ||
-				strpos($curLocation, "views/admin/login.php") > 0 || 
-				strpos($curLocation, "views/admin/logout.php") > 0  ){
-				//don't require the session
-			}else{
-				header("Location: /views/admin/login.php");
+				if(  $sessionManager->getExpired() ){
+					//echo "Expired Session";
+					$curLocation = $_SERVER["REQUEST_URI"];
+					
+					if( strpos($curLocation, "setup/") > 0 ||
+						strpos($curLocation, "views/admin/login.php") > 0 || 
+						strpos($curLocation, "views/admin/logout.php") > 0  ){
+						//don't require the session
+					}else{
+						header("Location: /views/admin/login.php");
+					}
+				}else{
+									
+					$sessionManager->renew();
+					if( $sessionManager->getCurrentUserID() != "" ){
+						$conn = getConnection();
+						$currentUser->setConnection($conn);
+						$currentUser = $currentUser->load( $sessionManager->getCurrentUserID() );
+					}
+					
+				}
 			}
-		}else{
-			$sessionManager->renew();
-			if( $sessionManager->getCurrentUserID() != "" ){
-				$conn = getConnection();
-				$currentUser->setConnection($conn);
-				$currentUser = $currentUser->load( $sessionManager->getCurrentUserID() );
-			}
-			
-		}
-	
-	}
-		
+		}	
 		?>
 		<html>
 			<head>
@@ -39,6 +38,7 @@
 					getCSSIncludes();
 					getScriptIncludes();
 				?>
+				<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 			</head>
 			<body>
 		<?php
@@ -85,6 +85,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 	
 		<script src="<?php echo JS_DIR.'/scripts.js'; ?>"></script>
+		<script src="<?php echo JS_DIR.'/jquery-ui-timepicker-addon.js'; ?>"></script>
 		<!--<script src="<?php echo JS_DIR.'/builder.js'; ?>"></script>-->
 		
 		<script src="<?php echo $CMPATH; ?>/lib/codemirror.js"></script>
@@ -114,6 +115,8 @@
 		<script src="<?php echo $CMPATH; ?>/addon/search/searchcursor.js"></script>
 		<script src="<?php echo $CMPATH; ?>/addon/selection/active-line.js"></script>
 		<!--<script src="<?php echo $CMPATH; ?>/addon/selection/mark-selection.js"></script>-->
+		
+		
 	<?php
 	}
 	
@@ -124,12 +127,15 @@
 		<!--<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" /> -->
 		<!--code.jquery.com/ui/[version]/themes/[theme name]/jquery-ui.css-->
         <link rel="stylesheet" href="<?php echo CSS_DIR.'/font-awesome/font-awesome.min.css'; ?>" />
+		<link rel="stylesheet" href="<?php echo CSS_DIR.'/jquery-ui-timepicker-addon.css'; ?>" />
         
 		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/lib/codemirror.css" />
 		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/hint/show-hint.css" />
 		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/display/fullscreen.css" />
 		<link rel="stylesheet" href="<?php echo CSS_DIR.'/style.css'; ?>">
 		<!--<link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>">-->
+		
+		
 	<?php	
 	}
 	

@@ -32,7 +32,7 @@
 		if( $datetime == "" || $datetime == "0000-00-00 00:00:00"){
 			return "";
 		}else{
-			return date('m/d/Y',strtotime($datetime) );
+			return date('m/d/Y H:i a',strtotime($datetime) );
 		}
 	}
 	

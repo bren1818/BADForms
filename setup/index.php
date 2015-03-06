@@ -6,7 +6,7 @@
 	include "../includes/include.php";
 	pageHeader();
 ?>
-<h1>Brens Awesome Dynamic Forms</h1>
+<h1><i class="fa fa-puzzle-piece"></i> Bren's Building Block Forms</h1>
 <h3>Setup Wizard <i class="fa fa-magic"></i></h3>
 <?php
 	set_time_limit(0);
@@ -300,7 +300,8 @@
 	if( $admin->save() > 0 ){
 	
 		echo "<p>Setup Complete...<i class='fa fa-check'></i></p>
-			<p><a class='btn' href='firstUser.php?first=".$pass."'><i class='fa fa-sign-out'></i> Finish Setup and create Admin</a></p>";		
+		 <br /><br />
+			<p><a class='btn' href='firstUser.php?first=".$pass."'><i class='fa fa-sign-out'></i> Finish Setup & Create Admin</a></p><br /><br />";		
 	}else{
 		echo "<p>Admin user could not be created! please see setup log</p>";
 		//uh oh

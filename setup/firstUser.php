@@ -1,6 +1,6 @@
 <?php
 	include "../includes/include.php";
-	pageHeader();
+	pageHeader("User Setup" , false);
 	
 	if( ! isPostback() ){
 	
@@ -22,7 +22,7 @@
 					<form class="form previewForm" method="POST" action="firstUser.php">
 						<div class="formRow">
 							<h2>Setup Admin Account</h2>
-							<p><i class="fa fa-user-secret"></i> Your admin account username is <b>admin</b></p>
+							<p><i class="fa fa-user-secret"></i> Your admin account username is <b><u>admin</u></b></p>
 							<p>Please create a password with atleast 1 small-case letter, 1 Capital letter, 1 digit, 1 special character and the length should be atleast 6 characters. The sequence of the characters is not important. 
 						</div>
 						<div class="formRow">
@@ -60,7 +60,7 @@
 						
 						<div class="formRow">
 							<input type="hidden" name="first" value="<?php echo $first; ?>"/>
-							<p align="center"><button class="btn">Submit</button></p>
+							<p align="center"><button class="btn"><i class="fa fa-sign-out"></i> Submit & Continue</button></p>
 						</div>
 					</form>
 					<script>
@@ -127,9 +127,21 @@
 					if( $admin->save() > 0 ){
 						//echo "Saved!";
 						echo "<h1>Setup Complete!</h1>";
-						echo "<p>Setup is complete, please go to the <i class='fa fa-home'></i> Home</a> home screen to continue.</p>";
+						echo "<p>Setup is complete. Please go to the <i class='fa fa-home'></i> Home</a> screen to continue.</p>";
 						echo "<br /><p><a class='btn' href='/'><i class='fa fa-home'></i> Home</a></p>";	
 						logMessage("Setup Complete! - User: $email setup successfully.", "setup.txt", "" ,"");
+						
+						global $sessionManager;
+						
+						if( ! is_object($sessionManager) ){
+							$sessionManager = new adminSession();
+						}
+						
+						$sessionManager->setCurrentUser( "admin" );
+						$sessionManager->setCurrentUserID( $admin->getId() );
+						$sessionManager->renew();
+						$sessionManager->save();
+						
 					}else{
 						echo "<h2>Error Saving Your information. Please try again.</h2>";
 						echo "<p>If this problem persists, contact your local system administrator or customer support</p>";
