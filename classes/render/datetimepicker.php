@@ -11,27 +11,34 @@
 		}
 		
 		function getJS(){
-			return "$('#input_". $this->formObject->getFormID().'_'.$this->formObject->getId()."').datepicker();";
+			return "$('#datetimePicker_". $this->formObject->getFormID().'_'.$this->formObject->getId()."').datetimepicker({\"dateFormat\" : \"mm/dd/yy\", \"timeFormat\": \"hh:mm tt\"});";
 		}
 				
 		function hasReturnValue(){
 			return 1;
 		}
-		
+
 		function render(){
 			?>
-				<label for="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>">
-					<?php echo $this->formObject->getLabel(); ?>
+				<div class="formRowLabel">
+				<label for="datetimePicker_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>">
+					<span class="labelText"><?php echo $this->formObject->getLabel(); ?></span>
+                </label>
+                </div>
+                <div class="formRowInput">
 					<input 
                     	name="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>" 
-						class=" datepicker<?php echo $this->formObject->getClasses(); ?>" 
-						id="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>" 
-						type="text" placeholder="<?php echo $this->formObject->getPlaceHolder(); ?>" 
+						class="datetimepicker <?php echo $this->formObject->getClasses(); ?>" 
+						id="datetimePicker_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>" 
+						type="text" placeholder="<?php echo $this->formObject->getPlaceHolder(); ?>"
+						<?php if( $this->formObject->getDefaultVal() != "" ){ echo ' value="'.$this->formObject->getDefaultVal().'" '; } ?>
 						<?php if( $this->formObject->getRequired() ){ echo 'required="required"'; } ?>/>
-				</label>
+				</div>
 			<?php
-			//value=" echo $this->formObject->getDefaultVal(); "
+			//value=" echo ; "
 		}
+		
+		
 		
 		
 	}

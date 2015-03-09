@@ -78,7 +78,7 @@
 	
 	
 	function getScriptIncludes(){
-		$CMPATH = JS_DIR.'/codemirror-4.0';
+		
 	?>
 		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -86,8 +86,15 @@
 	
 		<script src="<?php echo JS_DIR.'/scripts.js'; ?>"></script>
 		<script src="<?php echo JS_DIR.'/jquery-ui-timepicker-addon.js'; ?>"></script>
-		<!--<script src="<?php echo JS_DIR.'/builder.js'; ?>"></script>-->
-		
+	<?php
+	}
+	
+	function getCodeMirrorIncludes(){
+		$CMPATH = JS_DIR.'/codemirror-4.0';
+		?>
+		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/lib/codemirror.css" />
+		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/hint/show-hint.css" />
+		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/display/fullscreen.css" />
 		<script src="<?php echo $CMPATH; ?>/lib/codemirror.js"></script>
 		<script src="<?php echo $CMPATH; ?>/addon/hint/show-hint.js"></script>
 		<!--<script src="<?php echo $CMPATH; ?>/addon/hint/xml-hint.js"></script>-->
@@ -115,23 +122,16 @@
 		<script src="<?php echo $CMPATH; ?>/addon/search/searchcursor.js"></script>
 		<script src="<?php echo $CMPATH; ?>/addon/selection/active-line.js"></script>
 		<!--<script src="<?php echo $CMPATH; ?>/addon/selection/mark-selection.js"></script>-->
-		
-		
-	<?php
+		<?php
 	}
 	
+	
 	function getCSSIncludes(){
-		$CMPATH = JS_DIR.'/codemirror-4.0';
-		
 	?>
 		<!--<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" /> -->
 		<!--code.jquery.com/ui/[version]/themes/[theme name]/jquery-ui.css-->
-        <link rel="stylesheet" href="<?php echo CSS_DIR.'/font-awesome/font-awesome.min.css'; ?>" />
+		<link rel="stylesheet" href="<?php echo CSS_DIR.'/font-awesome/font-awesome.min.css'; ?>" />
 		<link rel="stylesheet" href="<?php echo CSS_DIR.'/jquery-ui-timepicker-addon.css'; ?>" />
-        
-		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/lib/codemirror.css" />
-		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/hint/show-hint.css" />
-		<link rel="stylesheet" href="<?php echo $CMPATH; ?>/addon/display/fullscreen.css" />
 		<link rel="stylesheet" href="<?php echo CSS_DIR.'/style.css'; ?>">
 		<!--<link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>">-->
 		

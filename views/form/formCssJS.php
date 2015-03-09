@@ -11,6 +11,8 @@
 	?>
 	<link rel="stylesheet" href="<?php echo CSS_DIR.'/builder.css'; ?>"/>
 	<?php
+	getCodeMirrorIncludes();
+	
 	$conn = getConnection();
 	$form = new Formcode($conn);
 	

@@ -66,10 +66,12 @@
     <?php
 		}
 	?>
-	<link rel="stylesheet" href="/css/formPreview.css" />
+    <link rel="stylesheet" href="/css/formPreview.css" />
     <link rel="stylesheet" href="/getCss.php?formID=<?php echo $formID; ?>" />
 	<?php
-	echo '<form method="POST" class="previewForm" action="/captureForm.php?formID='.$formID.'">';
+	//check if file?
+	
+	echo '<form method="POST" class="previewForm" action="/captureForm.php?formID='.$formID.'" enctype="multipart/form-data">';
 	$formJS = "";
 	if( $query->execute() ){
 		$rows = 0;

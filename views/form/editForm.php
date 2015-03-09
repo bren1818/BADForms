@@ -149,7 +149,7 @@
 			<p>For theme previews go to: <a target="_blank" href="http://jqueryui.com/themeroller/">http://jqueryui.com/themeroller/</a> and select "Gallery"</p>
 		</div>
 	</div>
-	
+	<!--
 	<div class="formRow caching">
 		<div class="rowLabel">
 			<label for="useCaching"><i class="fa fa-file-archive-o"></i> Use Caching:</label>
@@ -161,7 +161,7 @@
 			</select>
 		</div>
 	</div>	
-	
+	-->
 	<div class="formRow">
 		<div class="rowLabel">
 			<label for="sunrise"><i class="fa fa-calendar"></i> Sun rise:</label>
@@ -220,6 +220,14 @@
 			</select>
 		</div>
 	</div>	
+	
+	<!--
+	Form Not Active Text
+	Form Not Yet Available Text
+	Form Expired Text
+	Use Preview CSS
+	
+	-->
 	
 	<div class="formRow">
          <input type="hidden" name="owner" value="1" /> <!-- to hook up later -->

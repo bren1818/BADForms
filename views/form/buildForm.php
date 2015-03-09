@@ -104,7 +104,8 @@
 </ul>
 </div>
 
-<button class="btn" id="addRow"><i class="fa fa-plus"></i> Add Row</button> <button class="btn" id="save"><i class="fa fa-floppy-o"></i> Save</button>
+<button class="btn" id="addRow"><i class="fa fa-plus"></i> Add Row</button> <!--<button class="btn" id="save"><i class="fa fa-floppy-o"></i> Save</button>-->
+<input type="submit" value="Save" id="save" />
 
 <a class="btn" target="_blank" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
 <?php

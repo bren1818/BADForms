@@ -401,10 +401,41 @@ li.htmlChunk .form_row_object .row  .genericUseText label:before{
 	content: "HTML typed here will be rendered as-is in place in the form.";
 }
 
+/*FileUpload*/
+
+li.fileupload  .form_row_object .row.listType,
+li.fileupload  .form_row_object .row.defaultVal,
+li.fileupload  .form_row_object .row.errorText,
+li.fileupload  .form_row_object .row.placeholder,
+li.fileupload  .form_row_object .row.classes,
+li.fileupload  .form_row_object .row.listID,
+li.fileupload  .form_row_object .row.csList,
+
+li.fileupload  .form_row_object .row.minLength,
+li.fileupload  .form_row_object .row.maxLength,
+li.fileupload  .form_row_object .row.minVal,
+li.fileupload  .form_row_object .row.encrypted,
+li.fileupload  .form_row_object .row .reUseableFormItem{
+	display: none;
+}
+
+li.fileupload  .form_row_object .row.maxVal > label{
+	text-transform: capitalize;
+}
+li.fileupload  .form_row_object .row.maxVal >label:after{
+	content: " - (Maximum Size in (MB) of the file)";
+}
+
+li.fileupload  .form_row_object .row.regex > label:after{
+	content: " - to use the regex type a comma separated list of allowable types eg doc,xls,txt";
+}
+
+/*
+li.fileupload  .form_row_object .advancedSettings .showSettings.btn,
 
 
-
-
+,
+*/
 
 
 

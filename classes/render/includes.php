@@ -17,7 +17,9 @@
 	
 	include "labelField.php";
 	include "htmlChunk.php";
+	include "cssChunk.php";
 	
-	//include "timepicker.php";
-	//include "datetimepicker.php";	
+	include "fileupload.php";
+	include "timepicker.php";
+	include "datetimepicker.php";	
 ?>

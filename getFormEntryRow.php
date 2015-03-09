@@ -70,7 +70,7 @@ function generateHtml($formObject){
 		<label for="name">
 			The name of the field (system)
 		</label>
-		<input type="text" name="name" value="<?php echo $formObject->getName(); ?>" required="required" title="This is for the admin/data collectors convenience - should be unique name for what this field is"/>
+		<input type="text" required="required" name="name" value="<?php echo $formObject->getName(); ?>" required="required" title="This is for the admin/data collectors convenience - should be unique name for what this field is"/>
 	</div>
 
 	<div class="row defaultVal">

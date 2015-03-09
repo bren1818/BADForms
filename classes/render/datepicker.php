@@ -30,11 +30,12 @@
                     	name="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>" 
 						class="datepicker <?php echo $this->formObject->getClasses(); ?>" 
 						id="datePicker_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>" 
-						type="text" placeholder="<?php echo $this->formObject->getPlaceHolder(); ?>" 
+						type="text" placeholder="<?php echo $this->formObject->getPlaceHolder(); ?>"
+						<?php if( $this->formObject->getDefaultVal() != "" ){ echo ' value="'.$this->formObject->getDefaultVal().'" '; } ?>
 						<?php if( $this->formObject->getRequired() ){ echo 'required="required"'; } ?>/>
 				</div>
 			<?php
-			//value=" echo $this->formObject->getDefaultVal(); "
+			//value=" echo ; "
 		}
 		
 		

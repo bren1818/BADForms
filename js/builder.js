@@ -207,7 +207,7 @@
 		});
 		
 		$('input[name="label"]').unbind();
-		$('input[name="label"]').on("keyup change", function(e) {
+		$('input[name="label"]').on("keyup change, keydown, keypress", function(e) {
 				var name = $(this).closest('.form_row_object').find('input[name="name"]');
 				var placeholder = $(this).closest('.form_row_object').find('input[name="placeholder"]');
 				

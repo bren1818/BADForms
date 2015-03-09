@@ -170,21 +170,26 @@
 	$query = "INSERT INTO `objecttype` (`id`, `name`, `description`, `isListType`, `ordered`) VALUES 
 		(NULL, 'no-type-select', 	'-=Select=-', '0', '0'),
 		(NULL, 'labelField', 		'Label Field', '0', '1'),
-		(NULL, 'input', 			'Input box - max chars 60', '0', '1'),
-		(NULL, 'textarea', 			'Textarea  - max chars 255', '0', '2'),
+		(NULL, 'input', 		'Input box - max chars 60', '0', '1'),
+		(NULL, 'textarea', 		'Textarea  - max chars 255', '0', '2'),
 		(NULL, 'checkboxsingle', 	'Checkbox - single choice', '0', '3'),
 		(NULL, 'checkboxmutiple', 	'Checkbox - list', '1', '4'),
 		(NULL, 'selectbox', 		'Select box', '1', '5'),
 		(NULL, 'radiobutton', 		'Radio Button', '1', '6'),
-		(NULL, 'datepicker', 		'Date Picker', '0', '7'),	
+		(NULL, 'datepicker', 		'Date Picker', '0', '7'),
+		(NULL, 'datetimepicker', 	'Date & Time Picker', '0', '7'),
+		(NULL, 'timepicker', 		'Time Picker', '0', '7'),
 		(NULL, 'rangeslider', 		'Range Slider', '0', '8'),
-		(NULL, 'hidden', 			'Hidden', '0', '9'),
-		(NULL, 'email', 			'Email', '0', '10'),
-		(NULL, 'phone', 			'Phone Number', '0', '11'),
+		(NULL, 'hidden', 		'Hidden', '0', '9'),
+		(NULL, 'email', 		'Email', '0', '10'),
+		(NULL, 'phone', 		'Phone Number', '0', '11'),
 		(NULL, 'selectboxJQ', 		'Select Box - JQuery UI', '0', '12'),
 		(NULL, 'htmlChunk', 		'HTML Code', '0', '13'),
-		(NULL, 'group', 			'Form Group', '0', '14'),
-		(NULL, 'formItem', 			'Re-useable Form Item', '0', '15');";
+		(NULL, 'cssChunk', 		'CSS Code', '0', '13'),
+		(NULL, 'group', 		'Form Group', '0', '14'),
+		(NULL, 'formItem', 		'Re-useable Form Item', '0', '15'),
+		(NULL, 'fileupload', 		'File Upload', '0', '16');";
+		
 	
 
 	//list items
