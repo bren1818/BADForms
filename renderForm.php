@@ -71,6 +71,8 @@
 	<?php
 	//check if file?
 	
+	//enctype="multipart/form-data
+	
 	echo '<form method="POST" class="previewForm" action="/captureForm.php?formID='.$formID.'" enctype="multipart/form-data">';
 	$formJS = "";
 	if( $query->execute() ){

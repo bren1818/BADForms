@@ -8,6 +8,7 @@
 	define("INCLUDES_DIR",	ROOT_DIR."includes");
 	define("CSS_DIR",		'/'."css");
 	define("JS_DIR",		'/'."js");
+	define("FORM_SUBMISSION_DATA", ROOT_DIR."FORM_SUBMISSION_DATA");
 	
 	define("BASE_ENCRYPTION_SALT", "tempSaltEncKey");//An Instance level salt so DB and  Server would need to be comprimised to 
 	
@@ -54,6 +55,8 @@
 	if( !file_exists( LOG_DIR) ){
 		mkdir( LOG_DIR );
 	}
+	
+	
 		
 	if(!file_exists(LOG_DIR.DIRECTORY_SEPARATOR.".gitignore") && CREATE_GITIGNORE){	
 		file_put_contents(LOG_DIR.DIRECTORY_SEPARATOR.".gitignore", "*");
@@ -74,6 +77,15 @@
 	if(!file_exists(CACHE_DIR.DIRECTORY_SEPARATOR.".gitignore") && CREATE_GITIGNORE){	
 		file_put_contents(CACHE_DIR.DIRECTORY_SEPARATOR.".gitignore", "*");
 	}
+	
+	if( !file_exists( FORM_SUBMISSION_DATA) ){
+		mkdir( FORM_SUBMISSION_DATA );
+	}
+	
+	if(!file_exists(FORM_SUBMISSION_DATA.DIRECTORY_SEPARATOR.".gitignore") && CREATE_GITIGNORE){	
+		file_put_contents(FORM_SUBMISSION_DATA.DIRECTORY_SEPARATOR.".gitignore", "*");
+	}
+	
 	
 	/*End System Checks*/
 ?>

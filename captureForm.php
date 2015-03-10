@@ -56,6 +56,9 @@
 				$encryptor->setKey( $encryptionKey );
 				
 				
+				/*Update Hit Count*/
+				
+				
 			}else{
 				echo "Non Numeric Form ID";
 				exit;
@@ -185,9 +188,11 @@
 				
 				//-------------------------------------------------------------
 				$fieldType = $result->getType();
+				$className = "";
 				$hasReturnValue = 1;
 				if( isset($fieldTypes) && isset($fieldTypes[$fieldType]) ){
 					 if( class_exists($fieldTypes[$fieldType]) ){
+						$className = $fieldTypes[$fieldType];
 						$ClassFunction = new $fieldTypes[$fieldType]();
 						if( is_object($ClassFunction) ){
 							if( method_exists( $ClassFunction, "hasReturnValue") ){
@@ -195,6 +200,20 @@
 							}
 						}
 					 }
+				}
+				
+				//echo $className.'<br />';
+				if( $className == "fileupload"){
+						if( !file_exists( FORM_SUBMISSION_DATA.DIRECTORY_SEPARATOR.$formID ) ){
+								mkdir( FORM_SUBMISSION_DATA.DIRECTORY_SEPARATOR.$formID );
+								//form Data here
+								
+								
+								
+								
+						}	
+						
+						//exit;
 				}
 				
 				if( $hasReturnValue ){
@@ -207,6 +226,44 @@
 					$encryptData = $result->getEncrypted();
 					$required = $result->getRequired();
 					$isListType = (($result->getListType() == 1 || $result->getListType() == 2) ? 1 : 0);
+					
+					
+					if( $className == "fileupload"){
+						//handle in validate?
+						echo "Required: ".$required.'<br />';
+						$target_dir = FORM_SUBMISSION_DATA.DIRECTORY_SEPARATOR.$formID.DIRECTORY_SEPARATOR;
+						echo "Target dir: ".$target_dir.'<br />';
+						echo "Input_ID: ".$postBackID.'<br />';
+						
+						$regex = $result->getRegex();
+						
+						$target_file = $target_dir . time().'_'. basename($_FILES[$postBackID]["name"]);
+						$fileType = pathinfo($target_file,PATHINFO_EXTENSION);
+						$size = $_FILES[$postBackID]["size"];
+						
+						echo "FileName: ".$target_file.'<br />';
+						echo "Regex: ".$regex.'<br />';
+						echo $target_file.'<br />';
+						echo $target_dir.'<br />';
+						echo "file type: ".$fileType.'<br />';
+						echo "size: ".$size.'<br />';
+						
+						if( !file_exists($target_file) ){
+						
+								if (move_uploaded_file($_FILES[$postBackID]["tmp_name"], $target_file)) {
+										echo "The file ". basename( $_FILES[$postBackID]["name"]). " has been uploaded.";
+								} else {
+										echo "Sorry, there was an error uploading your file.";
+								}
+										
+						}else{
+								echo "File (".$target_file.") already Exists";
+						}
+						//exit;
+						
+						
+				}
+					
 					
 					//should do checking based on type ex, if empty and is required... etc
 					
