@@ -110,7 +110,12 @@
 			);";
 	
 	//numSubmissions
-	
+	//numViews
+	//Form Not Active Text
+	//Form Not Yet Available Text
+	//Form Expired Text
+	//Use Preview CSS
+	//public
 	
 	createAndTestTable($db, "theform", $query);
 	
