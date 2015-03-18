@@ -84,6 +84,7 @@
 	
 		$capturedData = array();
 		$counter = 1;
+		$errors = 0;
 		
 		$saveRow = array();
 	
@@ -190,14 +191,24 @@
 				$fieldType = $result->getType();
 				$className = "";
 				$hasReturnValue = 1;
+				$validates = 0;
+				$ObjectType = null;
+				
 				if( isset($fieldTypes) && isset($fieldTypes[$fieldType]) ){
 					 if( class_exists($fieldTypes[$fieldType]) ){
 						$className = $fieldTypes[$fieldType];
-						$ClassFunction = new $fieldTypes[$fieldType]();
+						$ClassFunction = new $fieldTypes[$fieldType]($result);
 						if( is_object($ClassFunction) ){
+							$ObjectType = $ClassFunction;
+							
 							if( method_exists( $ClassFunction, "hasReturnValue") ){
 								$hasReturnValue = $ClassFunction->hasReturnValue();
 							}
+							
+							if( method_exists($ClassFunction, "validate") ){
+								$validates = 1;
+							}
+							
 						}
 					 }
 				}
@@ -216,6 +227,9 @@
 						//exit;
 				}
 				
+				
+				
+				
 				if( $hasReturnValue ){
 				
 					//echo generateHtml( $result );
@@ -226,6 +240,8 @@
 					$encryptData = $result->getEncrypted();
 					$required = $result->getRequired();
 					$isListType = (($result->getListType() == 1 || $result->getListType() == 2) ? 1 : 0);
+					
+					
 					
 					
 					if( $className == "fileupload"){
@@ -262,7 +278,7 @@
 						//exit;
 						
 						
-				}
+					}//end file upload
 					
 					
 					//should do checking based on type ex, if empty and is required... etc
@@ -292,6 +308,24 @@
 						$capturedData[ $counter."_$postBackID" ] = $postBackValue;
 					}
 					
+					
+					if( $validates ){
+						if( $ObjectType != null ){
+							echo "Validating Object...<br />";
+							$valid = $ObjectType->validate($postBackValue);
+							
+							if( $valid ){
+								//continue
+							}else{
+								$errors++;
+								echo "Error Count: ".$ObjectType->errorCount. " - ".print_r($ObjectType->errors,true);
+							}
+							
+							//echo '<pre>'.print_r( $ObjectType , true).'</pre>';
+							
+						}
+					}
+					
 					$saveRow[] = array("item" => $counter, "encrypted" => ($encryptData == 1 ? 1 : 0), "name" => $inputName, "value" => $postBackValue);
 					
 					$counter++;
@@ -300,7 +334,12 @@
 			}
 			
 		}
-		echo "Stored Data";
+		
+		if( $errors > 0 ){
+			echo "<p>This data contains errors and would not be stored</p>";
+		}else{
+			echo "<p>Stored Data</p>";
+		}
 		
 		
 		
@@ -316,24 +355,29 @@
 		$saved1 = 0;
 		$saved2 = 0;
 	
-		$entry = new Formentry($conn);
-		$entry->setFormID( $formID );
-		$entry->setSaveTime( getCurrentDateTime() );
-		$entry->setRemoteIP( $_SERVER['REMOTE_ADDR'] );
-		$entry->setRemoteSession( session_id()  );
-		if( $entry->save() > 0 ){
-			//entry saved.
-			echo "<br /><br />Entry Created";
-			$Formsavejson = new Formsavejson($conn);
-			$Formsavejson->setEntryID( $entry->getId() );
-			$Formsavejson->setData( json_encode($saveRow) );
-			
-			$saved1 = 1;
-			
-			if( $Formsavejson->save() > 0 ){
-				echo "<br /><br />Entry Saved as JSON";
-				$saved2 = 1;
+		if( isset($_REQUEST['realPost']) && $_REQUEST['realPost'] == "1"){
+	
+			$entry = new Formentry($conn);
+			$entry->setFormID( $formID );
+			$entry->setSaveTime( getCurrentDateTime() );
+			$entry->setRemoteIP( $_SERVER['REMOTE_ADDR'] );
+			$entry->setRemoteSession( session_id()  );
+			if( $entry->save() > 0 ){
+				//entry saved.
+				echo "<br /><br />Entry Created";
+				$Formsavejson = new Formsavejson($conn);
+				$Formsavejson->setEntryID( $entry->getId() );
+				$Formsavejson->setData( json_encode($saveRow) );
+				
+				$saved1 = 1;
+				
+				if( $Formsavejson->save() > 0 ){
+					echo "<br /><br />Entry Saved as JSON";
+					$saved2 = 1;
+				}
 			}
+		}else{
+			echo "<br />Not inserting Test Data into DB...<br />";
 		}
 	
 	

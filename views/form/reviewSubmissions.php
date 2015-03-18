@@ -51,12 +51,12 @@
 		//echo $salty;
 	}
 	
-	echo '<p>Last 3 submissions</p>';
+	echo '<p>Last 5 submissions</p>';
 	
 	
 	$query = "SELECT `fs`.`data`, fe.`saveTime`  FROM `formentry` as `fe` 
 			INNER JOIN `formsavejson` as `fs` on `fs`.`entryID` = `fe`.`id`
-			where `fe`.`formID` = :formID order by `fe`.`saveTime` DESC LIMIT 3";
+			where `fe`.`formID` = :formID order by `fe`.`saveTime` DESC LIMIT 5";
 			
 	$query = $conn->prepare( $query );
 	$query->bindParam(':formID', $formID);

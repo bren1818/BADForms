@@ -77,10 +77,12 @@
 			
 			if( $deleted == 0 ){
 				$id = $rowObj->save();
+			}else{
+				$id = -1;
 			}
 			
 			 
-			if( $id > 0 ){
+			if( isset($id) && $id > 0 ){
 				//echo "Saved";
 				if( $deleted == 1 ){
 					$deletes++;

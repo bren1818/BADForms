@@ -59,7 +59,7 @@
 	if(  null !== ($Theform->getJqTheme()) && $Theform->getJqTheme() != "" && null !== ($Theform->getJqVersion()) && $Theform->getJqVersion() != "" ){
 	
 	echo ' <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/'.$Theform->getJqVersion().'/themes/'.$Theform->getJqTheme().'/jquery-ui.css" />';
-	
+	//echo $Theform->getJqVersion().'/themes/'.$Theform->getJqTheme();
 		}else{
 	?>
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
@@ -132,11 +132,13 @@
 
 echo '<div class="clear"></div>';
 ?>
-
-<p><a href="/views/form/buildForm.php?formID=<?php echo $formID; ?>" class='btn'><i class="fa fa-list-alt"></i> Back to Form</a></p>
+<br />
+<hr />
+<br />
+<p><a href="/views/form/buildForm.php?formID=<?php echo $formID; ?>" class='btn'><i class="fa fa-list-alt"></i> Back to Form</a> - <label for="disableHTML5Check">Disable html5 Validation - this will allow you to submit invalid content. <input id="disableHTML5Check" name="disableHTML5Check" type="checkbox" /></label></p>
 
 <script type="text/javascript">
-	<?php echo $formJS; ?>
+<?php echo $formJS; ?>
 $(function(){
 	$( document ).tooltip({show: null,
 		position: {
@@ -147,6 +149,17 @@ $(function(){
 			ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
 		}
 	});
+	
+	$('#disableHTML5Check').change(function() {
+		if(this.checked) {
+			//Do stuff
+			alert("HTML5 Validation has been disabled");
+			$('.previewForm').attr("novalidate", "");
+		}else{
+			$('.previewForm').removeAttr("novalidate");
+		}
+	});
+	
 });
 </script>
 <script src="/getJS.php?formID=<?php echo $formID; ?>" type="text/javascript"></script>
