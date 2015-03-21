@@ -125,6 +125,34 @@
 		<?php
 	}
 	
+	function getWYSIWYGIncludes(){
+		$WPATH = JS_DIR.'/ckEditor';
+		?>
+        <link rel="stylesheet" href="<?php echo CSS_DIR; ?>/jquery.cleditor.css"/>
+        <script type="text/javascript" src="<?php echo $WPATH; ?>/ckeditor.js"></script>
+		<script type="text/javascript" src="<?php echo $WPATH; ?>/adapters/jquery.js"></script>
+        <?php
+	}
+	
+	function initWYSIWYG($selector='textarea'){
+		?>
+        <script>
+			$(function(){
+				CKEDITOR.disableAutoInline = true;
+
+				//http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Toolbar
+				$( '<?php echo $selector; ?>' ).ckeditor({toolbar: [
+					[ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],			
+					'/',
+					{ name: 'styles', items : [ 'Format','FontSize' ] },
+					{ name: 'editing', items : [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ] },	// '/' Line break - next group will be placed in new line.
+					{ name: 'basicstyles', items: [ 'Bold', 'Italic' ] } 
+				]});
+			});
+		</script>
+        <?php
+	}
+	
 	
 	function getCSSIncludes(){
 	?>

@@ -28,7 +28,7 @@
 	}
 	
 ?>
-<a class="btn" href="/views/form/buildForm.php?formID=<?php echo $theform->getId(); ?>"><i class="fa fa-code"></i> Build Form</a>
+<a class="btn" href="/views/form/buildForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-code"></i> Build Form</a>
 <a class="btn" href="/views/form/editForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-pencil-square-o"></i> Edit Form Information</a>
 <a class="btn" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
 

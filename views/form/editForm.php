@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="<?php echo CSS_DIR.'/formBuilder.css'; ?>"/>
 <link rel="stylesheet" href="<?php echo CSS_DIR.'/formPreview.css'; ?>"/>
 <?php
+	getWYSIWYGIncludes();
+	
+
 	$conn = getConnection(); //set to DB Conn
 	$theform = new Theform($conn); 
 
@@ -164,7 +167,7 @@
 	</div>
      <div class="formRow">
 		<div class="rowLabel">
-			<label for="notAvailableText"><i class="fa fa-info"></i> notAvailableText:</label>
+			<label for="notAvailableText"><i class="fa fa-info"></i> Not Available Text (prior to sunrise):</label>
 		</div>
 		<div class="rowField">
 			<textarea name="notAvailableText" id="notAvailableText"  title="" ><?php echo ( (isset($theform) && $theform->getNotAvailableText() !="" )  ?  $theform->getNotAvailableText() : FORM_NOT_ACTIVE_TEXT); ?></textarea>
@@ -182,7 +185,7 @@
     
          <div class="formRow">
 		<div class="rowLabel">
-			<label for="expiredText"><i class="fa fa-info"></i> expiredText:</label>
+			<label for="expiredText"><i class="fa fa-info"></i> Form Expired Text (post sunset):</label>
 		</div>
 		<div class="rowField">
 			<textarea name="expiredText" id="expiredText"  title="" ><?php echo ( (isset($theform) && $theform->getExpiredText() !="" ) ?  $theform->getExpiredText() : FORM_EXPIRED_TEXT); ?></textarea>
@@ -191,7 +194,7 @@
     
      <div class="formRow">
 		<div class="rowLabel">
-			<label for="submissionText"><i class="fa fa-info"></i> submissionText:</label>
+			<label for="submissionText"><i class="fa fa-info"></i> Submission Text:</label>
 		</div>
 		<div class="rowField">
 			<textarea name="submissionText" id="submissionText"  title="" ><?php echo ( (isset($theform) && $theform->getSubmissionText() !="" ) ?  $theform->getSubmissionText() : FORM_SUBMISSION_TEXT); ?></textarea>
@@ -207,7 +210,7 @@
 	
 	<div class="formRow caching">
 		<div class="rowLabel">
-			<label for="useCaching">Use Caching:</label>
+			<label for="useCaching"><i class="fa fa-clock-o"></i> Use Caching:</label>
 		</div>
 		<div class="rowField">
 			<select name="useCaching">
@@ -219,7 +222,7 @@
 	
 	<div class="formRow caching">
 		<div class="rowLabel">
-			<label for="isPrivate">Form is private (Show Publicly in list of forms):</label>
+			<label for="isPrivate"><i class="fa fa-user-secret"></i> Form is private (Show Publicly in list of forms):</label>
 		</div>
 		<div class="rowField">
 			<select name="isPrivate">
@@ -231,7 +234,7 @@
 	  
     <div class="formRow active">
 		<div class="rowLabel">
-			<label for="enabled">Form Enabled:</label>
+			<label for="enabled"><i class="fa fa-check-square-o"></i> Form Enabled:</label>
 		</div>
 		<div class="rowField">
 			<select name="enabled">
@@ -244,7 +247,7 @@
     
 	<div class="formRow active">
 		<div class="rowLabel">
-			<label for="formActive">Use Preview CSS:</label>
+			<label for="formActive"><i class="fa fa-css3"></i> Use Preview CSS:</label>
 		</div>
 		<div class="rowField">
 			<select name="usePreviewCSS">
@@ -256,7 +259,7 @@
     
     <div class="formRow">
 		<div class="rowLabel">
-			<label for="notActiveText"><i class="fa fa-info"></i> notActiveText:</label>
+			<label for="notActiveText"><i class="fa fa-info"></i> Not Enabled Text:</label>
 		</div>
 		<div class="rowField">
 			<textarea name="notActiveText" id="notActiveText"  title="" ><?php echo (  (isset($theform) && $theform->getNotActiveText() !="" ) ?  $theform->getNotActiveText() : FORM_NOT_ENABLED_TEXT); ?></textarea>
@@ -264,6 +267,26 @@
 	</div>
 	
 	
+
+
+<div class="formRow">
+		<div class="rowLabel">
+			<i class="fa fa-eye"></i> Number of Views
+		</div>
+		<div class="rowField">
+			<?php echo (  (isset($theform)  ) ?  $theform->getNumViews() : ''); ?>
+		</div>
+	</div>
+    <div class="formRow">
+		<div class="rowLabel">
+			<i class="fa fa-envelope-o"></i> Number of Submissions
+		</div>
+		<div class="rowField">
+			<?php echo (  (isset($theform)  ) ?  $theform->getNumSubmissions() : ''); ?>
+		</div>
+	</div>
+
+
 
 	
 	<div class="clear"></div>
@@ -273,7 +296,7 @@
 	
 	<div class="formRow rowCenter">
     	<input type="hidden" name="formID" value="<?php echo $theform->getId(); ?>" /><br />
-		<button class="btn"><i class="fa fa-floppy-o"></i> Update Settings</button>
+		<button class="btn"><i class="fa fa-floppy-o"></i> Update Settings</button> | <a class="btn" href="/views/form/cloneForm.php?formID=<?php echo $theform->getId(); ?>">Clone Form</a>
         <hr /><br />
         <a class="btn" href="/views/form/buildForm.php?formID=<?php echo $theform->getId(); ?>"><i class="fa fa-code"></i> Build Form</a>
         <a class="btn" href='/views/form/reviewSubmissions.php?formID=<?php echo $theform->getId(); ?>'><i class='fa fa-clipboard'></i> View Submissions</a>
@@ -283,6 +306,9 @@
 	
 	
 </form>
+<?php
+initWYSIWYG();
+?>
 <script type="text/javascript" src="<?php echo JS_DIR.'/formBuilder.js'; ?>"></script>
 <?php
 	pageFooter();

@@ -24,6 +24,8 @@
 	notAvailableText, v
 	expiredText, v
 	submissionText, v
+	numViews, i
+	numSubmissions, i
 
 */
 
@@ -53,6 +55,8 @@
 		private $notAvailableText;
 		private $expiredText;
 		private $submissionText;
+		private $numViews;
+		private $numSubmissions;
 
 
 		/*Constructor*/
@@ -261,6 +265,22 @@
 			$this->submissionText = $submissionText;
 		}
 
+		function getNumViews(){
+			return $this->numViews;
+		}
+
+		function setNumViews($numViews){
+			$this->numViews = $numViews;
+		}
+
+		function getNumSubmissions(){
+			return $this->numSubmissions;
+		}
+
+		function setNumSubmissions($numSubmissions){
+			$this->numSubmissions = $numSubmissions;
+		}
+
 		/*Special Functions*/
 		function load($id = null){
 			if( $this->connection ){
@@ -305,6 +325,8 @@
 			$this->setNotAvailableText( (isset($_POST["notAvailableText"])) ? $_POST["notAvailableText"] : $this->getNotAvailableText() );
 			$this->setExpiredText( (isset($_POST["expiredText"])) ? $_POST["expiredText"] : $this->getExpiredText() );
 			$this->setSubmissionText( (isset($_POST["submissionText"])) ? $_POST["submissionText"] : $this->getSubmissionText() );
+			$this->setNumViews( (isset($_POST["numViews"])) ? $_POST["numViews"] : $this->getNumViews() );
+			$this->setNumSubmissions( (isset($_POST["numSubmissions"])) ? $_POST["numSubmissions"] : $this->getNumSubmissions() );
 		}
 
 		function getFromRequest(){
@@ -329,6 +351,8 @@
 			$this->setNotAvailableText( (isset($_REQUEST["notAvailableText"])) ? $_REQUEST["notAvailableText"] : $this->getNotAvailableText() );
 			$this->setExpiredText( (isset($_REQUEST["expiredText"])) ? $_REQUEST["expiredText"] : $this->getExpiredText() );
 			$this->setSubmissionText( (isset($_REQUEST["submissionText"])) ? $_REQUEST["submissionText"] : $this->getSubmissionText() );
+			$this->setNumViews( (isset($_REQUEST["numViews"])) ? $_REQUEST["numViews"] : $this->getNumViews() );
+			$this->setNumSubmissions( (isset($_REQUEST["numSubmissions"])) ? $_REQUEST["numSubmissions"] : $this->getNumSubmissions() );
 		}
 
 		function getFromArray($arr){
@@ -353,6 +377,8 @@
 			$this->setNotAvailableText( (isset($arr["notAvailableText"])) ? $arr["notAvailableText"] : $this->getNotAvailableText() );
 			$this->setExpiredText( (isset($arr["expiredText"])) ? $arr["expiredText"] : $this->getExpiredText() );
 			$this->setSubmissionText( (isset($arr["submissionText"])) ? $arr["submissionText"] : $this->getSubmissionText() );
+			$this->setNumViews( (isset($arr["numViews"])) ? $arr["numViews"] : $this->getNumViews() );
+			$this->setNumSubmissions( (isset($arr["numSubmissions"])) ? $arr["numSubmissions"] : $this->getNumSubmissions() );
 		}
 
 		function compareTo($theform){
@@ -482,6 +508,16 @@
 			}else{
 				$log["SubmissionText"] = "un-modified";
 			}
+			if($this->getNumViews() != $theform->getNumViews() ){
+				$log["NumViews"] = "modified";
+			}else{
+				$log["NumViews"] = "un-modified";
+			}
+			if($this->getNumSubmissions() != $theform->getNumSubmissions() ){
+				$log["NumSubmissions"] = "modified";
+			}else{
+				$log["NumSubmissions"] = "un-modified";
+			}
 		return $log;
 		}
 
@@ -508,10 +544,12 @@
 			$notAvailableText = $this->getNotAvailableText();
 			$expiredText = $this->getExpiredText();
 			$submissionText = $this->getSubmissionText();
+			$numViews = $this->getNumViews();
+			$numSubmissions = $this->getNumSubmissions();
 			if( $this->connection ){
 				if( $id != "" ){
 					/*Perform Update Operation*/
-					$query = $this->connection->prepare("UPDATE  `theform` SET `title` = :title ,`description` = :description ,`encryptionMode` = :encryptionMode ,`encryptionSalt` = :encryptionSalt ,`created` = :created ,`lastUpdated` = :lastUpdated ,`enabled` = :enabled ,`sunrise` = :sunrise ,`sunset` = :sunset ,`jqVersion` = :jqVersion ,`jqTheme` = :jqTheme ,`owner` = :owner ,`isPrivate` = :isPrivate ,`isGroup` = :isGroup ,`useCaching` = :useCaching ,`usePreviewCSS` = :usePreviewCSS ,`lastCacheTime` = :lastCacheTime ,`notActiveText` = :notActiveText ,`notAvailableText` = :notAvailableText ,`expiredText` = :expiredText ,`submissionText` = :submissionText WHERE `id` = :id");
+					$query = $this->connection->prepare("UPDATE  `theform` SET `title` = :title ,`description` = :description ,`encryptionMode` = :encryptionMode ,`encryptionSalt` = :encryptionSalt ,`created` = :created ,`lastUpdated` = :lastUpdated ,`enabled` = :enabled ,`sunrise` = :sunrise ,`sunset` = :sunset ,`jqVersion` = :jqVersion ,`jqTheme` = :jqTheme ,`owner` = :owner ,`isPrivate` = :isPrivate ,`isGroup` = :isGroup ,`useCaching` = :useCaching ,`usePreviewCSS` = :usePreviewCSS ,`lastCacheTime` = :lastCacheTime ,`notActiveText` = :notActiveText ,`notAvailableText` = :notAvailableText ,`expiredText` = :expiredText ,`submissionText` = :submissionText ,`numViews` = :numViews ,`numSubmissions` = :numSubmissions WHERE `id` = :id");
 					$query->bindParam('title', $title);
 					$query->bindParam('description', $description);
 					$query->bindParam('encryptionMode', $encryptionMode);
@@ -533,6 +571,8 @@
 					$query->bindParam('notAvailableText', $notAvailableText);
 					$query->bindParam('expiredText', $expiredText);
 					$query->bindParam('submissionText', $submissionText);
+					$query->bindParam('numViews', $numViews);
+					$query->bindParam('numSubmissions', $numSubmissions);
 					$query->bindParam('id', $id);
 					if( $query->execute() ){
 						return $id;
@@ -542,7 +582,7 @@
 
 				}else{
 					/*Perform Insert Operation*/
-					$query = $this->connection->prepare("INSERT INTO `theform` (`id`,`title`,`description`,`encryptionMode`,`encryptionSalt`,`created`,`lastUpdated`,`enabled`,`sunrise`,`sunset`,`jqVersion`,`jqTheme`,`owner`,`isPrivate`,`isGroup`,`useCaching`,`usePreviewCSS`,`lastCacheTime`,`notActiveText`,`notAvailableText`,`expiredText`,`submissionText`) VALUES (NULL,:title,:description,:encryptionMode,:encryptionSalt,:created,:lastUpdated,:enabled,:sunrise,:sunset,:jqVersion,:jqTheme,:owner,:isPrivate,:isGroup,:useCaching,:usePreviewCSS,:lastCacheTime,:notActiveText,:notAvailableText,:expiredText,:submissionText);");
+					$query = $this->connection->prepare("INSERT INTO `theform` (`id`,`title`,`description`,`encryptionMode`,`encryptionSalt`,`created`,`lastUpdated`,`enabled`,`sunrise`,`sunset`,`jqVersion`,`jqTheme`,`owner`,`isPrivate`,`isGroup`,`useCaching`,`usePreviewCSS`,`lastCacheTime`,`notActiveText`,`notAvailableText`,`expiredText`,`submissionText`,`numViews`,`numSubmissions`) VALUES (NULL,:title,:description,:encryptionMode,:encryptionSalt,:created,:lastUpdated,:enabled,:sunrise,:sunset,:jqVersion,:jqTheme,:owner,:isPrivate,:isGroup,:useCaching,:usePreviewCSS,:lastCacheTime,:notActiveText,:notAvailableText,:expiredText,:submissionText,:numViews,:numSubmissions);");
 					$query->bindParam(':title', $title);
 					$query->bindParam(':description', $description);
 					$query->bindParam(':encryptionMode', $encryptionMode);
@@ -564,6 +604,8 @@
 					$query->bindParam(':notAvailableText', $notAvailableText);
 					$query->bindParam(':expiredText', $expiredText);
 					$query->bindParam(':submissionText', $submissionText);
+					$query->bindParam(':numViews', $numViews);
+					$query->bindParam(':numSubmissions', $numSubmissions);
 
 					if( $query->execute() ){
 						$this->setId( $this->connection->lastInsertId() );
@@ -1087,6 +1129,52 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `submissionText` = :submissionText LIMIT 1");
 				$query->bindParam(':submissionText', $submissionText);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByNumViews($numViews){
+			if( $this->connection ){
+				if( $numViews == null && $this->getNumViews() != ""){
+					$numViews = $this->getNumViews();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `numViews` = :numViews LIMIT 1");
+				$query->bindParam(':numViews', $numViews);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByNumSubmissions($numSubmissions){
+			if( $this->connection ){
+				if( $numSubmissions == null && $this->getNumSubmissions() != ""){
+					$numSubmissions = $this->getNumSubmissions();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `numSubmissions` = :numSubmissions LIMIT 1");
+				$query->bindParam(':numSubmissions', $numSubmissions);
 				$object = null;
 
 				if( $query->execute() ){
@@ -1630,6 +1718,54 @@
 			}
 		}
 
+		function getListByNumViews($numViews=null){
+			if( $this->connection ){
+				if( $numViews == null && $this->getNumViews() != ""){
+					$numViews = $this->getNumViews();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `numViews` = :numViews");
+				$query->bindParam(':numViews', $numViews);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$theforms[] = $result;
+					}
+					if( is_array( $theforms ) ){
+						return $theforms;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByNumSubmissions($numSubmissions=null){
+			if( $this->connection ){
+				if( $numSubmissions == null && $this->getNumSubmissions() != ""){
+					$numSubmissions = $this->getNumSubmissions();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `numSubmissions` = :numSubmissions");
+				$query->bindParam(':numSubmissions', $numSubmissions);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$theforms[] = $result;
+					}
+					if( is_array( $theforms ) ){
+						return $theforms;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
 		/*Return parameter (object) as Array*/
 		function toArray ($obj=null) {
 			if (is_object($obj)) $obj = (array)$obj;
@@ -1653,6 +1789,7 @@
 
 		/*Return object as Array*/
 		function asArray(){
+
 			$array = $this->toArray( $this );
 			return $array;
 		}
