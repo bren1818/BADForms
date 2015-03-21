@@ -276,6 +276,35 @@
 	ob_flush();flush();
 	
 	
+	$query = "CREATE TABLE  `formrecordentryrow` (
+		`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+		`formID` INTEGER,
+		`recordNumber` INTEGER,
+		`entryTime` DATETIME,
+		`remoteIP` VARCHAR( 60 ),
+		`remoteSession` VARCHAR( 60 )
+		);";
+		
+	createAndTestTable($db, "formrecordentryrow", $query);
+
+	ob_flush();flush();
+			
+	
+	$query = "CREATE TABLE  `formentryvalue` (
+		`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
+		`rowID` INTEGER,
+		`formID` INTEGER,
+		`formKey` INTEGER,
+		`formKeyName` VARCHAR( 60 ),
+		`encrypted` BOOLEAN,
+		`formValue` LONGTEXT
+		);";
+		
+	createAndTestTable($db, "formentryvalue", $query);
+
+	ob_flush();flush();
+	
+	
 	$query = "CREATE TABLE IF NOT EXISTS `formentry` (
 			`id` INT NULL DEFAULT NULL AUTO_INCREMENT PRIMARY KEY,
 			`formID` INTEGER,

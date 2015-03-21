@@ -17,4 +17,8 @@
 	
 	include "formEntry.php";
 	include "Formsavejson.php";	
+	
+	include "formRecordEntryRow.php";
+	include "formEntryValue.php";
+	
 ?>

@@ -336,7 +336,7 @@
 					
 					
 					
-					$saveRow[] = array("item" => $counter, "encrypted" => ($encryptData == 1 ? 1 : 0), "name" => $inputName, "value" => $postBackValue);
+					$saveRow[] = array("item" => $counter, "encrypted" => ($encryptData == 1 ? 1 : 0), "name" => $inputName, "fieldObjectID" => $result->getId(), "value" => $postBackValue, "formID" => $formID);
 					
 					$counter++;
 				
@@ -386,6 +386,49 @@
 					$saved2 = 1;
 				}
 			}
+			
+			//tertiary save
+			
+			
+			
+			//create formrecordentryrow - with ip, session, etc
+			
+			$entry = ( (int)$Theform->getNumSubmissions() + 1 );
+			
+			$formRecord = new Formrecordentryrow($conn);
+			$formRecord->setRecordNumber( $entry );
+			$formRecord->setFormID( $formID );
+			$formRecord->setEntryTime(getCurrentDateTime() );
+			$formRecord->setRemoteIP( $_SERVER['REMOTE_ADDR'] );
+			$formRecord->setRemoteSession( session_id()  );
+			if( $formRecord->save() > 0 ){
+				$entryNumber = $formRecord->getId();
+				
+				foreach( json_decode($Formsavejson->getData()) as $k=>$v){
+					$entryD = new Formentryvalue($conn);
+					$entryD->setFormID( $formID );
+					$entryD->setRowID( $entryNumber );
+					
+					$v = (array)$v;
+					
+					//pa( $v );
+					
+					$entryD->setformKey( $v["fieldObjectID"] );
+					$entryD->setFormValue( $v["value"]  );
+					$entryD->setFormKeyName( $v["name"] );
+					$entryD->setEncrypted( $v["encrypted"]  );
+					//foreach item in JSON
+						//using entry row key
+							//setup formentryvalue
+					$entryD->save();		
+				}
+			
+				//increment number of submissions
+				
+			}
+			
+			
+			
 		}else{
 			echo "<br />Not inserting Test Data into DB...<br />";
 		}
@@ -398,7 +441,7 @@
 	
 	
 		if( (isset($_REQUEST['realPost']) && $_REQUEST['realPost'] == "1") || ( isset($_POST['forceSave']) && $_POST['forceSave'] == 1) ){
-			ob_clean();
+			//ob_clean();
 			if( $saved1 == 1 && $saved2 == 1){
 				
 				//thank you text
