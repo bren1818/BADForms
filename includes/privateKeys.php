@@ -18,6 +18,18 @@
 	
 	define("PUBLIC_SERVER_ADDRESS", "//127.0.0.1:88"); //Should be in a // address :PORT (if not 80)
 	
+	
+	//default not active Text
+	define("FORM_NOT_ACTIVE_TEXT", "<p>Form is not avialable yet</p>"); 
+	//default not enable Text
+	define("FORM_NOT_ENABLED_TEXT", "<p>Form is not enabled</p>"); 
+	//default expired Text
+	define("FORM_EXPIRED_TEXT", "<p>Form is no longer available</p>"); 
+	//default Submission Text
+	define("FORM_SUBMISSION_TEXT", "<p>Thank you for your submission</p>"); 
+	
+	
+	
 	/*Local Database : Mode 1*/
 	define("LOCAL_DATABASE_USER", 	"root");
 	define("LOCAL_DATABASE_PASS", 	"usbw");

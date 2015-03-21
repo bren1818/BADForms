@@ -15,9 +15,15 @@
 	jqVersion, v
 	jqTheme, v
 	owner, i
+	isPrivate, bool
 	isGroup, bool
 	useCaching, bool
+	usePreviewCSS, bool
 	lastCacheTime, dt
+	notActiveText, v
+	notAvailableText, v
+	expiredText, v
+	submissionText, v
 
 */
 
@@ -38,9 +44,15 @@
 		private $jqVersion;
 		private $jqTheme;
 		private $owner;
+		private $isPrivate;
 		private $isGroup;
 		private $useCaching;
+		private $usePreviewCSS;
 		private $lastCacheTime;
+		private $notActiveText;
+		private $notAvailableText;
+		private $expiredText;
+		private $submissionText;
 
 
 		/*Constructor*/
@@ -177,6 +189,14 @@
 			$this->owner = $owner;
 		}
 
+		function getIsPrivate(){
+			return $this->isPrivate;
+		}
+
+		function setIsPrivate($isPrivate){
+			$this->isPrivate = $isPrivate;
+		}
+
 		function getIsGroup(){
 			return $this->isGroup;
 		}
@@ -193,12 +213,52 @@
 			$this->useCaching = $useCaching;
 		}
 
+		function getUsePreviewCSS(){
+			return $this->usePreviewCSS;
+		}
+
+		function setUsePreviewCSS($usePreviewCSS){
+			$this->usePreviewCSS = $usePreviewCSS;
+		}
+
 		function getLastCacheTime(){
 			return $this->lastCacheTime;
 		}
 
 		function setLastCacheTime($lastCacheTime){
 			$this->lastCacheTime = $lastCacheTime;
+		}
+
+		function getNotActiveText(){
+			return $this->notActiveText;
+		}
+
+		function setNotActiveText($notActiveText){
+			$this->notActiveText = $notActiveText;
+		}
+
+		function getNotAvailableText(){
+			return $this->notAvailableText;
+		}
+
+		function setNotAvailableText($notAvailableText){
+			$this->notAvailableText = $notAvailableText;
+		}
+
+		function getExpiredText(){
+			return $this->expiredText;
+		}
+
+		function setExpiredText($expiredText){
+			$this->expiredText = $expiredText;
+		}
+
+		function getSubmissionText(){
+			return $this->submissionText;
+		}
+
+		function setSubmissionText($submissionText){
+			$this->submissionText = $submissionText;
 		}
 
 		/*Special Functions*/
@@ -236,9 +296,15 @@
 			$this->setJqVersion( (isset($_POST["jqVersion"])) ? $_POST["jqVersion"] : $this->getJqVersion() );
 			$this->setJqTheme( (isset($_POST["jqTheme"])) ? $_POST["jqTheme"] : $this->getJqTheme() );
 			$this->setOwner( (isset($_POST["owner"])) ? $_POST["owner"] : $this->getOwner() );
+			$this->setIsPrivate( (isset($_POST["isPrivate"])) ? $_POST["isPrivate"] : $this->getIsPrivate() );
 			$this->setIsGroup( (isset($_POST["isGroup"])) ? $_POST["isGroup"] : $this->getIsGroup() );
 			$this->setUseCaching( (isset($_POST["useCaching"])) ? $_POST["useCaching"] : $this->getUseCaching() );
+			$this->setUsePreviewCSS( (isset($_POST["usePreviewCSS"])) ? $_POST["usePreviewCSS"] : $this->getUsePreviewCSS() );
 			$this->setLastCacheTime( (isset($_POST["lastCacheTime"])) ? $_POST["lastCacheTime"] : $this->getLastCacheTime() );
+			$this->setNotActiveText( (isset($_POST["notActiveText"])) ? $_POST["notActiveText"] : $this->getNotActiveText() );
+			$this->setNotAvailableText( (isset($_POST["notAvailableText"])) ? $_POST["notAvailableText"] : $this->getNotAvailableText() );
+			$this->setExpiredText( (isset($_POST["expiredText"])) ? $_POST["expiredText"] : $this->getExpiredText() );
+			$this->setSubmissionText( (isset($_POST["submissionText"])) ? $_POST["submissionText"] : $this->getSubmissionText() );
 		}
 
 		function getFromRequest(){
@@ -254,9 +320,15 @@
 			$this->setJqVersion( (isset($_REQUEST["jqVersion"])) ? $_REQUEST["jqVersion"] : $this->getJqVersion() );
 			$this->setJqTheme( (isset($_REQUEST["jqTheme"])) ? $_REQUEST["jqTheme"] : $this->getJqTheme() );
 			$this->setOwner( (isset($_REQUEST["owner"])) ? $_REQUEST["owner"] : $this->getOwner() );
+			$this->setIsPrivate( (isset($_REQUEST["isPrivate"])) ? $_REQUEST["isPrivate"] : $this->getIsPrivate() );
 			$this->setIsGroup( (isset($_REQUEST["isGroup"])) ? $_REQUEST["isGroup"] : $this->getIsGroup() );
 			$this->setUseCaching( (isset($_REQUEST["useCaching"])) ? $_REQUEST["useCaching"] : $this->getUseCaching() );
+			$this->setUsePreviewCSS( (isset($_REQUEST["usePreviewCSS"])) ? $_REQUEST["usePreviewCSS"] : $this->getUsePreviewCSS() );
 			$this->setLastCacheTime( (isset($_REQUEST["lastCacheTime"])) ? $_REQUEST["lastCacheTime"] : $this->getLastCacheTime() );
+			$this->setNotActiveText( (isset($_REQUEST["notActiveText"])) ? $_REQUEST["notActiveText"] : $this->getNotActiveText() );
+			$this->setNotAvailableText( (isset($_REQUEST["notAvailableText"])) ? $_REQUEST["notAvailableText"] : $this->getNotAvailableText() );
+			$this->setExpiredText( (isset($_REQUEST["expiredText"])) ? $_REQUEST["expiredText"] : $this->getExpiredText() );
+			$this->setSubmissionText( (isset($_REQUEST["submissionText"])) ? $_REQUEST["submissionText"] : $this->getSubmissionText() );
 		}
 
 		function getFromArray($arr){
@@ -272,9 +344,15 @@
 			$this->setJqVersion( (isset($arr["jqVersion"])) ? $arr["jqVersion"] : $this->getJqVersion() );
 			$this->setJqTheme( (isset($arr["jqTheme"])) ? $arr["jqTheme"] : $this->getJqTheme() );
 			$this->setOwner( (isset($arr["owner"])) ? $arr["owner"] : $this->getOwner() );
+			$this->setIsPrivate( (isset($arr["isPrivate"])) ? $arr["isPrivate"] : $this->getIsPrivate() );
 			$this->setIsGroup( (isset($arr["isGroup"])) ? $arr["isGroup"] : $this->getIsGroup() );
 			$this->setUseCaching( (isset($arr["useCaching"])) ? $arr["useCaching"] : $this->getUseCaching() );
+			$this->setUsePreviewCSS( (isset($arr["usePreviewCSS"])) ? $arr["usePreviewCSS"] : $this->getUsePreviewCSS() );
 			$this->setLastCacheTime( (isset($arr["lastCacheTime"])) ? $arr["lastCacheTime"] : $this->getLastCacheTime() );
+			$this->setNotActiveText( (isset($arr["notActiveText"])) ? $arr["notActiveText"] : $this->getNotActiveText() );
+			$this->setNotAvailableText( (isset($arr["notAvailableText"])) ? $arr["notAvailableText"] : $this->getNotAvailableText() );
+			$this->setExpiredText( (isset($arr["expiredText"])) ? $arr["expiredText"] : $this->getExpiredText() );
+			$this->setSubmissionText( (isset($arr["submissionText"])) ? $arr["submissionText"] : $this->getSubmissionText() );
 		}
 
 		function compareTo($theform){
@@ -359,6 +437,11 @@
 			}else{
 				$log["Owner"] = "un-modified";
 			}
+			if($this->getIsPrivate() != $theform->getIsPrivate() ){
+				$log["IsPrivate"] = "modified";
+			}else{
+				$log["IsPrivate"] = "un-modified";
+			}
 			if($this->getIsGroup() != $theform->getIsGroup() ){
 				$log["IsGroup"] = "modified";
 			}else{
@@ -369,10 +452,35 @@
 			}else{
 				$log["UseCaching"] = "un-modified";
 			}
+			if($this->getUsePreviewCSS() != $theform->getUsePreviewCSS() ){
+				$log["UsePreviewCSS"] = "modified";
+			}else{
+				$log["UsePreviewCSS"] = "un-modified";
+			}
 			if($this->getLastCacheTime() != $theform->getLastCacheTime() ){
 				$log["LastCacheTime"] = "modified";
 			}else{
 				$log["LastCacheTime"] = "un-modified";
+			}
+			if($this->getNotActiveText() != $theform->getNotActiveText() ){
+				$log["NotActiveText"] = "modified";
+			}else{
+				$log["NotActiveText"] = "un-modified";
+			}
+			if($this->getNotAvailableText() != $theform->getNotAvailableText() ){
+				$log["NotAvailableText"] = "modified";
+			}else{
+				$log["NotAvailableText"] = "un-modified";
+			}
+			if($this->getExpiredText() != $theform->getExpiredText() ){
+				$log["ExpiredText"] = "modified";
+			}else{
+				$log["ExpiredText"] = "un-modified";
+			}
+			if($this->getSubmissionText() != $theform->getSubmissionText() ){
+				$log["SubmissionText"] = "modified";
+			}else{
+				$log["SubmissionText"] = "un-modified";
 			}
 		return $log;
 		}
@@ -391,13 +499,19 @@
 			$jqVersion = $this->getJqVersion();
 			$jqTheme = $this->getJqTheme();
 			$owner = $this->getOwner();
+			$isPrivate = $this->getIsPrivate();
 			$isGroup = $this->getIsGroup();
 			$useCaching = $this->getUseCaching();
+			$usePreviewCSS = $this->getUsePreviewCSS();
 			$lastCacheTime = $this->getLastCacheTime();
+			$notActiveText = $this->getNotActiveText();
+			$notAvailableText = $this->getNotAvailableText();
+			$expiredText = $this->getExpiredText();
+			$submissionText = $this->getSubmissionText();
 			if( $this->connection ){
 				if( $id != "" ){
 					/*Perform Update Operation*/
-					$query = $this->connection->prepare("UPDATE  `theform` SET `title` = :title ,`description` = :description ,`encryptionMode` = :encryptionMode ,`encryptionSalt` = :encryptionSalt ,`created` = :created ,`lastUpdated` = :lastUpdated ,`enabled` = :enabled ,`sunrise` = :sunrise ,`sunset` = :sunset ,`jqVersion` = :jqVersion ,`jqTheme` = :jqTheme ,`owner` = :owner ,`isGroup` = :isGroup ,`useCaching` = :useCaching ,`lastCacheTime` = :lastCacheTime WHERE `id` = :id");
+					$query = $this->connection->prepare("UPDATE  `theform` SET `title` = :title ,`description` = :description ,`encryptionMode` = :encryptionMode ,`encryptionSalt` = :encryptionSalt ,`created` = :created ,`lastUpdated` = :lastUpdated ,`enabled` = :enabled ,`sunrise` = :sunrise ,`sunset` = :sunset ,`jqVersion` = :jqVersion ,`jqTheme` = :jqTheme ,`owner` = :owner ,`isPrivate` = :isPrivate ,`isGroup` = :isGroup ,`useCaching` = :useCaching ,`usePreviewCSS` = :usePreviewCSS ,`lastCacheTime` = :lastCacheTime ,`notActiveText` = :notActiveText ,`notAvailableText` = :notAvailableText ,`expiredText` = :expiredText ,`submissionText` = :submissionText WHERE `id` = :id");
 					$query->bindParam('title', $title);
 					$query->bindParam('description', $description);
 					$query->bindParam('encryptionMode', $encryptionMode);
@@ -410,9 +524,15 @@
 					$query->bindParam('jqVersion', $jqVersion);
 					$query->bindParam('jqTheme', $jqTheme);
 					$query->bindParam('owner', $owner);
+					$query->bindParam('isPrivate', $isPrivate);
 					$query->bindParam('isGroup', $isGroup);
 					$query->bindParam('useCaching', $useCaching);
+					$query->bindParam('usePreviewCSS', $usePreviewCSS);
 					$query->bindParam('lastCacheTime', $lastCacheTime);
+					$query->bindParam('notActiveText', $notActiveText);
+					$query->bindParam('notAvailableText', $notAvailableText);
+					$query->bindParam('expiredText', $expiredText);
+					$query->bindParam('submissionText', $submissionText);
 					$query->bindParam('id', $id);
 					if( $query->execute() ){
 						return $id;
@@ -422,7 +542,7 @@
 
 				}else{
 					/*Perform Insert Operation*/
-					$query = $this->connection->prepare("INSERT INTO `theform` (`id`,`title`,`description`,`encryptionMode`,`encryptionSalt`,`created`,`lastUpdated`,`enabled`,`sunrise`,`sunset`,`jqVersion`,`jqTheme`,`owner`,`isGroup`,`useCaching`,`lastCacheTime`) VALUES (NULL,:title,:description,:encryptionMode,:encryptionSalt,:created,:lastUpdated,:enabled,:sunrise,:sunset,:jqVersion,:jqTheme,:owner,:isGroup,:useCaching,:lastCacheTime);");
+					$query = $this->connection->prepare("INSERT INTO `theform` (`id`,`title`,`description`,`encryptionMode`,`encryptionSalt`,`created`,`lastUpdated`,`enabled`,`sunrise`,`sunset`,`jqVersion`,`jqTheme`,`owner`,`isPrivate`,`isGroup`,`useCaching`,`usePreviewCSS`,`lastCacheTime`,`notActiveText`,`notAvailableText`,`expiredText`,`submissionText`) VALUES (NULL,:title,:description,:encryptionMode,:encryptionSalt,:created,:lastUpdated,:enabled,:sunrise,:sunset,:jqVersion,:jqTheme,:owner,:isPrivate,:isGroup,:useCaching,:usePreviewCSS,:lastCacheTime,:notActiveText,:notAvailableText,:expiredText,:submissionText);");
 					$query->bindParam(':title', $title);
 					$query->bindParam(':description', $description);
 					$query->bindParam(':encryptionMode', $encryptionMode);
@@ -435,9 +555,15 @@
 					$query->bindParam(':jqVersion', $jqVersion);
 					$query->bindParam(':jqTheme', $jqTheme);
 					$query->bindParam(':owner', $owner);
+					$query->bindParam(':isPrivate', $isPrivate);
 					$query->bindParam(':isGroup', $isGroup);
 					$query->bindParam(':useCaching', $useCaching);
+					$query->bindParam(':usePreviewCSS', $usePreviewCSS);
 					$query->bindParam(':lastCacheTime', $lastCacheTime);
+					$query->bindParam(':notActiveText', $notActiveText);
+					$query->bindParam(':notAvailableText', $notAvailableText);
+					$query->bindParam(':expiredText', $expiredText);
+					$query->bindParam(':submissionText', $submissionText);
 
 					if( $query->execute() ){
 						$this->setId( $this->connection->lastInsertId() );
@@ -768,6 +894,29 @@
 			}
 		}
 
+		function getByIsPrivate($isPrivate){
+			if( $this->connection ){
+				if( $isPrivate == null && $this->getIsPrivate() != ""){
+					$isPrivate = $this->getIsPrivate();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `isPrivate` = :isPrivate LIMIT 1");
+				$query->bindParam(':isPrivate', $isPrivate);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
 		function getByIsGroup($isGroup){
 			if( $this->connection ){
 				if( $isGroup == null && $this->getIsGroup() != ""){
@@ -814,6 +963,29 @@
 			}
 		}
 
+		function getByUsePreviewCSS($usePreviewCSS){
+			if( $this->connection ){
+				if( $usePreviewCSS == null && $this->getUsePreviewCSS() != ""){
+					$usePreviewCSS = $this->getUsePreviewCSS();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `usePreviewCSS` = :usePreviewCSS LIMIT 1");
+				$query->bindParam(':usePreviewCSS', $usePreviewCSS);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
 		function getByLastCacheTime($lastCacheTime){
 			if( $this->connection ){
 				if( $lastCacheTime == null && $this->getLastCacheTime() != ""){
@@ -823,6 +995,98 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `lastCacheTime` = :lastCacheTime LIMIT 1");
 				$query->bindParam(':lastCacheTime', $lastCacheTime);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByNotActiveText($notActiveText){
+			if( $this->connection ){
+				if( $notActiveText == null && $this->getNotActiveText() != ""){
+					$notActiveText = $this->getNotActiveText();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `notActiveText` = :notActiveText LIMIT 1");
+				$query->bindParam(':notActiveText', $notActiveText);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByNotAvailableText($notAvailableText){
+			if( $this->connection ){
+				if( $notAvailableText == null && $this->getNotAvailableText() != ""){
+					$notAvailableText = $this->getNotAvailableText();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `notAvailableText` = :notAvailableText LIMIT 1");
+				$query->bindParam(':notAvailableText', $notAvailableText);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getByExpiredText($expiredText){
+			if( $this->connection ){
+				if( $expiredText == null && $this->getExpiredText() != ""){
+					$expiredText = $this->getExpiredText();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `expiredText` = :expiredText LIMIT 1");
+				$query->bindParam(':expiredText', $expiredText);
+				$object = null;
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$object = $result;
+					}
+
+				}
+				if( is_object( $object ) ){
+					return $object;
+				}
+			}
+		}
+
+		function getBySubmissionText($submissionText){
+			if( $this->connection ){
+				if( $submissionText == null && $this->getSubmissionText() != ""){
+					$submissionText = $this->getSubmissionText();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `submissionText` = :submissionText LIMIT 1");
+				$query->bindParam(':submissionText', $submissionText);
 				$object = null;
 
 				if( $query->execute() ){
@@ -1150,6 +1414,30 @@
 			}
 		}
 
+		function getListByIsPrivate($isPrivate=null){
+			if( $this->connection ){
+				if( $isPrivate == null && $this->getIsPrivate() != ""){
+					$isPrivate = $this->getIsPrivate();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `isPrivate` = :isPrivate");
+				$query->bindParam(':isPrivate', $isPrivate);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$theforms[] = $result;
+					}
+					if( is_array( $theforms ) ){
+						return $theforms;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
 		function getListByIsGroup($isGroup=null){
 			if( $this->connection ){
 				if( $isGroup == null && $this->getIsGroup() != ""){
@@ -1198,6 +1486,30 @@
 			}
 		}
 
+		function getListByUsePreviewCSS($usePreviewCSS=null){
+			if( $this->connection ){
+				if( $usePreviewCSS == null && $this->getUsePreviewCSS() != ""){
+					$usePreviewCSS = $this->getUsePreviewCSS();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `usePreviewCSS` = :usePreviewCSS");
+				$query->bindParam(':usePreviewCSS', $usePreviewCSS);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$theforms[] = $result;
+					}
+					if( is_array( $theforms ) ){
+						return $theforms;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
 		function getListByLastCacheTime($lastCacheTime=null){
 			if( $this->connection ){
 				if( $lastCacheTime == null && $this->getLastCacheTime() != ""){
@@ -1207,6 +1519,102 @@
 				/*Perform Query*/
 				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `lastCacheTime` = :lastCacheTime");
 				$query->bindParam(':lastCacheTime', $lastCacheTime);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$theforms[] = $result;
+					}
+					if( is_array( $theforms ) ){
+						return $theforms;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByNotActiveText($notActiveText=null){
+			if( $this->connection ){
+				if( $notActiveText == null && $this->getNotActiveText() != ""){
+					$notActiveText = $this->getNotActiveText();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `notActiveText` = :notActiveText");
+				$query->bindParam(':notActiveText', $notActiveText);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$theforms[] = $result;
+					}
+					if( is_array( $theforms ) ){
+						return $theforms;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByNotAvailableText($notAvailableText=null){
+			if( $this->connection ){
+				if( $notAvailableText == null && $this->getNotAvailableText() != ""){
+					$notAvailableText = $this->getNotAvailableText();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `notAvailableText` = :notAvailableText");
+				$query->bindParam(':notAvailableText', $notAvailableText);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$theforms[] = $result;
+					}
+					if( is_array( $theforms ) ){
+						return $theforms;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListByExpiredText($expiredText=null){
+			if( $this->connection ){
+				if( $expiredText == null && $this->getExpiredText() != ""){
+					$expiredText = $this->getExpiredText();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `expiredText` = :expiredText");
+				$query->bindParam(':expiredText', $expiredText);
+
+				if( $query->execute() ){
+					while( $result = $query->fetchObject("theform") ){
+						$theforms[] = $result;
+					}
+					if( is_array( $theforms ) ){
+						return $theforms;
+					}else{
+						return array();
+					}
+
+				}
+			}
+		}
+
+		function getListBySubmissionText($submissionText=null){
+			if( $this->connection ){
+				if( $submissionText == null && $this->getSubmissionText() != ""){
+					$submissionText = $this->getSubmissionText();
+				}
+
+				/*Perform Query*/
+				$query = $this->connection->prepare("SELECT * FROM `theform` WHERE `submissionText` = :submissionText");
+				$query->bindParam(':submissionText', $submissionText);
 
 				if( $query->execute() ){
 					while( $result = $query->fetchObject("theform") ){

@@ -122,6 +122,9 @@
 		
 		echo '<div class="formRow">';
 		
+		?>
+		<p><label for="forceSave">Allow saving this submission to Database. <input id="forceSave" name="forceSave" value="1" type="checkbox" /></label></p>
+        <?php
 		echo '<br /><input class="btn" type="submit" value="TEST - SUBMIT" />';
 		echo '</div>';
 		
@@ -135,8 +138,13 @@ echo '<div class="clear"></div>';
 <br />
 <hr />
 <br />
-<p><a href="/views/form/buildForm.php?formID=<?php echo $formID; ?>" class='btn'><i class="fa fa-list-alt"></i> Back to Form</a> - <label for="disableHTML5Check">Disable html5 Validation - this will allow you to submit invalid content. <input id="disableHTML5Check" name="disableHTML5Check" type="checkbox" /></label></p>
+<p><label for="disableHTML5Check">Disable html5 Validation - this will allow you to submit invalid content. <input id="disableHTML5Check" name="disableHTML5Check" type="checkbox" /></label></p>
 
+
+<p><br /></p>
+
+
+<p><a href="/views/form/buildForm.php?formID=<?php echo $formID; ?>" class='btn'><i class="fa fa-list-alt"></i> Back to Form</a> </p>
 <script type="text/javascript">
 <?php echo $formJS; ?>
 $(function(){

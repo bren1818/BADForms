@@ -57,6 +57,8 @@
 <a class="btn" href="/views/form/formCssJs.php?codeType=1&formID=<?php echo $formID; echo $css;?>"><i class="fa fa-pencil-square-o"></i> Edit Form CSS</a>
 <a class="btn" href="/views/form/formCssJs.php?codeType=2&formID=<?php echo $formID; echo $js; ?>"><i class="fa fa-code"></i> Edit Form Javascript</a>
 <a class="btn" href="/views/form/editForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-pencil-square-o"></i> Edit Form Information</a>
+
+<a class="btn" href="/views/form/reviewSubmissions.php?formID=<?php echo $formID; ?>"><i class="fa fa-clipboard"></i> Submissions</a>
 <a class="btn" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
 
 </div>
@@ -107,7 +109,7 @@
 <button class="btn" id="addRow"><i class="fa fa-plus"></i> Add Row</button> <button class="btn" id="save"><i class="fa fa-floppy-o"></i> Save</button>
 <!--<input type="submit" value="Save" id="save" />-->
 
-<a class="btn" target="_blank" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
+<a class="btn" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
 <?php
 	pageFooter();
 ?>

@@ -355,7 +355,7 @@
 		$saved1 = 0;
 		$saved2 = 0;
 	
-		if( isset($_REQUEST['realPost']) && $_REQUEST['realPost'] == "1"){
+		if( (isset($_REQUEST['realPost']) && $_REQUEST['realPost'] == "1" ) || ( isset($_POST['forceSave']) && $_POST['forceSave'] == 1) ){
 	
 			$entry = new Formentry($conn);
 			$entry->setFormID( $formID );
@@ -381,16 +381,22 @@
 		}
 	
 	
-		echo "<br /><br /><a href='/views/form/reviewSubmissions.php?formID=".$formID."'>View Submissions</a>";
+		echo "<br /><br /><a href='/views/form/reviewSubmissions.php?formID=".$formID."'><i class='fa fa-clipboard'></i> View Submissions</a>";
 		
 		//back?? 
 		//dont save the test?!
 	
 	
-		if( isset($_REQUEST['realPost']) && $_REQUEST['realPost'] == "1"){
+		if( (isset($_REQUEST['realPost']) && $_REQUEST['realPost'] == "1") || ( isset($_POST['forceSave']) && $_POST['forceSave'] == 1) ){
 			ob_clean();
 			if( $saved1 == 1 && $saved2 == 1){
+				
+				//thank you text
 				echo "<h1>Thank you for your submission</h1>";
+			}
+			
+			if( isset($_POST['forceSave']) && $_POST['forceSave'] == 1 ){
+				echo '<hr />';	
 			}
 		}
 	

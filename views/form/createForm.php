@@ -16,6 +16,7 @@
 		$theform->getFromPost();
 		$theform->setEnabled(1);
 		$theform->setIsGroup(0);
+		$theform->setOwner( $currentUser->getId() );
 		
 		if( $theform->getSunrise() != "" ){
 			$theform->setSunrise( getdatetime( $theform->getSunrise() ) );
@@ -95,19 +96,6 @@
 		</div>
 	</div>
 	
-    <div class="formRow">
-		<!--
-        <div class="formRowLabel">
-			<label for="owner">Owner:</label>
-		</div>
-		<div class="formRowInput">
-			<input type="number" name="owner" id="owner" value="<?php echo (isset($theform) ?  $theform->getOwner() : ''); ?>" title="" />
-		</div>
-        -->
-         <input type="hidden" name="owner" value="1" /> <!-- to hook up later -->
-	</div>
-  
-   
     
 	<div class="formRow">
 		<div class="formRowLabel">

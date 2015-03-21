@@ -101,3 +101,5 @@ textarea{
 .formRow.encryption-mode-2{
 	display: none;	
 }
+
+hr{ clear: both; }

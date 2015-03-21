@@ -104,18 +104,20 @@
 			`jqVersion` VARCHAR( 10 ),
 			`jqTheme` VARCHAR( 60 ),
 			`owner` INTEGER,
+			`isPrivate` BOOLEAN,
 			`isGroup` BOOLEAN,
 			`useCaching` BOOLEAN,
-			`lastCacheTime` DATETIME
+			`usePreviewCSS` BOOLEAN,
+			`lastCacheTime` DATETIME,
+			`notActiveText` VARCHAR( 255 ),
+			`notAvailableText` VARCHAR( 255 ),
+			`expiredText` VARCHAR( 255 ),
+			`submissionText` VARCHAR( 255 ),
+			`numViews` INTEGER,
+			`numSubmissions` INTEGER
 			);";
-	
-	//numSubmissions
-	//numViews
-	//Form Not Active Text
-	//Form Not Yet Available Text
-	//Form Expired Text
-	//Use Preview CSS
-	//public
+				
+
 	
 	createAndTestTable($db, "theform", $query);
 	
@@ -173,27 +175,27 @@
 	echo "<p><i class='fa fa-bars'></i> Creating types...</p>";
 	
 	$query = "INSERT INTO `objecttype` (`id`, `name`, `description`, `isListType`, `ordered`) VALUES 
-		(NULL, 'no-type-select', 	'-=Select=-', '0', '0'),
-		(NULL, 'labelField', 		'Label Field', '0', '1'),
-		(NULL, 'input', 		'Input box - max chars 60', '0', '1'),
-		(NULL, 'textarea', 		'Textarea  - max chars 255', '0', '2'),
-		(NULL, 'checkboxsingle', 	'Checkbox - single choice', '0', '3'),
-		(NULL, 'checkboxmutiple', 	'Checkbox - list', '1', '4'),
-		(NULL, 'selectbox', 		'Select box', '1', '5'),
-		(NULL, 'radiobutton', 		'Radio Button', '1', '6'),
-		(NULL, 'datepicker', 		'Date Picker', '0', '7'),
-		(NULL, 'datetimepicker', 	'Date & Time Picker', '0', '7'),
-		(NULL, 'timepicker', 		'Time Picker', '0', '7'),
-		(NULL, 'rangeslider', 		'Range Slider', '0', '8'),
-		(NULL, 'hidden', 		'Hidden', '0', '9'),
-		(NULL, 'email', 		'Email', '0', '10'),
-		(NULL, 'phone', 		'Phone Number', '0', '11'),
-		(NULL, 'selectboxJQ', 		'Select Box - JQuery UI', '0', '12'),
-		(NULL, 'htmlChunk', 		'HTML Code', '0', '13'),
-		(NULL, 'cssChunk', 		'CSS Code', '0', '13'),
-		(NULL, 'group', 		'Form Group', '0', '14'),
-		(NULL, 'formItem', 		'Re-useable Form Item', '0', '15'),
-		(NULL, 'fileupload', 		'File Upload', '0', '16');";
+		(NULL, 'no-type-select', 	'-=Select=-', 				 '0', '0'),
+		(NULL, 'labelField', 		'Label Field', 				 '0', '1'),
+		(NULL, 'input', 			'Input box - max chars 60',  '0', '1'),
+		(NULL, 'textarea', 			'Textarea  - max chars 255', '0', '2'),
+		(NULL, 'checkboxsingle', 	'Checkbox - single choice',  '0', '3'),
+		(NULL, 'checkboxmutiple', 	'Checkbox - list', 			 '1', '4'),
+		(NULL, 'selectbox', 		'Select box', 				 '1', '5'),
+		(NULL, 'radiobutton', 		'Radio Button', 			'1', '6'),
+		(NULL, 'datepicker', 		'Date Picker', 				'0', '7'),
+		(NULL, 'datetimepicker', 	'Date & Time Picker', 		'0', '8'),
+		(NULL, 'timepicker', 		'Time Picker', 				'0', '9'),
+		(NULL, 'rangeslider', 		'Range Slider', 			'0', '10'),
+		(NULL, 'hidden', 			'Hidden', 					'0', '11'),
+		(NULL, 'email', 			'Email', 					'0', '12'),
+		(NULL, 'phone', 			'Phone Number', 			'0', '13'),
+		(NULL, 'selectboxJQ', 		'Select Box - JQuery UI', 	'0', '14'),
+		(NULL, 'htmlChunk', 		'HTML Code', 				'0', '15'),
+		(NULL, 'cssChunk', 			'CSS Code', 				'0', '16'),
+		(NULL, 'group', 			'Form Group', 				'0', '17'),
+		(NULL, 'formItem', 			'Re-useable Form Item', 	'0', '18'),
+		(NULL, 'fileupload', 		'File Upload', 				'0', '19');";
 		
 	
 
@@ -227,7 +229,7 @@
 	
 	ob_flush();flush();
 	
-	$query = "INSERT INTO `jquerythemes` (`themeName`, `themeVersion`) VALUES ('base', '1.11.2'), ('black-tie', '1.11.2'), ('blitzer', '1.11.2'), ('cupetino', '1.11.2'), ('dark-hive', '1.11.2'), ('dot-luv', '1.11.2'), ('eggplant', '1.11.2'), ('excite-bike', '1.11.2'), ('flick', '1.11.2'), ('hot-sneaks', '1.11.2'), ('humanity', '1.11.2'), ('le-frog', '1.11.2'), ('mint-choc', '1.11.2'), ('overcaset', '1.11.2'), ('pepper-grinder', '1.11.2'), ('redmond', '1.11.2'), ('smoothness', '1.11.2'), ('south-street', '1.11.2'), ('start', '1.11.2'), ('sunny', '1.11.2'), ('swanky-purse', '1.11.2'), ('ui-darkness', '1.11.2'), ('trontastic', '1.11.2'), ('ui-darkness', '1.11.2'), ('ui-lightness', '1.11.2'), ('vader', '1.11.2');";
+	$query = "INSERT INTO `jquerythemes` (`themeName`, `themeVersion`) VALUES  ('black-tie', '1.11.2'), ('blitzer', '1.11.2'), ('cupetino', '1.11.2'), ('dark-hive', '1.11.2'), ('dot-luv', '1.11.2'), ('eggplant', '1.11.2'), ('excite-bike', '1.11.2'), ('flick', '1.11.2'), ('hot-sneaks', '1.11.2'), ('humanity', '1.11.2'), ('le-frog', '1.11.2'), ('mint-choc', '1.11.2'), ('overcaset', '1.11.2'), ('pepper-grinder', '1.11.2'), ('redmond', '1.11.2'), ('smoothness', '1.11.2'), ('south-street', '1.11.2'), ('start', '1.11.2'), ('sunny', '1.11.2'), ('swanky-purse', '1.11.2'), ('ui-darkness', '1.11.2'), ('trontastic', '1.11.2'), ('ui-darkness', '1.11.2'), ('ui-lightness', '1.11.2'), ('vader', '1.11.2');";
 	
 	$query = $db->prepare($query);
 	if( $query->execute() ){

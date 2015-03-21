@@ -73,7 +73,7 @@
 				}				
 			}
 			
-			if( $maxLength != ""  ){
+			if( $maxLength != "" && $maxLength != 0 ){
 				if( strlen( $value) > $maxLength ){
 					$this->errorCount++;
 					$this->errors[] = "Field is longer than maximum allowable length.";

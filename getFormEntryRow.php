@@ -209,7 +209,7 @@ function generateHtml($formObject){
 			<label for="maxLength">
 				maximum length of input 
 			</label>
-			<input type="number" name="maxLength" value="<?php echo $formObject->getMaxLength(); ?>" />
+			<input type="number" name="maxLength" value="<?php echo ($formObject->getMaxLength() == "0" ? "" : $formObject->getMaxLength()); ?>" />
 		</div>
 		
 		<div class="row minVal">
