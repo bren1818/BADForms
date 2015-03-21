@@ -296,7 +296,7 @@
 	
 	<div class="formRow rowCenter">
     	<input type="hidden" name="formID" value="<?php echo $theform->getId(); ?>" /><br />
-		<button class="btn"><i class="fa fa-floppy-o"></i> Update Settings</button> | <a class="btn" href="/views/form/cloneForm.php?formID=<?php echo $theform->getId(); ?>">Clone Form</a>
+		<button class="btn"><i class="fa fa-floppy-o"></i> Update Settings</button> | <a class="btn" href="/views/form/cloneForm.php?formID=<?php echo $theform->getId(); ?>">Clone Form</a> | <a class="btn" href="/views/form/deleteForm.php?formID=<?php echo $theform->getId(); ?>">Delete Form</a> 
         <hr /><br />
         <a class="btn" href="/views/form/buildForm.php?formID=<?php echo $theform->getId(); ?>"><i class="fa fa-code"></i> Build Form</a>
         <a class="btn" href='/views/form/reviewSubmissions.php?formID=<?php echo $theform->getId(); ?>'><i class='fa fa-clipboard'></i> View Submissions</a>
