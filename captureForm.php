@@ -281,7 +281,9 @@
 					}//end file upload
 					
 					
-					//should do checking based on type ex, if empty and is required... etc
+					
+					
+					
 					
 					if( isset($_POST[$postBackID] ) ){
 						if( $isListType ){
@@ -296,18 +298,8 @@
 						}
 					}
 					
-					if( $postBackValue != "" && $encryptData ){ //encrypting of global form must be some or all
-						$encryptedD = $encryptor->encrypt( $postBackValue );
-						$postBackValue = $encryptedD;
-					}
 					
-					//check the data for errors...
-					if( isset( $inputName ) && $inputName != "" ){
-						$capturedData[ $counter."_$inputName" ] = $postBackValue;		
-					}else{
-						$capturedData[ $counter."_$postBackID" ] = $postBackValue;
-					}
-					
+					//should do checking based on type ex, if empty and is required... etc
 					
 					if( $validates ){
 						if( $ObjectType != null ){
@@ -325,6 +317,24 @@
 							
 						}
 					}
+					
+					//if errors... dont do this
+					
+					
+					if( $postBackValue != "" && $encryptData ){ //encrypting of global form must be some or all
+						$encryptedD = $encryptor->encrypt( $postBackValue );
+						$postBackValue = $encryptedD;
+					}
+					
+					//check the data for errors...
+					if( isset( $inputName ) && $inputName != "" ){
+						$capturedData[ $counter."_$inputName" ] = $postBackValue;		
+					}else{
+						$capturedData[ $counter."_$postBackID" ] = $postBackValue;
+					}
+					
+					
+					
 					
 					$saveRow[] = array("item" => $counter, "encrypted" => ($encryptData == 1 ? 1 : 0), "name" => $inputName, "value" => $postBackValue);
 					

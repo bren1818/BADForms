@@ -195,7 +195,8 @@
 		(NULL, 'cssChunk', 			'CSS Code', 				'0', '16'),
 		(NULL, 'group', 			'Form Group', 				'0', '17'),
 		(NULL, 'formItem', 			'Re-useable Form Item', 	'0', '18'),
-		(NULL, 'fileupload', 		'File Upload', 				'0', '19');";
+		(NULL, 'fileupload', 		'File Upload', 				'0', '19'),
+		(NULL, 'numberInput', 		'Number',	 				'0', '20');";
 		
 	
 

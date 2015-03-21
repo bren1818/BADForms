@@ -70,6 +70,13 @@ li.input .form_row_object .row.listType,
 li.input .form_row_object .row.listID,
 li.input .form_row_object .row.csList{ display: none; }
 
+/*Number*/
+li.numberInput .form_row_object .row.regex,
+li.numberInput .form_row_object .row.listType,
+li.numberInput .form_row_object .row.listID,
+li.numberInput .form_row_object .row.csList{ display: none; }
+
+
 /*textarea*/
 li.textarea .form_row_object .row.minVal,
 li.textarea .form_row_object .row.maxVal,

@@ -1,5 +1,6 @@
 <?php
 	include "input.php";
+	include "numberInput.php";
 	include "textarea.php";
 	include "checkboxsingle.php";
 	include "checkboxmultiple.php";

@@ -1,5 +1,5 @@
 <?php
-	class input{
+	class numberInput{
 		
 		private $formObject;
 		public $errors;
@@ -56,6 +56,9 @@
 			$minLength = $this->formObject->getMinLength();
 			$maxLength = $this->formObject->getMaxLength();
 			$regex = $this->formObject->getRegex();
+			$minValue = $this->formObject->getMinVal();
+			$maxValue = $this->formObject->getMaxVal();
+			$isNumeric = is_numeric($value);
 			
 			if( $required == 1 ){
 				if( trim($value) == "" ){
@@ -80,6 +83,33 @@
 					$valid = 0;
 				}				
 			}
+			
+			if( !$isNumeric ){
+					$this->errorCount++;
+					$this->errors[] = "Field must be a number.";
+					$valid = 0;
+			}else{
+			
+			
+				if( $minValue != ""  ){
+					if( ( $value) < $minValue  ){
+						$this->errorCount++;
+						$this->errors[] = "Field does not meet minimum value required.";
+						$valid = 0;
+					}				
+				}
+				
+				if( $maxValue != "" && $maxValue != 0 ){
+					if( ( $value) > $maxValue ){
+						$this->errorCount++;
+						$this->errors[] = "Field is larger than maximum allowable value.";
+						$valid = 0;
+					}				
+				}
+			}
+			
+			
+			
 			
 			if( trim($regex) != ""  ){
 				
@@ -112,9 +142,9 @@
                 <div class="formRowInput">
                     <input 	
                     name="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>" 
-                    class="inputBox <?php echo $this->formObject->getClasses(); ?>" 
+                    class="inputBox numberInputBox <?php echo $this->formObject->getClasses(); ?>" 
                     id="input_<?php echo $this->formObject->getFormID().'_'.$this->formObject->getId(); ?>" 
-                    type="text" 
+                    type="number" 
                     
 					<?php if( trim($this->formObject->getErrorText()) != ""){ ?>
                     title="<?php echo $this->formObject->getErrorText() ?>"
@@ -128,18 +158,29 @@
                     value="<?php echo $this->formObject->getDefaultVal(); ?>"
                     <?php } ?>
                     
-                    <?php $pattern = $this->getPattern($this->formObject->getRegex(),$this->formObject->getMinLength(),$this->formObject->getMaxLength());
+                    <?php /*$pattern = $this->getPattern($this->formObject->getRegex(),$this->formObject->getMinLength(),$this->formObject->getMaxLength());
                     if($pattern != "" ){ ?>
                     pattern="<?php echo $pattern; ?>"
-                    <?php } ?>
+                    <?php } */ ?>
                     
-                    <?php if( $this->formObject->getMinLength() != ""){ ?>
+					<?php if( $this->formObject->getMinLength() != ""){ ?>
                     data-min-length="<?php echo $this->formObject->getMinLength(); ?>" 
                     <?php } ?>
                     
                     <?php if( $this->formObject->getMaxLength() != ""){ ?>
                     data-max-length="<?php echo $this->formObject->getMaxLength(); ?>"
                     <?php } ?>
+                    
+                    
+                    <?php if( $this->formObject->getMinVal() != ""){ ?>
+                    min="<?php echo $this->formObject->getMinVal(); ?>"
+                    data-min-length="<?php echo $this->formObject->getMinVal(); ?>" 
+                    <?php } ?>
+                    
+                    <?php if( $this->formObject->getMaxVal() != ""){ ?>  
+                    data-max-length="<?php echo $this->formObject->getMaxVal(); ?>"
+                    max="<?php echo $this->formObject->getMaxVal(); ?>"	
+                    <?php }  ?>
                     
                     <?php if( $this->formObject->getMaxLength() != "" && $this->formObject->getMaxLength() != 0){ ?>
                     maxlength="<?php echo $this->formObject->getMaxLength(); ?>"

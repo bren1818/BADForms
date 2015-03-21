@@ -33,7 +33,7 @@ function generateHtml($formObject){
 	
 	ob_start();
 ?>
-<li class="<?php echo " list-type-".$formObject->getListType(); echo " ".(isset($RowTypes[$formObject->getType()]) ? $RowTypes[$formObject->getType()] : "no-type-select"); ?>">
+<li class="<?php echo $RowTypes[$formObject->getType()]; ?> <?php echo " list-type-".$formObject->getListType(); echo " ".(isset($RowTypes[$formObject->getType()]) ? $RowTypes[$formObject->getType()] : "no-type-select"); ?>">
 <form id="<?php if( isset($formObject) && $formObject->getId() != ""){ echo $formObject->getId(); $tempID = $formObject->getId(); }else{ echo $tempID;  } ?>">
 <div class="form_row_object">
 	<div class="row type">
