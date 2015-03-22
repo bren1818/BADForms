@@ -38,8 +38,15 @@
 
 	<h1>Form Submissions for: &ldquo;<?php echo $theForm->getTitle(); ?>&rdquo;</h1>
 	<p>Number of Submissions: <b><?php echo $count; ?></b></p>
-    
     <?php
+	if( $theForm->getEncryptionMode() != 2 ){
+	?>
+    <p>**Note, searching a table while looking for encrypted Data will <b>NOT</b> work</p>
+    <?php
+		}
+	?>
+	
+	<?php
 		function buildTableHeader($formID){
 			$conn = getConnection();
 			$query = $conn->prepare("SELECT `label` FROM `formobject` WHERE `formID` = :formID order by `rowOrder`");
@@ -134,6 +141,7 @@
 <?php
 	//need Form Rows to match title tags for entries grab from form and iterate through each corresponding result set	
 	//pa( $theForm );
+	/*
 	$encryptionMode = $theForm->getEncryptionMode();
 	
 	$dencryptionKey = "";
@@ -180,6 +188,7 @@
 			$counter++;	
 		}
 	}
+	*/
 ?>
 </table>
 -->
