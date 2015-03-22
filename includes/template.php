@@ -153,12 +153,29 @@
         <?php
 	}
 	
-	function getDataTablesInclude(){
+	function getDataTablesInclude($formID = ""){
 		$DTPATH =  JS_DIR.'/dataTables';
+		if( $formID != "" ){
+			$conn = getConnection(); //set to DB Conn
+			$theform = new Theform($conn); 
+			$theform = $theform->load( $formID );
+			if(  null !== ($theform->getJqTheme()) && $theform->getJqTheme() != "" && null !== ($theform->getJqVersion()) && $theform->getJqVersion() != "" ){
+				echo ' <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/'.$theform->getJqVersion().'/themes/'.$theform->getJqTheme().'/jquery-ui.css" />';
+			}else{
+				?>
+    			<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    			<?php
+			}
+		}else{
+			?>
+    			<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    		<?php
+		}
 		?>
-		<link rel="stylesheet" href="<?php echo $DTPATH; ?>/media/css/jquery.dataTables.min.css"/>
+		<!--<link rel="stylesheet" href="<?php echo $DTPATH; ?>/media/css/jquery.dataTables.min.css"/>-->
         <link rel="stylesheet" href="<?php echo $DTPATH; ?>/media/css/jquery.dataTables_themeroller.css"/>
         <script type="text/javascript" src="<?php echo $DTPATH; ?>/media/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="<?php echo $DTPATH; ?>/media/js/dataTables.jqueryui.js"></script>
         <?php
 	}
 	

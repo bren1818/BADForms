@@ -3,7 +3,7 @@
 	$conn = getConnection();
 	pageHeader();
 	
-	getDataTablesInclude();
+	
 	
 	$formID = 0;
 	if( isset($_REQUEST) && isset($_REQUEST['formID']) && $_REQUEST['formID'] != "" ){
@@ -29,6 +29,7 @@
 		$count = $result["count"];
 	}
 	
+	getDataTablesInclude($formID);
 ?>
 <a class="btn" href="/views/form/buildForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-code"></i> Build Form</a>
 <a class="btn" href="/views/form/editForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-pencil-square-o"></i> Edit Form Information</a>
@@ -113,11 +114,17 @@
 		}
 		
 		buildTableHeader($formID);
-		buildTableBody($formID);
+		//buildTableBody($formID);
+		echo '</table>';
 	?>
     <script>
 		$(function(){
-			$('#submissions').DataTable();
+			$('#submissions').DataTable({
+				"processing": true,
+        		"serverSide": true,
+        		"ajax": "/views/helpers/submissions.php?formID=<?php echo $formID; ?>&userID=<?php echo $currentUser->getId();  ?>"
+			
+			});
 		});
 	</script>
     
