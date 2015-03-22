@@ -3,6 +3,8 @@
 	$conn = getConnection();
 	pageHeader();
 	
+	getDataTablesInclude();
+	
 	$formID = 0;
 	if( isset($_REQUEST) && isset($_REQUEST['formID']) && $_REQUEST['formID'] != "" ){
 		$formID = $_REQUEST['formID'];
@@ -35,6 +37,91 @@
 
 	<h1>Form Submissions for: &ldquo;<?php echo $theForm->getTitle(); ?>&rdquo;</h1>
 	<p>Number of Submissions: <b><?php echo $count; ?></b></p>
+    
+    <?php
+		function buildTableHeader($formID){
+			$conn = getConnection();
+			$query = $conn->prepare("SELECT `label` FROM `formobject` WHERE `formID` = :formID order by `rowOrder`");
+			$query->bindParam(':formID', $formID);
+			if( $query->execute() ){
+				
+				echo '<table id="submissions" class="dataTable display" cellspacing="0" width="100%">';
+				$formFields = "";
+				while( $item = $query->fetch() ){
+						$formFields.= '<th>'.$item["label"].'</th>';
+				}
+				
+				echo '<thead>';
+				echo '<tr>';
+				echo $formFields;
+				echo '</tr>';
+				echo '</thead>';
+				
+				echo '<tfoot>';
+				echo '<tr>';
+				echo $formFields;
+				echo '</tr>';
+				echo '</tfoot>';
+				
+			}
+		}
+		
+		function buildTableBody($formID){
+			$conn = getConnection();
+			echo '<tbody>';
+			$ids = array();
+			$query = $conn->prepare("SELECT `id` FROM `formobject` WHERE `formID` = :formID order by `rowOrder`");
+			$query->bindParam(':formID', $formID);
+			if( $query->execute() ){
+				while( $item = $query->fetch() ){
+						//$formFields.= '<th>'.$item["id"].'</th>';
+						$ids[] = $item['id'];
+				}
+			}
+			
+			$query = $conn->prepare("SELECT `fs`.`data`, fe.`saveTime`  FROM `formentry` as `fe` 
+			INNER JOIN `formsavejson` as `fs` on `fs`.`entryID` = `fe`.`id`
+			where `fe`.`formID` = :formID order by `fe`.`saveTime` DESC LIMIT 5");
+			$query->bindParam(':formID', $formID);
+			
+			if( $query->execute() ){
+				while( $row = $query->fetch() ){
+					echo '<tr>';
+					
+						foreach( json_decode($row["data"]) as $key=>$value){
+						$value = (array)$value;
+						if( $value["encrypted"] == 1 ){
+							$val = $encryptor->decrypt( $value["value"] );
+							//echo $value["name"]." : ".$val." (decrypted From: ".$value["value"].") <br />";
+							echo '<td>'.$val.'</td>';
+						}else{
+							//echo $value["name"]." : ".$value["value"]." <br />";
+							echo '<td>'.$value["value"].'</td>';
+						}
+					}
+						
+					echo '</tr>';	
+				}
+			}
+			
+			
+			
+			
+			
+			echo '</tbody>';
+			echo '</table>';
+		}
+		
+		buildTableHeader($formID);
+		buildTableBody($formID);
+	?>
+    <script>
+		$(function(){
+			$('#submissions').DataTable();
+		});
+	</script>
+    
+    <!--
     
     <table>
 <?php
@@ -88,6 +175,7 @@
 	}
 ?>
 </table>
+-->
 <p>
 <a target="_blank" class="btn" href="/views/form/downloadSubmissions.php?formID=<?php echo $formID; ?>&fileType=TXT">Download as Text</a>
 <a target="_blank" class="btn" href="/views/form/downloadSubmissions.php?formID=<?php echo $formID; ?>&fileType=XML">Download as XML</a>

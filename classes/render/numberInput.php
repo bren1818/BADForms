@@ -158,7 +158,8 @@
                     value="<?php echo $this->formObject->getDefaultVal(); ?>"
                     <?php } ?>
                     
-                    <?php /*$pattern = $this->getPattern($this->formObject->getRegex(),$this->formObject->getMinLength(),$this->formObject->getMaxLength());
+                    <?php 
+					/*$pattern = $this->getPattern($this->formObject->getRegex(),$this->formObject->getMinLength(),$this->formObject->getMaxLength());
                     if($pattern != "" ){ ?>
                     pattern="<?php echo $pattern; ?>"
                     <?php } */ ?>
@@ -170,16 +171,18 @@
                     <?php if( $this->formObject->getMaxLength() != ""){ ?>
                     data-max-length="<?php echo $this->formObject->getMaxLength(); ?>"
                     <?php } ?>
-                    
+                  
                     
                     <?php if( $this->formObject->getMinVal() != ""){ ?>
                     min="<?php echo $this->formObject->getMinVal(); ?>"
                     data-min-length="<?php echo $this->formObject->getMinVal(); ?>" 
                     <?php } ?>
                     
-                    <?php if( $this->formObject->getMaxVal() != ""){ ?>  
+                    <?php if( $this->formObject->getMaxVal() != "" && $this->formObject->getMaxVal() != 0){ ?>  
                     data-max-length="<?php echo $this->formObject->getMaxVal(); ?>"
                     max="<?php echo $this->formObject->getMaxVal(); ?>"	
+                    
+                    
                     <?php }  ?>
                     
                     <?php if( $this->formObject->getMaxLength() != "" && $this->formObject->getMaxLength() != 0){ ?>

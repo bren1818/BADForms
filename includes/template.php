@@ -153,6 +153,15 @@
         <?php
 	}
 	
+	function getDataTablesInclude(){
+		$DTPATH =  JS_DIR.'/dataTables';
+		?>
+		<link rel="stylesheet" href="<?php echo $DTPATH; ?>/media/css/jquery.dataTables.min.css"/>
+        <link rel="stylesheet" href="<?php echo $DTPATH; ?>/media/css/jquery.dataTables_themeroller.css"/>
+        <script type="text/javascript" src="<?php echo $DTPATH; ?>/media/js/jquery.dataTables.min.js"></script>
+        <?php
+	}
+	
 	
 	function getCSSIncludes(){
 	?>
