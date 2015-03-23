@@ -1,0 +1,278 @@
+<?php
+	include "../../includes/include.php";
+	$conn = getConnection();
+	
+	if( isPostBack() ){
+		if( isset($_POST['formID']) && isset($_POST['fields']) ){
+			
+			$formID = $_POST['formID'];
+			$fields = explode(",",$_POST['fields']);
+			
+			echo 'Form id: '.$formID.' <pre>'.print_r($fields,true).'</pre>';
+			
+			//build Query
+			//$built = "SELECT * FROM `formentryvalue` WHERE `formID` = :formID GROUP BY `rowID`";
+			
+			
+			//$query = $conn->prepare($built);
+			
+			
+		}
+		exit;
+	}
+	
+	pageHeader();
+	
+	
+	
+	$formID = 0;
+	if( isset($_REQUEST) && isset($_REQUEST['formID']) && $_REQUEST['formID'] != "" ){
+		$formID = $_REQUEST['formID'];
+	}
+	
+	$query = "SELECT * FROM `theform` WHERE `id` = :formID";
+	$query = $conn->prepare( $query );
+	$query->bindParam(':formID', $formID);
+	
+	if( $query->execute() ){
+		$theForm = $query->fetchObject("theform");
+	}
+	?>
+    <form id="QBuilder">
+    	<fieldset>
+    		<legend>Form Components to Query:</legend>
+            <?php
+				$query = $conn->prepare("SELECT `fo`.`label`, `fo`.`id`, `ot`.`description`
+										FROM `formobject` as `fo`
+										INNER JOIN `objecttype` as `ot` ON
+										`ot`.`id` = `fo`.`type`
+										WHERE
+										`fo`.`formID` = 1
+										ORDER BY
+										`fo`.`rowOrder` ASC");
+				if( $query->execute() ){
+					while( $row = $query->fetch(PDO::FETCH_ASSOC) ){
+						echo '<label><input class="QOptions" type="checkbox" name="columns" value="'.$row["id"].'" /> <b>'.$row["label"].'</b> ('.$row["description"].')</label><br />';
+						
+					}
+				}
+										
+			?>
+            <input type="hidden" name="formID" value="<?php echo $theForm->getId(); ?>" />
+        </fieldset>
+        <br /><br />
+        <button id="fetch">Fetch Data</button>
+        
+    </form>
+    
+    <script type="text/javascript">
+		$(function(){
+			$('#fetch').click(function(event){
+				event.preventDefault();
+				var fields = "";
+				var formID =$('#QBuilder input[name="formID"]').attr('value');
+				$('#QBuilder input.QOptions').each(function(){
+					if( $(this).prop('checked') == true ){
+						fields += $(this).attr('value') + ",";
+					}
+				});
+				fields = fields.substring(0, fields.length - 1);
+				
+				$.post( "submissionQAPI.php", { formID: formID, fields: fields } ).done(function( data ) {
+					alert( "Data Loaded: " + data );
+				 });
+				
+			});
+		});
+	</script>
+    
+    <?php
+	
+	/*
+	$count = 0;
+	
+	$query = "SELECT Count(`id`) as `count` FROM `formEntry` WHERE `formID` = :formID";
+	$query = $conn->prepare( $query );
+	$query->bindParam(':formID', $formID);
+	if( $query->execute() ){
+		$result = $query->fetch();
+		$count = $result["count"];
+	}
+	
+	getDataTablesInclude($formID);
+?>
+<a class="btn" href="/views/form/buildForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-code"></i> Build Form</a>
+<a class="btn" href="/views/form/editForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-pencil-square-o"></i> Edit Form Information</a>
+<a class="btn" href="/renderForm.php?formID=<?php echo $formID; ?>"><i class="fa fa-desktop"></i> Preview Form</a>
+
+
+	<h1>Form Submissions for: &ldquo;<?php echo $theForm->getTitle(); ?>&rdquo;</h1>
+	<p>Number of Submissions: <b><?php echo $count; ?></b></p>
+    <?php
+	if( $theForm->getEncryptionMode() != 2 ){
+	?>
+    <p>**Note, searching a table while looking for encrypted Data will <b>NOT</b> work</p>
+    <?php
+		}
+	?>
+	
+	<?php
+		function buildTableHeader($formID){
+			$conn = getConnection();
+			$query = $conn->prepare("SELECT `label` FROM `formobject` WHERE `formID` = :formID order by `rowOrder`");
+			$query->bindParam(':formID', $formID);
+			if( $query->execute() ){
+				
+				echo '<table id="submissions" class="dataTable display" cellspacing="0" width="100%">';
+				$formFields = "";
+				while( $item = $query->fetch() ){
+						$formFields.= '<th>'.$item["label"].'</th>';
+				}
+				
+				echo '<thead>';
+				echo '<tr>';
+				echo $formFields;
+				echo '</tr>';
+				echo '</thead>';
+				
+				echo '<tfoot>';
+				echo '<tr>';
+				echo $formFields;
+				echo '</tr>';
+				echo '</tfoot>';
+				
+			}
+		}
+		
+		function buildTableBody($formID){
+			$conn = getConnection();
+			echo '<tbody>';
+			$ids = array();
+			$query = $conn->prepare("SELECT `id` FROM `formobject` WHERE `formID` = :formID order by `rowOrder`");
+			$query->bindParam(':formID', $formID);
+			if( $query->execute() ){
+				while( $item = $query->fetch() ){
+						//$formFields.= '<th>'.$item["id"].'</th>';
+						$ids[] = $item['id'];
+				}
+			}
+			
+			$query = $conn->prepare("SELECT `fs`.`data`, fe.`saveTime`  FROM `formentry` as `fe` 
+			INNER JOIN `formsavejson` as `fs` on `fs`.`entryID` = `fe`.`id`
+			where `fe`.`formID` = :formID order by `fe`.`saveTime` DESC LIMIT 5");
+			$query->bindParam(':formID', $formID);
+			
+			if( $query->execute() ){
+				while( $row = $query->fetch() ){
+					echo '<tr>';
+					
+						foreach( json_decode($row["data"]) as $key=>$value){
+						$value = (array)$value;
+						if( $value["encrypted"] == 1 ){
+							$val = $encryptor->decrypt( $value["value"] );
+							//echo $value["name"]." : ".$val." (decrypted From: ".$value["value"].") <br />";
+							echo '<td>'.$val.'</td>';
+						}else{
+							//echo $value["name"]." : ".$value["value"]." <br />";
+							echo '<td>'.$value["value"].'</td>';
+						}
+					}
+						
+					echo '</tr>';	
+				}
+			}
+			
+			
+			
+			
+			
+			echo '</tbody>';
+			echo '</table>';
+		}
+		
+		buildTableHeader($formID);
+		//buildTableBody($formID);
+		echo '</table>';
+	?>
+    <script>
+		$(function(){
+			$('#submissions').DataTable({
+				"processing": true,
+        		"serverSide": true,
+        		"ajax": "/views/helpers/submissions.php?formID=<?php echo $formID; ?>&userID=<?php echo $currentUser->getId();  ?>"
+			
+			});
+		});
+	</script>
+    
+    <!--
+    
+    <table>
+<?php
+	//need Form Rows to match title tags for entries grab from form and iterate through each corresponding result set	
+	//pa( $theForm );
+	/*
+	$encryptionMode = $theForm->getEncryptionMode();
+	
+	$dencryptionKey = "";
+	$encryptor = "";
+	
+	if( $encryptionMode < 2 ){
+		//have to check for decryption	
+		$salty = $theForm->getEncryptionSalt();
+		$encryptionKey = BASE_ENCRYPTION_SALT;
+		
+		$encryptor = new BrenCrypt();
+		$encryptor->setKey( $encryptionKey.$salty );
+		
+		//echo $salty;
+	}
+	
+	echo '<p>Last 5 submissions</p>';
+	
+	
+	$query = "SELECT `fs`.`data`, fe.`saveTime`  FROM `formentry` as `fe` 
+			INNER JOIN `formsavejson` as `fs` on `fs`.`entryID` = `fe`.`id`
+			where `fe`.`formID` = :formID order by `fe`.`saveTime` DESC LIMIT 5";
+			
+	$query = $conn->prepare( $query );
+	$query->bindParam(':formID', $formID);
+	if( $query->execute() ){
+		$counter = 1;
+		while( $row = $query->fetch() ){
+			echo "<tr>";
+				echo "<td>";
+					echo "<br /><p><b>Form Entry</b> on ".$row["saveTime"]."</p>";
+					//echo pa(json_decode($row["data"]),1);
+					foreach( json_decode($row["data"]) as $key=>$value){
+						$value = (array)$value;
+						if( $value["encrypted"] == 1 ){
+							$val = $encryptor->decrypt( $value["value"] );
+							echo $value["name"]." : ".$val." (decrypted From: ".$value["value"].") <br />";
+						}else{
+							echo $value["name"]." : ".$value["value"]." <br />";
+						}
+					}
+				echo "</td>";
+			echo "</tr>";
+			$counter++;	
+		}
+	}
+
+?>
+</table>
+-->
+<p>
+<a target="_blank" class="btn" href="/views/form/downloadSubmissions.php?formID=<?php echo $formID; ?>&fileType=TXT">Download as Text</a>
+<a target="_blank" class="btn" href="/views/form/downloadSubmissions.php?formID=<?php echo $formID; ?>&fileType=XML">Download as XML</a>
+<a target="_blank" class="btn" href="/views/form/downloadSubmissions.php?formID=<?php echo $formID; ?>&fileType=CSV">Download as CSV</a>
+<a  target="_blank" class="btn" href="/views/form/downloadSubmissions.php?formID=<?php echo $formID; ?>&fileType=JSON">Download as JSON</a>
+</p>
+<br />
+<p><a class="btn" href="/">Home</a></p>
+    
+    
+<?php	
+*/
+	pageFooter();
+?>
