@@ -38,6 +38,9 @@
 
 	<h1>Form Submissions for: &ldquo;<?php echo $theForm->getTitle(); ?>&rdquo;</h1>
 	<p>Number of Submissions: <b><?php echo $count; ?></b></p>
+    
+    <p>Look at <a href="/views/form/SubmissionQAPI.php?formID=<?php echo $formID; ?>">Submission QAPI</a></p>
+    
     <?php
 	if( $theForm->getEncryptionMode() != 2 ){
 	?>
@@ -49,14 +52,14 @@
 	<?php
 		function buildTableHeader($formID){
 			$conn = getConnection();
-			$query = $conn->prepare("SELECT `label` FROM `formobject` WHERE `formID` = :formID order by `rowOrder`");
+			$query = $conn->prepare("SELECT `label`, `encrypted` FROM `formobject` WHERE `formID` = :formID order by `rowOrder`");
 			$query->bindParam(':formID', $formID);
 			if( $query->execute() ){
 				
 				echo '<table id="submissions" class="dataTable display" cellspacing="0" width="100%">';
 				$formFields = "";
 				while( $item = $query->fetch() ){
-						$formFields.= '<th>'.$item["label"].'</th>';
+						$formFields.= '<th>'.( ($item["encrypted"] == 1) ? '<i style="color: #f00;" class="icon-key"></i> ' : '').$item["label"].'</th>';
 				}
 				
 				echo '<thead>';
