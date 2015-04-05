@@ -165,6 +165,7 @@
 		`name` VARCHAR( 45 ),
 		`description` VARCHAR( 45 ),
 		`isListType` INTEGER,
+		`hasReturn` INTEGER,
 		`ordered` INTEGER
 		);";
 				
@@ -174,29 +175,29 @@
 	
 	echo "<p><i class='fa fa-bars'></i> Creating types...</p>";
 	
-	$query = "INSERT INTO `objecttype` (`id`, `name`, `description`, `isListType`, `ordered`) VALUES 
-		(NULL, 'no-type-select', 	'-=Select=-', 				 '0', '0'),
-		(NULL, 'labelField', 		'Label Field', 				 '0', '1'),
-		(NULL, 'input', 			'Input box - max chars 60',  '0', '1'),
-		(NULL, 'textarea', 			'Textarea  - max chars 255', '0', '2'),
-		(NULL, 'checkboxsingle', 	'Checkbox - single choice',  '0', '3'),
-		(NULL, 'checkboxmutiple', 	'Checkbox - list', 			 '1', '4'),
-		(NULL, 'selectbox', 		'Select box', 				 '1', '5'),
-		(NULL, 'radiobutton', 		'Radio Button', 			'1', '6'),
-		(NULL, 'datepicker', 		'Date Picker', 				'0', '7'),
-		(NULL, 'datetimepicker', 	'Date & Time Picker', 		'0', '8'),
-		(NULL, 'timepicker', 		'Time Picker', 				'0', '9'),
-		(NULL, 'rangeslider', 		'Range Slider', 			'0', '10'),
-		(NULL, 'hidden', 			'Hidden', 					'0', '11'),
-		(NULL, 'email', 			'Email', 					'0', '12'),
-		(NULL, 'phone', 			'Phone Number', 			'0', '13'),
-		(NULL, 'selectboxJQ', 		'Select Box - JQuery UI', 	'0', '14'),
-		(NULL, 'htmlChunk', 		'HTML Code', 				'0', '15'),
-		(NULL, 'cssChunk', 			'CSS Code', 				'0', '16'),
-		(NULL, 'group', 			'Form Group', 				'0', '17'),
-		(NULL, 'formItem', 			'Re-useable Form Item', 	'0', '18'),
-		(NULL, 'fileupload', 		'File Upload', 				'0', '19'),
-		(NULL, 'numberInput', 		'Number',	 				'0', '20');";
+	$query = "INSERT INTO `objecttype` (`id`, `name`, `description`, `isListType`, `hasReturn`, `ordered`) VALUES 
+		(NULL, 'no-type-select', 	'-=Select=-', 				 '0', '0', '0'),
+		(NULL, 'labelField', 		'Label Field', 				 '0', '0', '1'),
+		(NULL, 'input', 			'Input box - max chars 60',  '0', '1', '1'),
+		(NULL, 'textarea', 			'Textarea  - max chars 255', '0', '1', '2'),
+		(NULL, 'checkboxsingle', 	'Checkbox - single choice',  '0', '1', '3'),
+		(NULL, 'checkboxmutiple', 	'Checkbox - list', 			 '1', '1', '4'),
+		(NULL, 'selectbox', 		'Select box', 				 '1', '1', '5'),
+		(NULL, 'radiobutton', 		'Radio Button', 			'1', '1', '6'),
+		(NULL, 'datepicker', 		'Date Picker', 				'0', '1','7'),
+		(NULL, 'datetimepicker', 	'Date & Time Picker', 		'0','1', '8'),
+		(NULL, 'timepicker', 		'Time Picker', 				'0','1', '9'),
+		(NULL, 'rangeslider', 		'Range Slider', 			'0','1', '10'),
+		(NULL, 'hidden', 			'Hidden', 					'0', '1','11'),
+		(NULL, 'email', 			'Email', 					'0','1', '12'),
+		(NULL, 'phone', 			'Phone Number', 			'0','1', '13'),
+		(NULL, 'selectboxJQ', 		'Select Box - JQuery UI', 	'0','1', '14'),
+		(NULL, 'htmlChunk', 		'HTML Code', 				'0','1', '15'),
+		(NULL, 'cssChunk', 			'CSS Code', 				'0','1', '16'),
+		(NULL, 'group', 			'Form Group', 				'0', '1','17'),
+		(NULL, 'formItem', 			'Re-useable Form Item', 	'0','1', '18'),
+		(NULL, 'fileupload', 		'File Upload', 				'0', '1','19'),
+		(NULL, 'numberInput', 		'Number',	 				'0','1', '20');";
 		
 	
 

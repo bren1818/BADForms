@@ -151,10 +151,10 @@ $(function(){
 	$( document ).tooltip({show: null,
 		position: {
 			my: "left top",
-			at: "left bottom"
+			at: "right top"
 		},
 		open: function( event, ui ) {
-			ui.tooltip.animate({ top: ui.tooltip.position().top + 10 }, "fast" );
+			ui.tooltip.animate({ top: ui.tooltip.position().top, left : ui.tooltip.position().left + 10  }, "fast" );
 		}
 	});
 	

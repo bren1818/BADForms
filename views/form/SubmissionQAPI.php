@@ -100,9 +100,9 @@ order by f1.`rowID`
 				for( $c = 0; $c < $count; $c++){
 					
 					if( $c == 0){
-						$superQuery.= " f".$formKeys[$c]["id"].".`rowID`, f".$formKeys[$c]["id"].".`formValue` as `v".$formKeys[$c]["id"]."`".(($count > 1) ? "," : "");		
+						$superQuery.= " f".$formKeys[$c]["id"].".`rowID`, IFNULL(f".$formKeys[$c]["id"].".`formValue`, '-') as `v".$formKeys[$c]["id"]."`".(($count > 1) ? "," : "");		// f2.`rowID`, f2.`formValue` as `v2`,
 					}else{
-						$superQuery.= " f".$formKeys[$c]["id"].".`formValue` as `v".$formKeys[$c]["id"]."`".( ( ($c +1) < $count )? "," : "");
+						$superQuery.= " IFNULL(f".$formKeys[$c]["id"].".`formValue`, '-') as `v".$formKeys[$c]["id"]."`".( ( ($c +1) < $count )? "," : "");
 					}
 				}
 				

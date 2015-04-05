@@ -52,7 +52,21 @@
 	<?php
 		function buildTableHeader($formID){
 			$conn = getConnection();
-			$query = $conn->prepare("SELECT `label`, `encrypted` FROM `formobject` WHERE `formID` = :formID order by `rowOrder`");
+			$query = $conn->prepare("SELECT fo.`label`, fo.`encrypted`
+									FROM `formobject` fo
+									LEFT JOIN `objecttype` ot ON ot.`id` = fo.`type`
+									WHERE `formID` = :formID
+									AND ot.`hasReturn` =  1
+									order by `rowOrder`");
+			
+			/*SELECT fo.`id` FROM `formobject` fo
+							LEFT JOIN `objecttype` ot ON ot.`id` = fo.`type`
+							
+							WHERE `formID` = :formID
+							AND ot.`hasReturn` =  1
+							order by `rowOrder` */
+			
+			
 			$query->bindParam(':formID', $formID);
 			if( $query->execute() ){
 				
@@ -64,12 +78,14 @@
 				
 				echo '<thead>';
 				echo '<tr>';
+				echo '<th>ID</th>';	
 				echo $formFields;
 				echo '</tr>';
 				echo '</thead>';
 				
 				echo '<tfoot>';
 				echo '<tr>';
+				echo '<th>ID</th>';	
 				echo $formFields;
 				echo '</tr>';
 				echo '</tfoot>';
@@ -100,8 +116,10 @@
 					echo '<tr>';
 					
 						foreach( json_decode($row["data"]) as $key=>$value){
-						$value = (array)$value;
+							
+							$value = (array)$value;
 						if( $value["encrypted"] == 1 ){
+							
 							$val = $encryptor->decrypt( $value["value"] );
 							//echo $value["name"]." : ".$val." (decrypted From: ".$value["value"].") <br />";
 							echo '<td>'.$val.'</td>';
