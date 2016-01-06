@@ -80,10 +80,15 @@
 
 <h2><?php if( is_object($theForm)){ echo $theForm->getTitle(); } ?></h2>
 <p><?php if( is_object($theForm)){ echo $theForm->getDescription(); } ?></p>
-<p><b>Form Embed Code:</b><br /><br />
+<p><b>Form Embed Code:</b><br /><span>IFrame Mode:</span><br />
 	<textarea class="embedCode"><iframe href="<?php 
 			echo PUBLIC_SERVER_ADDRESS."/GetForm.php?ID=".$formID."&key=".md5($formID.BASE_ENCRYPTION_SALT); 
-		?>"></iframe></textarea>
+		?>"></iframe></textarea><br /><span>Javsacript mode</span><br /><textarea class="embedCode"><div id="formContainer"></div><script type="text/javascript" src="<?php 
+			echo PUBLIC_SERVER_ADDRESS."/getFormScriptEmbed.php?ID=".$formID."&key=".md5($formID.BASE_ENCRYPTION_SALT); 
+		?>&jsync=1"></script></textarea>
+		
+		
+		
 </p>
 
 <br />

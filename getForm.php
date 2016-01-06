@@ -12,6 +12,14 @@
 		$securityKey = $_REQUEST['key'];
 	}
 	
+	if( isset($_REQUEST) && isset($_REQUEST['jsync']) && $_REQUEST['jsync'] == 1 ){
+		$Standalone_MODE = 0;
+	}else{
+		$Standalone_MODE = 1;
+	}
+	
+	
+	
 	if( $formID != "" && $securityKey != "" ){
 		
 			if( md5($formID.BASE_ENCRYPTION_SALT) == $securityKey ){
@@ -65,18 +73,24 @@
 	
 	$title = $Theform->getTitle();
 	
-	pageHeader($title, false);
-	
+	if( $Standalone_MODE ){
+		pageHeader($title, false);
+	}
 	
 	if(  null !== ($Theform->getJqTheme()) && $Theform->getJqTheme() != "" && null !== ($Theform->getJqVersion()) && $Theform->getJqVersion() != "" ){
 	
 	echo ' <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/'.$Theform->getJqVersion().'/themes/'.$Theform->getJqTheme().'/jquery-ui.css" />';
 	
-		}else{
+	}else{
 	?>
     	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
     <?php
-		}
+	}
+	
+	if( ! $Standalone_MODE ){
+		getCSSIncludes();
+		getScriptIncludes();
+	}
 	?>
 	<link rel="stylesheet" href="<?php echo PUBLIC_SERVER_ADDRESS; ?>/css/formPreview.css" />
     <link rel="stylesheet" href="<?php echo PUBLIC_SERVER_ADDRESS; ?>/getCss.php?formID=<?php echo $formID; ?>" />

@@ -4,8 +4,10 @@
 	
 	if( isPostback() ){
 		
-		echo "Posted Data";
-		pa( $_POST );
+		if( VERBOSE_LOGGING ){
+			echo "Posted Data";
+			pa( $_POST );
+		}
 		
 		$conn = getConnection();
 		$formID = "";
@@ -303,7 +305,9 @@
 					
 					if( $validates ){
 						if( $ObjectType != null ){
+							if( VERBOSE_LOGGING ){
 							echo "Validating Object...<br />";
+							}
 							$valid = $ObjectType->validate($postBackValue);
 							
 							if( $valid ){
@@ -348,15 +352,18 @@
 		if( $errors > 0 ){
 			echo "<p>This data contains errors and would not be stored</p>";
 		}else{
-			echo "<p>Stored Data</p>";
+			if( VERBOSE_LOGGING ){
+				echo "<p>Stored Data</p>";
+			}
 		}
 		
 		
-		
+		if( VERBOSE_LOGGING ){
 		pa( array_filter($capturedData) ); //array_filter removes empty values	
 		
 		
 		echo json_encode( $saveRow );
+		}
 		
 		//store in DB as flat JSON or as key-value 
 		//submission (id) - form (id) - date - ip
@@ -374,7 +381,9 @@
 			$entry->setRemoteSession( session_id()  );
 			if( $entry->save() > 0 ){
 				//entry saved.
-				echo "<br /><br />Entry Created";
+				if( VERBOSE_LOGGING ){
+					echo "<br /><br />Entry Created";
+				}
 				$Formsavejson = new Formsavejson($conn);
 				$Formsavejson->setEntryID( $entry->getId() );
 				$Formsavejson->setData( json_encode($saveRow) );
@@ -382,8 +391,14 @@
 				$saved1 = 1;
 				
 				if( $Formsavejson->save() > 0 ){
-					echo "<br /><br />Entry Saved as JSON";
+					if( VERBOSE_LOGGING ){
+						echo "<br /><br />Entry Saved as JSON";
+					}
 					$saved2 = 1;
+				}else{
+					if( VERBOSE_LOGGING ){
+						echo "<br /><br />Entry <b>NOT</b> Saved as JSON";
+					}
 				}
 			}
 			
@@ -433,8 +448,11 @@
 			echo "<br />Not inserting Test Data into DB...<br />";
 		}
 	
-	
-		echo "<br /><br /><a href='/views/form/reviewSubmissions.php?formID=".$formID."'><i class='fa fa-clipboard'></i> View Submissions</a>";
+		if( VERBOSE_LOGGING ){
+			if( $currentUser->getUserLevel() == 1 ){
+				echo "<br /><br /><a href='/views/form/reviewSubmissions.php?formID=".$formID."'><i class='fa fa-clipboard'></i> View Submissions</a>";
+			}
+		}
 		
 		//back?? 
 		//dont save the test?!
@@ -445,7 +463,8 @@
 			if( $saved1 == 1 && $saved2 == 1){
 				
 				//thank you text
-				echo "<h1>Thank you for your submission</h1>";
+				echo "<h1>".$Theform->getSubmissionText()."</h1>";
+				//complete action?
 			}
 			
 			if( isset($_POST['forceSave']) && $_POST['forceSave'] == 1 ){

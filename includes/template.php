@@ -84,8 +84,8 @@
 		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 	
-		<script src="<?php echo JS_DIR.'/scripts.js'; ?>"></script>
-		<script src="<?php echo JS_DIR.'/jquery-ui-timepicker-addon.js'; ?>"></script>
+		<script src="<?php echo PUBLIC_SERVER_ADDRESS; ?><?php echo JS_DIR.'/scripts.js'; ?>"></script>
+		<script src="<?php echo PUBLIC_SERVER_ADDRESS; ?><?php echo JS_DIR.'/jquery-ui-timepicker-addon.js'; ?>"></script>
 	<?php
 	}
 	
